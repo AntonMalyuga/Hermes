@@ -6,24 +6,18 @@ from page_objects.elements.Alert import Alert
 from page_objects.elements.UserLoginForm import PASSWORD, LOGIN
 
 
-@allure.feature('Профиль пользователя')
-@allure.title("Проверка значения почты по умолчанию")
 def test_check_mail_user(driver):
     UserLoginForm(driver).autorization_default()
     driver.get('https://hermes-test.rt.ru/user_management/sso/user_profile')
     assert UserProfile(driver).get_email() == 'testgermes@yandex.ru12'
 
 
-@allure.feature('Профиль пользователя')
-@allure.title("Проверка на соответствие логина с логином авторизации")
 def test_check_login(driver):
     UserLoginForm(driver).autorization_default()
     driver.get('https://hermes-test.rt.ru/user_management/sso/user_profile')
     assert UserProfile(driver).get_login() == LOGIN
 
 
-@allure.feature('Профиль пользователя')
-@allure.title("Проверка замены пароля на существующий пароль")
 def test_enter_change_password_on_current_pass(driver):
     UserLoginForm(driver).autorization_default()
     driver.get('https://hermes-test.rt.ru/user_management/sso/user_profile')
@@ -36,8 +30,6 @@ def test_enter_change_password_on_current_pass(driver):
         driver).get_alert_text() == 'Новый пароль не должен совпадать с уже использованными паролями за последний год'
 
 
-@allure.feature('Профиль пользователя')
-@allure.title("Проверка на московский номер")
 def test_moscow_number(driver):
     UserLoginForm(driver).autorization_default()
     driver.get('https://hermes-test.rt.ru/user_management/sso/user_profile')

@@ -4,7 +4,6 @@ from page_objects.orders.Order import Order
 
 
 class Project(Order):
-
     _LOCATOR_BUTTON_FORM_WORK = (By.CSS_SELECTOR, 'a[href*="works_volumes"]')
     _LOCATOR_BUTTON_FORM_SPECIFICATION = (By.CSS_SELECTOR, 'a[href*="specification"]')
 

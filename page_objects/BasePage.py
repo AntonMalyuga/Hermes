@@ -33,11 +33,9 @@ class BasePage:
             EC.presence_of_element_located(locator=self._LOADER),
             message=f"Не дождался загрузки обновления страницы")
 
-    @allure.step('Открыть страницу по переданному URL')
     def open(self):
         self._driver.get(self.current_url() + self.path)
 
-    @allure.step('Возвращаю текущий URL')
     def current_url(self) -> str:
         return self._driver.current_url
 
@@ -45,21 +43,17 @@ class BasePage:
         element = self.find_element(locator)
         ActionChains(self._driver).move_to_element(element).perform()
 
-    @allure.step('Нахожу элемент по селектору {locator}')
     def find_element(self, locator: [str, str], second: int = 40) -> 'WebElement':
 
         return WebDriverWait(self._driver, second).until(
             EC.presence_of_element_located(locator=locator),
             message=f"Не смог найти элемент по CSS {locator[0]} {locator[1]}")
 
-    @allure.step('Нахожу элементы по локатору {locator}')
     def find_elements(self, locator: [str, str], second: int = 40) -> 'list[WebElement]':
         return WebDriverWait(self._driver, second).until(
             EC.presence_of_all_elements_located(locator=locator),
             message=f"Не смог найти элементы по CSS {locator}")
 
-    @allure.step(
-        'Выбираю с ожиданием элемент списка по локатору {locator} по контексту {value}')
     def selected_element_by_value(self, locator, value: str):
         def __check_class_names_by_select(select_element, *class_names) -> bool:
 

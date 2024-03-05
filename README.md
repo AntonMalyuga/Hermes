@@ -43,3 +43,6 @@ export PASSWORD=Пароль
 export LOGIN=Логин
 export PASSWORD=Пароль
 ```
+
+
+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

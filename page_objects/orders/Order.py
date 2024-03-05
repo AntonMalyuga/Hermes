@@ -14,14 +14,11 @@ class Order(BasePage):
     _LOCATOR_FORM_ODER_CLOSE_STAGE_COMMENT = (By.CSS_SELECTOR, '.agg-change-stage-form textarea[name="comment"]')
     _LOCATOR_FORM_BUTTON_CLOSE_STAGE = (By.CSS_SELECTOR, 'div[id^="moveOrderSelector"]')
 
-    @allure.step('Проверка открытия интерфейса заявки')
     def check_open_order_interface(self) -> bool:
         self.check_loader()
         self.find_element(locator=self._CHECK_OPEN_ORDER).get_property(
             'innerText')
 
-
-    @allure.step('Проверка открытия заявки с номером {order_id}')
     def check_order_id(self, order_id: int) -> bool:
         self.check_open_order_interface()
         text = self.find_element(locator=self._CHECK_OPEN_ORDER).get_property(
@@ -30,7 +27,6 @@ class Order(BasePage):
         if text.find(str(order_id)) != -1:
             return True
 
-    @allure.step('Проверка что текущий этап заявки {stage_name}')
     def check_current_stage(self, stage_name: str):
         self.check_open_order_interface()
         text = self.find_element(locator=self._LOCATOR_ODER_CURRENT_STAGE).get_property(

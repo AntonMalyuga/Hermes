@@ -4,8 +4,6 @@ import pytest
 from page_objects.elements.UserLoginForm import UserLoginForm
 
 
-@allure.feature('Авторизация')
-@allure.title("Проверка успешной авторизации пользователя")
 @pytest.mark.smoke
 def test_user_autorization_success(driver, base_url):
     """Положительная авторизация пользователя в Гермес"""
@@ -13,8 +11,6 @@ def test_user_autorization_success(driver, base_url):
     assert UserLoginForm(driver).current_url() == base_url
 
 
-@allure.feature('Авторизация')
-@allure.title("Проверка некорректной авторизации пользователя")
 @pytest.mark.smoke
 @pytest.mark.parametrize('login, password',
                          [('MalyugaAS', 'TestPass'), ('TestUser', 'TestPass')],
