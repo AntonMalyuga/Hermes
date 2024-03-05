@@ -39,7 +39,7 @@ class ComponentOpexCosts(Order):
     def add_cost(self, name: str, total: int):
         self.open_drop_down_panel()
         self.open_editor()
-        self.push_add_other_capital_costs_button()
-        self.fill_other_capital_costs_out_rate_form(name)
-        self.fill_other_capital_costs_out_rate_total(total)
-        self.push_other_capital_costs_submit_button()
+        self.push_add_other_opex_costs_button()
+        self.fill_other_opex_costs_out_rate_form(name)
+        self.fill_other_opex_costs_out_rate_total(total)
+        self.push_other_opex_costs_submit_button()

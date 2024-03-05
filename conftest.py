@@ -9,7 +9,7 @@ from webdriver_manager.firefox import GeckoDriverManager
 def pytest_addoption(parser):
     parser.addoption(
         '--browser', '-B',
-        default='chrome',
+        default='firefox',
         choices=('chrome', 'firefox'),
         help='Выбирает необходимый драйвер для работы с браузером, по умолчанию Chrome'
     )

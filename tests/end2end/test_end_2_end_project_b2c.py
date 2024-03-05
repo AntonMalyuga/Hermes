@@ -12,8 +12,6 @@ from page_objects.orders.b2c.ComponentFiles import ComponentFiles
 from page_objects.elements.UserLoginForm import UserLoginForm
 
 
-@allure.feature('Форма создания строительного проекта B2C')
-@allure.title('Проработка строительного проекта')
 def test_end_2_end_project_b2c(driver):
 
     works = {

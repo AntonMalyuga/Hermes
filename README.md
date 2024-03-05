@@ -31,7 +31,7 @@ deactivate
 * Установить пакеты для работы с проектом
 
 ```commandline
-pip install -U requirements.txt
+pip install -r requirements.txt
 ```
 
 * Установить в переменное окружение логин и пароль пользователя для запуска тестов
@@ -43,3 +43,6 @@ export PASSWORD=Пароль
 export LOGIN=Логин
 export PASSWORD=Пароль
 ```
+
+
+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

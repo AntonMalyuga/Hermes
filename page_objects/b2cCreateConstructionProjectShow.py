@@ -45,30 +45,24 @@ class B2CCreateConstructionProjectShow(BasePage):
     _LOCATOR_BUTTON_DELETE_SERVICES = (By.CSS_SELECTOR, '.js--b2c-construction-projects-delete-objects')
     _LOCATOR_BUTTON_CREATE_PROJECT = (By.CSS_SELECTOR, '.js--b2c-construction-projects-create-project')
 
-    @allure.step('Выбрать РФ по имени {rf_name}')
     def selected_rf(self, rf_name: str):
         self.selected_element_by_value(locator=self._LOCATOR_SELECT_RF, value=rf_name)
 
-    @allure.step('Выбрать тип строительства по индексу {value}')
     def selected_type_construct(self, value: str):
         self.selected_element_by_value(locator=self._LOCATOR_SELECT_TYPE_BUILD_TYPE, value=value)
 
-    @allure.step('Выбрать тип наличие ШПД {is_need_broad}')
     def selected_is_need_broad(self, is_need_broad: str = 'Нет'):
         self.selected_element_by_value(locator=self._LOCATOR_SELECT_IS_NEED_BROAD_BAND,
                                        value=is_need_broad)
 
-    @allure.step('Выбрать клиента по ИНН {value}')
     def selected_customer_by_inn(self, value):
         self.selected_element_by_value(locator=self._LOCATOR_SELECT_AJAX_CUSTOMER,
                                        value=value)
 
-    @allure.step('Ввести наименование проекта {value}')
     def enter_project_name(self, value):
         self.find_element(locator=self._LOCATOR_INPUT_PROJECT_NAME).send_keys(
             f'{value} (уникальный: {time.time()})')
 
-    @allure.step('Добавить адрес в городе {city_name} {house} по улице {street_name}')
     def add_address(self, city_name, street_name, house):
         self.find_element(locator=self._LOCATOR_BUTTON_OPEN_MODAL_ADD_OBJECT_SMR).click()
         self.selected_element_by_value(locator=self._LOCATOR_SELECT_AJAX_MODAL_ADDRESS_CITY,
@@ -79,12 +73,10 @@ class B2CCreateConstructionProjectShow(BasePage):
         self.find_element(locator=self._LOCATOR_BUTTON_MODAL_ADDRESS_ADD_ADDRESS).click()
         self.find_element(locator=self._LOCATOR_BUTTON_MODAL_ADDRESS_CONFIRM_ADDRESS).click()
 
-    @allure.step('Ввести количество ДХ {dh_count}')
     def enter_dh_for_address(self, dh_count):
         self.find_element(locator=self._LOCATOR_TABLE_SERVICES_OPEN_DH).click()
         self.find_element(locator=self._LOCATOR_TABLE_SERVICES_ENTER_DH).send_keys(f'{dh_count}\n')
 
-    @allure.step('Выбрать рандомные услуги ключа')
     def set_random_service_key(self):
         self.find_element(locator=self._LOCATOR_TABLE_SERVICES_OPEN_MODAL_SERVICES).click()
         self.find_element(locator=self._LOCATOR_BUTTON_MODAL_SERVICES_SUBMIT).is_displayed()
@@ -92,7 +84,6 @@ class B2CCreateConstructionProjectShow(BasePage):
         self.find_elements(locator=self._LOCATOR_CHECKBOX_MODAL_SERVICES_LIST)[random.randint(0, 5)].click()
         self.find_element(locator=self._LOCATOR_BUTTON_MODAL_SERVICES_SUBMIT).click()
 
-    @allure.step('Выбрать услугу ключа {service_name}')
     def set_service_key(self, service_name: str):
         selector = f'{self._LOCATOR_CHECKBOX_MODAL_SERVICE[1]} and contains(., "{service_name}")]//input'
 
@@ -101,6 +92,5 @@ class B2CCreateConstructionProjectShow(BasePage):
         self.find_element(locator=(By.XPATH, selector)).click()
         self.find_element(locator=self._LOCATOR_BUTTON_MODAL_SERVICES_SUBMIT).click()
 
-    @allure.step('Создать строительный проект')
     def enter_create_project(self):
         self.find_element(locator=self._LOCATOR_BUTTON_CREATE_PROJECT).click()
