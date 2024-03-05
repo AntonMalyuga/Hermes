@@ -1,16 +1,17 @@
 import pytest
 from selenium import webdriver
 from selenium.webdriver.chrome.service import Service as ChromeService
-from webdriver_manager.chrome import ChromeDriverManager
+from selenium.webdriver.chromium.service import ChromiumService
 from selenium.webdriver.firefox.service import Service as FirefoxService
+from webdriver_manager.chrome import ChromeDriverManager
 from webdriver_manager.firefox import GeckoDriverManager
 
 
 def pytest_addoption(parser):
     parser.addoption(
         '--browser', '-B',
-        default='firefox',
-        choices=('chrome', 'firefox'),
+        default='chrome',
+        choices=('chrome', 'firefox', 'chromium'),
         help='Выбирает необходимый драйвер для работы с браузером, по умолчанию Chrome'
     )
     parser.addoption(
@@ -40,6 +41,8 @@ def driver(request, base_url):
         driver = webdriver.Chrome(service=ChromeService(ChromeDriverManager().install()))
     elif browser == 'firefox':
         driver = webdriver.Firefox(service=FirefoxService(GeckoDriverManager().install()))
+    elif browser == 'chromium':
+        driver = webdriver.Ch(service=ChromiumService(ChromeDriverManager().install()))
     else:
         raise ValueError(f'Браузер {browser} не поддерживается')
 
