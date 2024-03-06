@@ -1,6 +1,4 @@
 from ..BasePage import BasePage
-import allure
-
 
 class ComplexInstallationReport(BasePage):
     path = 'report/complex_installation_report'

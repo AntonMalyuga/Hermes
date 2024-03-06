@@ -1,8 +1,6 @@
 
 
 from ..BasePage import BasePage
-import allure
-
 
 class SubtasksDetailedReport(BasePage):
     path = 'report/subtasks_detailed_report'

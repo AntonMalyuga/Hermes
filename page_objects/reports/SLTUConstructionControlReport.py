@@ -1,6 +1,4 @@
 from ..BasePage import BasePage
-import allure
-
 
 class SLTUConstructionControlReport(BasePage):
     path = 'report/sltu_construction_control_report'

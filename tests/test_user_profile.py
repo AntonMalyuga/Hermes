@@ -1,5 +1,4 @@
 import time
-import allure
 from page_objects.UserProfile import UserProfile
 from page_objects.elements.UserLoginForm import UserLoginForm
 from page_objects.elements.Alert import Alert

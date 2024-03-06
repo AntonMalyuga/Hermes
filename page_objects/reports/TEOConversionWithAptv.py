@@ -1,6 +1,4 @@
 from ..BasePage import BasePage
-import allure
-
 
 class TEOConversionWithAptv(BasePage):
     path = 'report/teo_conversion_with_aptv'

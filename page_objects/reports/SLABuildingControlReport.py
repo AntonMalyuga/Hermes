@@ -1,6 +1,4 @@
 from ..BasePage import BasePage
-import allure
-
 
 class SLABuildingControlReport(BasePage):
     path = 'report/sla_building_control_report'

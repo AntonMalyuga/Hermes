@@ -1,6 +1,4 @@
 from ..BasePage import BasePage
-import allure
-
 
 class DeadlinesHistoryReport(BasePage):
     path = 'report/deadlines_history_report'

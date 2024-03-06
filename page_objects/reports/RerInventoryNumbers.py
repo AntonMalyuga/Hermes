@@ -1,6 +1,4 @@
 from ..BasePage import BasePage
-import allure
-
 
 class RerInventoryNumbers(BasePage):
     path = 'report/rer_inventory_numbers'

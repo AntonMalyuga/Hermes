@@ -1,7 +1,5 @@
 import time
 
-import allure
-
 from page_objects.b2cCreateConstructionProjectShow import B2CCreateConstructionProjectShow
 from page_objects.orders.b2c.Project import Project
 from page_objects.orders.b2c.b2cFormWorkVolume import B2cFormWorkVolume

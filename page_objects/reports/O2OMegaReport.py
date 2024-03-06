@@ -1,6 +1,4 @@
 from ..BasePage import BasePage
-import allure
-
 
 class O2OMegaReport(BasePage):
     path = 'report/o2o_mega_report'

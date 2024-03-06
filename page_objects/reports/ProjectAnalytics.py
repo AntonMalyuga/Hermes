@@ -1,6 +1,4 @@
 from ..BasePage import BasePage
-import allure
-
 
 class ProjectAnalytics(BasePage):
     path = 'report/projectanalytics'

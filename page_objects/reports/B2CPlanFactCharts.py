@@ -1,6 +1,4 @@
 from ..BasePage import BasePage
-import allure
-
 
 class B2CPlanFactCharts(BasePage):
     path = 'report/b2c_plan_fact_charts'

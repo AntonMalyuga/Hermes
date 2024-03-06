@@ -1,7 +1,6 @@
 from page_objects.BasePage import BasePage
 from selenium.webdriver.common.by import By
 import time
-import allure
 
 
 class Order(BasePage):

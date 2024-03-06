@@ -1,11 +1,7 @@
-import allure
-
 from page_objects.reports.SLABuildingControlReport import SLABuildingControlReport
 from page_objects.elements.UserLoginForm import UserLoginForm
 
 
-@allure.feature('Отчёты')
-@allure.step('Проверяет загруженность страницы формы отчёта')
 def test_open_report_sla_building_control_report(driver):
     SLABuildingControlReport(driver).open()
     UserLoginForm(driver).autorization_default()

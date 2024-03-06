@@ -1,6 +1,4 @@
 from ..BasePage import BasePage
-import allure
-
 
 class CommentsReport(BasePage):
     path = 'report/comments_report'

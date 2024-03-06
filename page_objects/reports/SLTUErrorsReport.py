@@ -1,6 +1,4 @@
 from ..BasePage import BasePage
-import allure
-
 
 class SLTUErrorsReport(BasePage):
     path = 'report/sltu_errors_report'

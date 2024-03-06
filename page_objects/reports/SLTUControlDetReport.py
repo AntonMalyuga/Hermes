@@ -1,6 +1,4 @@
 from ..BasePage import BasePage
-import allure
-
 
 class SLTUControlDetReport(BasePage):
     path = 'report/sltucontrol_det_report'

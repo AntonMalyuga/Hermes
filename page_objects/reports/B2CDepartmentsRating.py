@@ -1,6 +1,4 @@
 from ..BasePage import BasePage
-import allure
-
 
 class B2CDepartmentsRating(BasePage):
     path = 'report/b2c_departments_rating'

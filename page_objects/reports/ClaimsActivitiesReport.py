@@ -1,6 +1,4 @@
 from ..BasePage import BasePage
-import allure
-
 
 class ClaimsActivitiesReport(BasePage):
     path = 'report/claims_activities_report'

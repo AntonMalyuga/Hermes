@@ -1,6 +1,4 @@
 from ..BasePage import BasePage
-import allure
-
 
 class InvestmentAllocation(BasePage):
     path = 'report/investment_allocation'

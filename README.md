@@ -44,5 +44,30 @@ export LOGIN=Логин
 export PASSWORD=Пароль
 ```
 
+## Установка драйверов браузера
 
-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
+Для работы веб драйвера в системе Linux необходимо добавить сам драйвер браузера из GitHub 
+* Firefox https://github.com/mozilla/geckodriver/releases/
+* Chrome
+
+Скачиваем необходимый файл (указан пример):
+```
+wget https://github.com/mozilla/geckodriver/releases/download/v0.34.0/geckodriver-v0.34.0-linux32.tar.gz
+```
+
+Вытаскиваем файл из архива (указан пример):
+```
+tar -xvzf geckodriver*
+```
+
+Даем нужные права драйверу (указан пример):
+```
+sudo chmod +x geckodriver
+```
+
+Отправляем драйвер в папку где его будет искать Selenium (указан пример т.к. везде разные пути):
+```
+sudo mv geckodriver /Документы
+```
+
+

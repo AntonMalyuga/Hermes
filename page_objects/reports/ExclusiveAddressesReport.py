@@ -1,6 +1,4 @@
 from ..BasePage import BasePage
-import allure
-
 
 class ExclusiveAddressesReport(BasePage):
     path = 'report/exclusive_addresses_report'

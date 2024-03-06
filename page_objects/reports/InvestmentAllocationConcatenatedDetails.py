@@ -1,6 +1,4 @@
 from ..BasePage import BasePage
-import allure
-
 
 class InvestmentAllocationConcatenatedDetails(BasePage):
     path = 'report/investment_allocation_concatenated_details'

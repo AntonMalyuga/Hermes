@@ -1,6 +1,4 @@
 from ..BasePage import BasePage
-import allure
-
 
 class ContractorClientOrderReport(BasePage):
     path = 'report/contractor_client_order_report'

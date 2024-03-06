@@ -1,6 +1,4 @@
 from ..BasePage import BasePage
-import allure
-
 
 class SLAContractorRatingReport(BasePage):
     path = 'report/sla_contractor_rating_report'

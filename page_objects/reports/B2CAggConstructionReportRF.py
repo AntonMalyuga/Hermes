@@ -1,5 +1,4 @@
 from ..BasePage import BasePage
-import allure
 
 
 class B2CAggConstructionReportRF(BasePage):

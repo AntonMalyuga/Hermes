@@ -1,8 +1,6 @@
 
 
 from ..BasePage import BasePage
-import allure
-
 
 class OrdersDynamicsReport(BasePage):
     path = 'report/orders_dynamics_report'

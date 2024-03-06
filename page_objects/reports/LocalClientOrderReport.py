@@ -1,6 +1,4 @@
 from ..BasePage import BasePage
-import allure
-
 
 class LocalClientOrderReport(BasePage):
     path = 'report/local_client_order_report'

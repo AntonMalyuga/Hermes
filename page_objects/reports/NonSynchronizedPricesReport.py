@@ -1,6 +1,4 @@
 from ..BasePage import BasePage
-import allure
-
 
 class NonSynchronizedPricesReport(BasePage):
     path = 'report/non_synchronized_prices_report'

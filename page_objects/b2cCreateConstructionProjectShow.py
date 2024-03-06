@@ -1,5 +1,4 @@
 import random
-import allure
 from page_objects.BasePage import BasePage
 from selenium.webdriver.common.by import By
 import time

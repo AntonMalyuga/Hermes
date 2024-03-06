@@ -1,6 +1,4 @@
 from ..BasePage import BasePage
-import allure
-
 
 class DrnParametersReport(BasePage):
     path = 'report/drn_parameters_report'

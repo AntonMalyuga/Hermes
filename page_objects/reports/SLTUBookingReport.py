@@ -1,6 +1,4 @@
 from ..BasePage import BasePage
-import allure
-
 
 class SLTUBookingReport(BasePage):
     path = 'report/sltu_booking_report'

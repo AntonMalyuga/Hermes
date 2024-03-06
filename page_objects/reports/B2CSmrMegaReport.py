@@ -1,6 +1,4 @@
 from ..BasePage import BasePage
-import allure
-
 
 class B2CSmrMegaReport(BasePage):
     path = 'report/b2c_smr_mega_report'

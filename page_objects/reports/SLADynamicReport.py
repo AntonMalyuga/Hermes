@@ -1,6 +1,4 @@
 from ..BasePage import BasePage
-import allure
-
 
 class SLADynamicReport(BasePage):
     path = 'report/sla_dynamic_report'

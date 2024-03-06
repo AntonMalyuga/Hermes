@@ -1,6 +1,4 @@
 from ..BasePage import BasePage
-import allure
-
 
 class NewPostmonReport(BasePage):
     path = 'report/new_postmon_report'

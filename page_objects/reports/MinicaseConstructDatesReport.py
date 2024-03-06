@@ -1,6 +1,4 @@
 from ..BasePage import BasePage
-import allure
-
 
 class MinicaseConstructDatesReport(BasePage):
     path = 'report/minicase_constructdates_report'

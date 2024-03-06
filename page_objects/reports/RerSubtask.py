@@ -1,6 +1,4 @@
 from ..BasePage import BasePage
-import allure
-
 
 class RerSubtask(BasePage):
     path = 'report/rer_subtask'

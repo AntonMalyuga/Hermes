@@ -1,7 +1,5 @@
 
 from ..BasePage import BasePage
-import allure
-
 
 class MinicaseB2BReport(BasePage):
     path = 'report/minicase_b2b_report'

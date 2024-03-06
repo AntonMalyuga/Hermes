@@ -1,6 +1,4 @@
 from ..BasePage import BasePage
-import allure
-
 
 class SLAConcatenatedDetailsReportByStages(BasePage):
     path = 'report/sla_concatenated_details_report_by_stages'

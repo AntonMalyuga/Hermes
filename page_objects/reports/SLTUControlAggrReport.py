@@ -1,6 +1,4 @@
 from ..BasePage import BasePage
-import allure
-
 
 class SLTUControlAggrReport(BasePage):
     path = 'report/sltucontrol_aggr_report'
