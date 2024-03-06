@@ -34,40 +34,25 @@ deactivate
 pip install -r requirements.txt
 ```
 
-* Установить в переменное окружение логин и пароль пользователя для запуска тестов
-```commandline
-#### Для линукс
-export LOGIN=Логин
-export PASSWORD=Пароль
-#### Для виндоус
-export LOGIN=Логин
-export PASSWORD=Пароль
+
+## Установка браузера для linux
+
+Для работы веб драйвера в системе Linux необходимо добавить сам драйвер браузера из GitHub
+* Chrome https://dl.google.com/linux/direct/google-chrome-stable_current_amd64.deb
+
+Скачиваем необходимый файл браузера (указан пример):
+```
+# wget https://dl.google.com/linux/direct/google-chrome-stable_current_amd64.deb
 ```
 
-## Установка драйверов браузера
-
-Для работы веб драйвера в системе Linux необходимо добавить сам драйвер браузера из GitHub 
-* Firefox https://github.com/mozilla/geckodriver/releases/
-* Chrome
-
-Скачиваем необходимый файл (указан пример):
+Устанавливаем браузер (указан пример):
 ```
-wget https://github.com/mozilla/geckodriver/releases/download/v0.34.0/geckodriver-v0.34.0-linux32.tar.gz
+dpkg -i google-chrome-stable_current_amd64.deb
 ```
 
-Вытаскиваем файл из архива (указан пример):
-```
-tar -xvzf geckodriver*
-```
+## Установка переменного окружения
 
-Даем нужные права драйверу (указан пример):
-```
-sudo chmod +x geckodriver
-```
+В корневом каталоге необходимо открыть (создать) файл .env и записать туда логин и пароль от Гермес
 
-Отправляем драйвер в папку где его будет искать Selenium (указан пример т.к. везде разные пути):
-```
-sudo mv geckodriver /Документы
-```
-
-
+ВАЖНО!
+Убедиться, что в gitignore указано исключение файла .env (добавлена строка с надписьмю .env), иначе УД попадёт в GitHub.
