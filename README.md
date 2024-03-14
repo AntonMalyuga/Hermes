@@ -42,7 +42,7 @@ pip install -r requirements.txt
 
 Скачиваем необходимый файл браузера (указан пример):
 ```
-# wget https://dl.google.com/linux/direct/google-chrome-stable_current_amd64.deb
+wget https://dl.google.com/linux/direct/google-chrome-stable_current_amd64.deb
 ```
 
 Устанавливаем браузер (указан пример):
