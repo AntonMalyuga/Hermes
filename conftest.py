@@ -2,16 +2,17 @@ import pytest
 import os
 from selenium import webdriver
 from selenium.webdriver.chrome.service import Service as ChromeService
-from selenium.webdriver.chromium.service import ChromiumService
 from selenium.webdriver.firefox.service import Service as FirefoxService
 from webdriver_manager.chrome import ChromeDriverManager
 from webdriver_manager.firefox import GeckoDriverManager
+from selenium.webdriver.chrome.options import Options
+from selenium.webdriver.chrome.service import Service
 
 
 def pytest_addoption(parser):
     parser.addoption(
         '--browser', '-B',
-        default='firefox',
+        default='chrome',
         choices=('chrome', 'firefox'),
         help='Выбирает необходимый драйвер для работы с браузером, по умолчанию Firefox'
     )
@@ -38,26 +39,28 @@ def base_url(request):
 def driver(request, base_url):
     browser = request.config.getoption('--browser')
 
-    def connect_by_windows():
+    def get_driver_by_windows():
         if browser == 'chrome':
-            driver = webdriver.Chrome(service=ChromeService(ChromeDriverManager().install()))
+            return webdriver.Chrome(service=ChromeService(ChromeDriverManager().install()))
         elif browser == 'firefox':
-            driver = webdriver.Firefox(service=FirefoxService(GeckoDriverManager().install()))
+            return webdriver.Firefox(service=FirefoxService(GeckoDriverManager().install()))
         else:
             raise ValueError(f'Браузер {browser} не поддерживается')
 
-    def connect_by_linux():
+    def get_driver_by_linux():
         if browser == 'chrome':
-            driver = webdriver.Firefox('~/Документы/geckodriver')
+            options = Options()
+            options.add_argument('--disable-dev-shm-usage')
+            return webdriver.Chrome(service=Service(ChromeDriverManager().install()), options=options)
         else:
             raise ValueError(f'Браузер {browser} не поддерживается')
-
-    request.addfinalizer(driver.quit)
 
     if os.name == 'posix':
-        connect_by_linux()
+        driver = get_driver_by_linux()
     else:
-        connect_by_windows()
+        driver = get_driver_by_windows()
+
+    request.addfinalizer(driver.quit)
 
     def open(path=''):
         return driver.get(base_url + path)

@@ -21,6 +21,11 @@ def test_close_stage(driver):
     Order(driver).close_stage(pass_name='Требуются уточнения у инициатора', is_auto=True)
 
 
+def test_login(driver):
+    UserLoginForm(driver).enter_login_default()
+    time.sleep(10)
+
+
 def test_change_work(driver):
     works = {
         'Восстановление поврежденного канала кабельной канализации': {
