@@ -31,5 +31,4 @@ class ComponentCheckListWiFi(Order):
         self.open_drop_down_panel()
         self.push_edit_button()
         self.select_dropdown_panel(value)
-        time.sleep(5)
         self.push_submit_button()
