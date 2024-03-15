@@ -9,6 +9,7 @@ from page_objects.orders.b2c.ComponentControlDate import ComponentControlDate
 from page_objects.orders.b2c.ComponentCapitalCosts import ComponentCapitalCosts
 from page_objects.orders.b2c.ComponentOpexCosts import ComponentOpexCosts
 from page_objects.orders.b2c.ComponentFiles import ComponentFiles
+from page_objects.orders.b2c.ComponentCheckListWiFi import ComponentCheckListWiFi
 
 
 def test_close_stage(driver):
@@ -88,4 +89,10 @@ def test_add_file(driver):
     UserLoginForm(driver).autorization_default()
     driver.get('https://hermes-test.rt.ru/aggregator/1595877')
     ComponentFiles(driver).add_file(name='супер', type='Ведомость ВО (pdf)', file_name='file.txt')
+    time.sleep(10)
+
+def test_check_list_wifi(driver):
+    UserLoginForm(driver).autorization_default()
+    driver.get('https://hermes-test.rt.ru/aggregator/1597383')
+    ComponentCheckListWiFi(driver).add_cost_wifi(value='opex')
     time.sleep(10)
