@@ -10,6 +10,7 @@ from page_objects.orders.b2c.ComponentCapitalCosts import ComponentCapitalCosts
 from page_objects.orders.b2c.ComponentOpexCosts import ComponentOpexCosts
 from page_objects.orders.b2c.ComponentFiles import ComponentFiles
 from page_objects.orders.b2c.ComponentCheckListWiFi import ComponentCheckListWiFi
+from page_objects.orders.b2c.ComponentCheckListVideo import ComponentCheckListVideo
 
 
 def test_close_stage(driver):
@@ -95,4 +96,10 @@ def test_check_list_wifi(driver):
     UserLoginForm(driver).autorization_default()
     driver.get('https://hermes-test.rt.ru/aggregator/1597383')
     ComponentCheckListWiFi(driver).add_cost_wifi(value='opex')
+    time.sleep(10)
+
+def test_check_list_video(driver):
+    UserLoginForm(driver).autorization_default()
+    driver.get('https://hermes-test.rt.ru/aggregator/1597383')
+    ComponentCheckListWiFi(driver).add_cost_wifi(value='capex')
     time.sleep(10)
