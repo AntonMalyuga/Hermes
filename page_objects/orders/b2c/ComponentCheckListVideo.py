@@ -27,7 +27,7 @@ class ComponentCheckListVideo(Order):
         self.find_element(locator=self._LOCATOR_COMPONENT_SUBMIT_BUTTON).click()
 
 
-    def add_cost_wifi(self, value: str):
+    def add_cost_video(self, value: str):
         self.open_drop_down_panel()
         self.push_edit_button()
         self.select_dropdown_panel(value)
