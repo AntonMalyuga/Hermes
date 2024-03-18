@@ -36,7 +36,7 @@ class ComponentFiles(Order):
             raise f'Не найден тип вложения {type}'
 
     def set_file_path(self, file_name: str):
-        file_path = str(Path(__file__).resolve().parents[1].joinpath('b2c').joinpath('files').joinpath('file.txt'))
+        file_path = str(Path(__file__).resolve().parents[1].joinpath('b2c').joinpath('files').joinpath(file_name))
         self.find_element(self._LOCATOR_FORM_INPUT_FILE).send_keys(file_path)
 
     def submit(self):
