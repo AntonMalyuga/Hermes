@@ -1,10 +1,13 @@
 import time
+
+from selenium.webdriver.remote.webelement import WebElement
 from selenium.webdriver.support.wait import WebDriverWait
 from selenium.webdriver.support import expected_conditions as EC
 from selenium.webdriver.common.by import By
 from selenium.webdriver.support.select import Select
 from selenium.webdriver.common.action_chains import ActionChains
 from selenium.common.exceptions import ElementClickInterceptedException
+from selenium.webdriver.common.keys import Keys
 
 
 class BasePage:
@@ -34,6 +37,7 @@ class BasePage:
 
     def open(self):
         self._driver.get(self.current_url() + self.path)
+
 
     def current_url(self) -> str:
         return self._driver.current_url

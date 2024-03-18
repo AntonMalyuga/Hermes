@@ -31,10 +31,11 @@ class Order(BasePage):
         text = self.find_element(locator=self._LOCATOR_ODER_CURRENT_STAGE).get_property(
             'innerText')
 
-        if text.find(str(stage_name)) != -1:
-            return True
+        if text.find(str(stage_name)) == -1:
+            raise Exception(f'Некорректный этап, ожидание {stage_name}, получен {text}')
 
-    def close_stage(self, pass_name: str, reason: str = '', comment: str = '', is_auto: bool = False):
+    def close_stage(self, pass_name: str, next_stage: str, reason: str = '', comment: str = '',
+                    is_auto: bool = False, ):
 
         self.check_open_order_interface()
         try:
@@ -59,3 +60,5 @@ class Order(BasePage):
         else:
             element = self.find_element(locator=(By.CSS_SELECTOR, f'{self._LOCATOR_FORM_BUTTON_CLOSE_STAGE[1]} button'))
             element.click()
+
+        self.check_current_stage(next_stage)
