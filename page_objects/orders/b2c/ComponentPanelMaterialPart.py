@@ -4,24 +4,29 @@ from selenium.webdriver.common.by import By
 from page_objects.orders.Order import Order
 from selenium.webdriver.support.select import Select
 from selenium.common.exceptions import TimeoutException
+
+
 class ComponentPanelMaterialPart(Order):
-    _LOCATOR_GROUP = (By.XPATH, '//div[@class="panel panel-material"]//span[contains(., "Затратная часть")]/ancestor::div[2]')
-    _LOCATOR_COMPONENT_DROPDOWN_MENU = (By.XPATH, '//div[@class="panel panel-material"]//span[contains(., "Затратная часть")]/ancestor::div[2]//select[@class[contains(., "form-control input-medium input-sm change-expenses-monitoring-object")]]')
+    _LOCATOR_GROUP = (
+    By.XPATH, '//div[@class="panel panel-material"]//span[contains(., "Затратная часть")]/ancestor::div[2]')
+    _LOCATOR_COMPONENT_DROPDOWN_MENU = (By.XPATH,
+                                        '//div[@class="panel panel-material"]//span[contains(., "Затратная часть")]/ancestor::div[2]//select[@class[contains(., "form-control input-medium input-sm change-expenses-monitoring-object")]]')
     _LOCATOR_COMPONENT_OTHER_CAPITAL_COSTS_DROPDOWN = (By.XPATH,
-                                      '//div[@class="panel panel-material"]//span[contains(., "Затратная часть")]/ancestor::div[2]//div[@id[contains(., "component-otherCapex")]]/div[1]')
+                                                       '//div[@class="panel panel-material"]//span[contains(., "Затратная часть")]/ancestor::div[2]//div[@id[contains(., "component-otherCapex")]]/div[1]')
     _LOCATOR_OTHER_CAPITAL_EDIT_BUTTON = (By.XPATH,
-                                      '//div[@class="panel panel-material"]//span[contains(., "Затратная часть")]/ancestor::div[2]//div[@id[contains(., "component-otherCapex")]]//i[@class = "fas fa-edit"]')
+                                          '//div[@class="panel panel-material"]//span[contains(., "Затратная часть")]/ancestor::div[2]//div[@id[contains(., "component-otherCapex")]]//i[@class = "fas fa-edit"]')
     _LOCATOR_COMPONENT_DELETE_STRING = (By.XPATH,
-                                      '//div[@class="panel panel-material"]//span[contains(., "Затратная часть")]/ancestor::div[2]//button[@title= "Удалить"]')
+                                        '//div[@class="panel panel-material"]//span[contains(., "Затратная часть")]/ancestor::div[2]//button[@title= "Удалить"]')
     _LOCATOR_COMPONENT_ADD_STRING = (By.XPATH,
                                      '//div[@class="panel panel-material"]//span[contains(., "Затратная часть")]/ancestor::div[2]//button[@title= "Добавить строку"]')
     _LOCATOR_COMPONENT_ADD_EXPENCE_NAME = (By.XPATH,
                                            '//div[@class="panel panel-material"]//span[contains(., "Затратная часть")]/ancestor::div[2]//td[@data-field = "name"]//input[@class = "form-control input-sm"]')
-    _LOCATOR_COMPONENT_OBJECT_DROPDOWN = (By.XPATH, '//div[@class="panel panel-material"]//span[contains(., "Затратная часть")]/ancestor::div[2]//select[@class[contains(., "form-control input-sm js--other-capexes-changeOrder")]]')
+    _LOCATOR_COMPONENT_OBJECT_DROPDOWN = (By.XPATH,
+                                          '//div[@class="panel panel-material"]//span[contains(., "Затратная часть")]/ancestor::div[2]//select[@class[contains(., "form-control input-sm js--other-capexes-changeOrder")]]')
     _LOCATOR_COMPONENT_ADD_COST = (By.XPATH,
                                    '//div[@class="panel panel-material"]//span[contains(., "Затратная часть")]/ancestor::div[2]//td[@data-field = "cost"]//input[@class = "form-control input-sm"]')
     _LOCATOR_COMPONENT_SUBMIT_BUTTON = (By.XPATH,
-                                   '//div[@class="panel panel-material"]//span[contains(., "Затратная часть")]/ancestor::div[2]//button[@title = "Сохранить прочие капитальные расходы"]')
+                                        '//div[@class="panel panel-material"]//span[contains(., "Затратная часть")]/ancestor::div[2]//button[@title = "Сохранить прочие капитальные расходы"]')
 
     def fill_drop_down_menu(self, value):
         select = Select(self.find_element(locator=self._LOCATOR_COMPONENT_DROPDOWN_MENU))

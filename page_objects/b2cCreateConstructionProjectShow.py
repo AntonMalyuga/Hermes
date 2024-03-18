@@ -12,6 +12,7 @@ class B2CCreateConstructionProjectShow(BasePage):
     _LOCATOR_SELECT_TECHNOLOGY = (By.CSS_SELECTOR, '#technology')
     _LOCATOR_INPUT_PROJECT_NAME = (By.CSS_SELECTOR, '#projectName')
     _LOCATOR_BUTTON_OPEN_MODAL_ADD_OBJECT_SMR = (By.CSS_SELECTOR, '.btn-group button')
+    _LOCATOR_OPEN_DROPDOWN = (By.XPATH, '//div[@class = "suggest form-control input-sm"]')
 
     _LOCATOR_SELECT_AJAX_MODAL = (By.CSS_SELECTOR, '.modal-content')
     _LOCATOR_SELECT_AJAX_MODAL_ADDRESS_CITY = (By.CSS_SELECTOR, '.modal-content [id^=city]')
@@ -64,6 +65,7 @@ class B2CCreateConstructionProjectShow(BasePage):
 
     def add_address(self, city_name, street_name, house):
         self.find_element(locator=self._LOCATOR_BUTTON_OPEN_MODAL_ADD_OBJECT_SMR).click()
+        self.find_element(locator=self._LOCATOR_OPEN_DROPDOWN).click()
         self.selected_element_by_value(locator=self._LOCATOR_SELECT_AJAX_MODAL_ADDRESS_CITY,
                                        value=city_name)
         self.selected_element_by_value(locator=self._LOCATOR_SELECT_AJAX_MODAL_ADDRESS_STREET,
