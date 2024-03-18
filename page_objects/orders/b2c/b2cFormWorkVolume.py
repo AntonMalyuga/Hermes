@@ -2,6 +2,7 @@ import time
 
 from selenium.webdriver.common.by import By
 from page_objects.BasePage import BasePage
+from selenium.webdriver.common.keys import Keys
 
 
 class B2cFormWorkVolume(BasePage):
@@ -33,12 +34,15 @@ class B2cFormWorkVolume(BasePage):
         self.save_works()
 
     def set_construct_method(self, type_construct):
-        self.find_element((By.XPATH, f'{self._LOCATOR_LABEL_CONSTRUCTION_METHOD[1]} and contains(.,"{type_construct}")]/input')).click()
+        self.find_element((By.XPATH,
+                           f'{self._LOCATOR_LABEL_CONSTRUCTION_METHOD[1]} and contains(.,"{type_construct}")]/input')).click()
 
     def set_works_value(self, works: dict):
         for work, work_params in works.items():
             time.sleep(1)
             work_locator = f'//tr[@data-work-name[contains(., "{work}")] and @data-work-type="{work_params["type"]}"]//input[@class="form-control input-sm volumes-form-work-quantity-input"]'
+            self.find_element((By.XPATH, work_locator)).send_keys(Keys.CONTROL, 'a')
+            self.find_element((By.XPATH, work_locator)).send_keys(Keys.BACKSPACE)
             self.find_element((By.XPATH, work_locator)).send_keys(int(work_params["qty"]))
 
     def set_natural_indicators(self, works: dict):
