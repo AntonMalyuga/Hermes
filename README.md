@@ -13,7 +13,7 @@
 
 Для Windows
 ```commandline
-python .\venv\Scripts\activate
+venv\Scripts\activate
 ```
 
 Для Linux

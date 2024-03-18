@@ -31,6 +31,15 @@ def test_end_2_end_project_b2c(driver):
         }
     }
 
+    natural_indicators = {
+        'Wi-Fi': {
+            'value': 1
+        },
+        'Видеонаблюдение': {
+            'value': 2
+        }
+    }
+
     UserLoginForm(driver).autorization_default()
     driver.get('https://hermes-test.rt.ru/b2c/create_construction_project_show')
     B2CCreateConstructionProjectShow(driver).selected_rf('РФ Саратовский')
