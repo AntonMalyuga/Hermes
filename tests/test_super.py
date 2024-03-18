@@ -9,6 +9,9 @@ from page_objects.orders.b2c.ComponentControlDate import ComponentControlDate
 from page_objects.orders.b2c.ComponentCapitalCosts import ComponentCapitalCosts
 from page_objects.orders.b2c.ComponentOpexCosts import ComponentOpexCosts
 from page_objects.orders.b2c.ComponentFiles import ComponentFiles
+from page_objects.orders.b2c.ComponentCheckListWiFi import ComponentCheckListWiFi
+from page_objects.orders.b2c.ComponentCheckListVideo import ComponentCheckListVideo
+from page_objects.orders.b2c.ComponentPanelMaterialPart import ComponentPanelMaterialPart
 
 
 def test_close_stage(driver):
@@ -89,3 +92,21 @@ def test_add_file(driver):
     driver.get('https://hermes-test.rt.ru/aggregator/1595877')
     ComponentFiles(driver).add_file(name='супер', type='Ведомость ВО (pdf)', file_name='file.txt')
     time.sleep(10)
+
+def test_check_list_wifi(driver):
+    UserLoginForm(driver).autorization_default()
+    driver.get('https://hermes-test.rt.ru/aggregator/1597383')
+    ComponentCheckListWiFi(driver).add_cost_wifi(value='opex')
+    time.sleep(5)
+
+def test_check_list_video(driver):
+    UserLoginForm(driver).autorization_default()
+    driver.get('https://hermes-test.rt.ru/aggregator/1597383')
+    ComponentCheckListVideo(driver).add_cost_video(value='capex')
+    time.sleep(5)
+
+def test_change_material_part(driver):
+    UserLoginForm(driver).autorization_default()
+    driver.get('https://hermes-test.rt.ru/aggregator/1597383')
+    ComponentPanelMaterialPart(driver).add_material_part(value='1597384', name='Кампуктеры', cost=12345, text='Строительный проект B2C #1597383')
+    time.sleep(5)
