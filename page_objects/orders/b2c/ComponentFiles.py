@@ -1,3 +1,5 @@
+import sys
+from pathlib import Path
 from selenium.webdriver.common.by import By
 from page_objects.orders.Order import Order
 
@@ -34,7 +36,7 @@ class ComponentFiles(Order):
             raise f'Не найден тип вложения {type}'
 
     def set_file_path(self, file_name: str):
-        file_path = f'C:\\Users\\Anton.S.Malyuga\\PycharmProjects\\Develop\\Hermes\\page_objects\\orders\\b2c\\files\\{file_name}'
+        file_path = str(Path(__file__).resolve().parents[1].joinpath('b2c').joinpath('files').joinpath(file_name))
         self.find_element(self._LOCATOR_FORM_INPUT_FILE).send_keys(file_path)
 
     def submit(self):
