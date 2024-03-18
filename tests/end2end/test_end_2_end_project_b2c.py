@@ -6,6 +6,8 @@ from page_objects.orders.b2c.b2cFormWorkVolume import B2cFormWorkVolume
 from page_objects.orders.b2c.b2cFormSpecification import B2cFormSpecification
 from page_objects.orders.b2c.ComponentControlDate import ComponentControlDate
 from page_objects.orders.b2c.ComponentCapitalCosts import ComponentCapitalCosts
+from page_objects.orders.b2c.ComponentCheckListWiFi import ComponentCheckListWiFi
+from page_objects.orders.b2c.ComponentNaturalIndicators import ComponentNaturalIndicator
 from page_objects.orders.b2c.ComponentFiles import ComponentFiles
 from page_objects.elements.UserLoginForm import UserLoginForm
 
@@ -42,29 +44,26 @@ def test_end_2_end_project_b2c(driver):
     B2CCreateConstructionProjectShow(driver).enter_dh_for_address(120)
     B2CCreateConstructionProjectShow(driver).set_service_key('Wi-Fi')
     B2CCreateConstructionProjectShow(driver).enter_create_project()
-    Project(driver).close_stage(pass_name='Положительно', is_auto=True)
     Project(driver).check_current_stage('Корректировка состава объектов проекта, проработка подключения услуг ключа на объектах и формирование предКП по ключу')
+    ComponentCheckListWiFi(driver).add_cost_wifi(value='capex')
+    Project(driver).close_stage(pass_name='Положительно', next_stage='Уточнение лин. данных в ОТУ')
     Project(driver).open_form_work()
     B2cFormWorkVolume(driver).set_construct_method('Хоз.способ')
     B2cFormWorkVolume(driver).add_works(works)
     B2cFormWorkVolume(driver).close()
-    Project(driver).close_stage(pass_name='Положительно')
-    Project(driver).check_current_stage('Проработка ТР и внесение стоимости работ')
     Project(driver).open_form_specification()
     B2cFormSpecification(driver).set_construct_method('Хоз. способ')
     B2cFormSpecification(driver).add_specification(specifications)
     B2cFormSpecification(driver).close()
+    Project(driver).close_stage(pass_name='Положительно', next_stage='Проработка ТР и внесение стоимости работ')
     ComponentCapitalCosts(driver).add_cost('привет мир', 300)
-    Project(driver).close_stage(pass_name='Положительно', is_auto=True)
-    Project(driver).check_current_stage('Согласование состава оборудования услуг ключ в проекте')
-    Project(driver).close_stage(pass_name='Положительно', is_auto=True)
-    Project(driver).check_current_stage('Уточнение срока строительства и согласований')
+    ComponentNaturalIndicator(driver).add_random()
+    Project(driver).close_stage(pass_name='Положительно', next_stage='Согласование состава оборудования услуг ключ в проекте')
+    Project(driver).close_stage(pass_name='Положительно', next_stage='Уточнение срока строительства и согласований')
     ComponentControlDate(driver).change_all_control_dates(30)
-    Project(driver).close_stage(pass_name='Положительно', is_auto=True)
-    Project(driver).check_current_stage('Согласование Желаемой даты ТГ (ГРЗиУК)')
-    Project(driver).close_stage(pass_name='Положительно', is_auto=True)
-    Project(driver).check_current_stage('Формирование КП и калькулятора')
+    Project(driver).close_stage(pass_name='Положительно', next_stage='Формирование КП и калькулятора')
     ComponentFiles(driver).add_file(name='КП Ключ', type='КП Ключ', file_name='file.txt')
     ComponentFiles(driver).add_file(name='Калькулятор Ключ', type='Калькулятор Ключ', file_name='file.txt')
+    Project(driver).close_stage(pass_name='Положительно', next_stage='Формирование доходной части и согласование ТЭО')
     time.sleep(20)
     assert True
