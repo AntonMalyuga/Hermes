@@ -4,6 +4,7 @@ from selenium.webdriver.common.by import By
 from page_objects.orders.Order import Order
 from selenium.webdriver.support.select import Select
 from selenium.common.exceptions import TimeoutException
+from selenium.webdriver.common.keys import Keys
 
 
 class ComponentAdditionalIncome(Order):
@@ -57,13 +58,14 @@ class ComponentAdditionalIncome(Order):
 
     def fill_years_income(self, value):
         elements = self.find_elements(locator=self._LOCATOR_ADD_YEARS_STRING)
-        self.value = value
 
         for element in elements:
+            element.send_keys(Keys.CONTROL, 'a')
             element.send_keys(value)
+            time.sleep(1)
 
     def push_save_button(self):
-        self.find_element(locator=self._LOCATOR_SAVE_BUTTON).click
+        self.find_element(locator=self._LOCATOR_SAVE_BUTTON).click()
 
     def move_to_group(self):
         self.move_to_element(self._LOCATOR_GROUP)

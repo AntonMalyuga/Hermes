@@ -8,6 +8,7 @@ from page_objects.orders.b2c.ComponentControlDate import ComponentControlDate
 from page_objects.orders.b2c.ComponentCapitalCosts import ComponentCapitalCosts
 from page_objects.orders.b2c.ComponentCheckListWiFi import ComponentCheckListWiFi
 from page_objects.orders.b2c.ComponentNaturalIndicators import ComponentNaturalIndicator
+from page_objects.orders.b2c.ComponentAddictionalIncome import ComponentAdditionalIncome
 from page_objects.orders.b2c.ComponentFiles import ComponentFiles
 from page_objects.elements.UserLoginForm import UserLoginForm
 
@@ -65,5 +66,6 @@ def test_end_2_end_project_b2c(driver):
     ComponentFiles(driver).add_file(name='КП Ключ', type='КП Ключ', file_name='file.txt')
     ComponentFiles(driver).add_file(name='Калькулятор Ключ', type='Калькулятор Ключ', file_name='file.txt')
     Project(driver).close_stage(pass_name='Положительно', next_stage='Формирование доходной части и согласование ТЭО')
+    ComponentAdditionalIncome(driver).add_addictional_income(name='Вайфай', infrastructure_type='Wi-Fi', income_type='WiFi', abonent_type='Приростная', value=10000)
     time.sleep(20)
     assert True
