@@ -36,10 +36,8 @@ class ComponentPanelMaterialPart(Order):
     def check_new_string_necessity(self):
         try:
             self.find_element(locator=self._LOCATOR_COMPONENT_DELETE_STRING).click()
-            time.sleep(3)
         except TimeoutException:
             self.find_element(locator=self._LOCATOR_COMPONENT_ADD_STRING).click()
-            time.sleep(3)
         else:
             self.find_element(locator=self._LOCATOR_COMPONENT_ADD_STRING).click()
 
@@ -56,7 +54,12 @@ class ComponentPanelMaterialPart(Order):
     def submit_button_click(self):
         self.find_element(locator=self._LOCATOR_COMPONENT_SUBMIT_BUTTON).click()
 
+    def move_to_group(self):
+        self.move_to_element(self._LOCATOR_GROUP)
+
     def add_material_part(self, value: str, name: str, cost: int, text: str):
+        self.check_loader()
+        self.move_to_group()
         self.fill_drop_down_menu(value)
         self.push_open_capital_dropdown()
         self.push_other_capital_edit_button()
