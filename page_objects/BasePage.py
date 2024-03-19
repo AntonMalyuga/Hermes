@@ -7,7 +7,6 @@ from selenium.webdriver.common.by import By
 from selenium.webdriver.support.select import Select
 from selenium.webdriver.common.action_chains import ActionChains
 from selenium.common.exceptions import ElementClickInterceptedException
-from selenium.webdriver.common.keys import Keys
 
 
 class BasePage:
@@ -38,8 +37,8 @@ class BasePage:
     def open(self):
         self._driver.get(self.current_url() + self.path)
 
-    def get_origin(self):
-        return self._driver.get_origin
+    def base_url(self) -> str:
+        return self._driver.base_url
 
     def current_url(self) -> str:
         return self._driver.current_url

@@ -10,7 +10,8 @@ from page_objects.orders.b2c.ComponentCapitalCosts import ComponentCapitalCosts
 from page_objects.orders.b2c.ComponentCheckListWiFi import ComponentCheckListWiFi
 from page_objects.orders.b2c.ComponentNaturalIndicators import ComponentNaturalIndicator
 from page_objects.orders.b2c.ComponentAddictionalIncome import ComponentAdditionalIncome
-from page_objects.orders.b2c.ComponenOrderstHierarchy import ComponentNaturalIndicator
+from page_objects.orders.b2c.ComponenOrderstHierarchy import ComponentOrdersHierarchy
+from page_objects.orders.b2c.ComponentTypeProject import ComponentTypeProject
 from page_objects.orders.b2c.ComponentFiles import ComponentFiles
 from page_objects.elements.UserLoginForm import UserLoginForm
 
@@ -37,7 +38,7 @@ def test_end_2_end_project_b2c(driver):
     }
 
     UserLoginForm(driver).autorization_default()
-    driver.get('https://hermes-test.rt.ru/b2c/create_construction_project_show')
+    B2CCreateConstructionProjectShow(driver).open()
     B2CCreateConstructionProjectShow(driver).selected_rf('РФ Саратовский')
     B2CCreateConstructionProjectShow(driver).selected_is_need_broad('Нет')
     B2CCreateConstructionProjectShow(driver).selected_type_construct('Новостройка')
@@ -69,9 +70,27 @@ def test_end_2_end_project_b2c(driver):
     ComponentFiles(driver).add_file(name='Калькулятор Ключ', type='Калькулятор Ключ', file_name='file.txt')
     Project(driver).close_stage(pass_name='Положительно', next_stage='Формирование доходной части и согласование ТЭО')
     ComponentAdditionalIncome(driver).add_addictional_income(name='Вайфай', infrastructure_type='Wi-Fi', income_type='WiFi', abonent_type='Приростная', value=10000)
-    # Заполнение типа ИП
+    ComponentTypeProject(driver).change_type_project('ЛИП')
     Project(driver).close_stage(pass_name='Согласование проекта будет проходить вне Гермес', next_stage='Согласование проекта вне Гермес и выделение инвестиций')
     ComponentFiles(driver).add_file(name='Подтверждение ВХР', type='Подтверждение ВХР', file_name='file.txt')
-    Project(driver).close_stage(pass_name='Проект согласован вне Гермес. Инвестиции выделены', next_stage='Ожидание реализации проекта')
-    Hoz(driver).open_order(ComponentNaturalIndicator(driver).get_gph_number())
+    Project(driver).close_stage(pass_name='Проект согласован вне Гермес. Инвестиции выделены', next_stage='Ожидание реализации проекта', is_auto=True)
+    Hoz(driver).open_order(ComponentOrdersHierarchy(driver).get_hoz_number())
+    Hoz(driver).close_stage(pass_name="Положительно", next_stage="Подтверждение передачи в работу заказа по услугам ключа")
+    Hoz(driver).close_stage(pass_name="Положительно", next_stage="Разработка ПД и РД")
+    Hoz(driver).close_stage(pass_name="Положительно", next_stage="Согласование ПД и РД")
+    Hoz(driver).close_stage(pass_name="Положительно", next_stage="Выполнение СМР/внесение статусов работ")
+    ComponentFiles(driver).add_file(name='Протокол измерений ВОК', type='Протокол измерений ВОК', file_name='file.txt')
+    ComponentFiles(driver).add_file(name='Таблица терминации (xls)', type='Таблица терминации (xls)', file_name='file.txt')
+    ComponentFiles(driver).add_file(name='Схема организации связи', type='Схема организации связи', file_name='file.txt')
+    Hoz(driver).close_stage(pass_name="Положительно", next_stage="Приемка выполненных работ")
+    ComponentFiles(driver).add_file(name='Ведомость ВО (pdf)', type='Ведомость ВО (pdf)', file_name='file.txt')
+    Hoz(driver).close_stage(pass_name="Положительно", next_stage="Пусконаладочные работы")
+    ComponentFiles(driver).add_file(name='Приёмка минимального комплекта ИД', type='Приёмка минимального комплекта ИД', file_name='file.txt')
+    Hoz(driver).close_stage(pass_name="Положительно", next_stage="Приёмка минимального комплекта ИД")
+    Hoz(driver).close_stage(pass_name="Положительно", next_stage="Внесение в СЛТУ/предварительная готовность")
+    Hoz(driver).close_stage(pass_name="Положительно", next_stage="Разработка ИД")
+    ComponentFiles(driver).add_file(name='Исполнительная документация', type='Исполнительная документация', file_name='file.txt')
+    Hoz(driver).close_stage(pass_name="Положительно", next_stage="Приёмка ИД")
+    Hoz(driver).close_stage(pass_name="Положительно", next_stage="Внесение данных в СЛТУ в статусе Готов")
+    Hoz(driver).close_stage(pass_name="Положительно", next_stage="Строительство завершено")
     assert True

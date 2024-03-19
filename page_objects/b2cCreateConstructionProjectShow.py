@@ -5,6 +5,8 @@ import time
 
 
 class B2CCreateConstructionProjectShow(BasePage):
+    path = 'b2c/create_construction_project_show'
+
     _LOCATOR_SELECT_RF = (By.CSS_SELECTOR, 'select#rfId')
     _LOCATOR_SELECT_IS_NEED_BROAD_BAND = (By.CSS_SELECTOR, '#needBroadband')
     _LOCATOR_SELECT_TYPE_BUILD_TYPE = (By.CSS_SELECTOR, '#buildTypeId')

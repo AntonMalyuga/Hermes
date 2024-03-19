@@ -4,7 +4,7 @@ from selenium.webdriver.common.keys import Keys
 import random
 
 
-class ComponentNaturalIndicator(Order):
+class ComponentOrdersHierarchy(Order):
     _GROUP = '//div[@class="panel panel-material"]//span[contains(., "Иерархия заявок")]/ancestor::div[2]'
     _LOCATOR_LINK_PROJECT = (By.XPATH, f'{_GROUP}//tbody//td[2]/a')
     _LOCATOR_LINK_SMR = (By.XPATH, f'{_GROUP}//tbody//td[3]/a')

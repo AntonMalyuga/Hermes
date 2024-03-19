@@ -5,18 +5,18 @@ import random
 
 
 class ComponentNaturalIndicator(Order):
-    _LOCATOR_GROUP = '//div[@class="panel panel-material"]//span[contains(., "Натуральные показатели")]/ancestor::div[2]'
-    _COMPONENT_BUTTON_OPEN_EDITOR = (By.XPATH, f'{_LOCATOR_GROUP}//a[@title="Редактировать"]')
-    _COMPONENT_BUTTON_SAVE = (By.XPATH, f'{_LOCATOR_GROUP}//button[@type="submit"]')
+    _GROUP = '//div[@class="panel panel-material"]//span[contains(., "Натуральные показатели")]/ancestor::div[2]'
+    _COMPONENT_BUTTON_OPEN_EDITOR = (By.XPATH, f'{_GROUP}//a[@title="Редактировать"]')
+    _COMPONENT_BUTTON_SAVE = (By.XPATH, f'{_GROUP}//button[@type="submit"]')
 
     def move_to_group(self):
-        self.move_to_element((By.XPATH, self._LOCATOR_GROUP))
+        self.move_to_element((By.XPATH, self._GROUP))
 
     def open_editor(self):
         self.find_element(self._COMPONENT_BUTTON_OPEN_EDITOR).click()
 
     def set_random_qty(self):
-        locator = f'{self._LOCATOR_GROUP}//input[@type="number"]'
+        locator = f'{self._GROUP}//input[@type="number"]'
         inputs = self.find_elements(locator=(By.XPATH, locator))
 
         for input_element in inputs:

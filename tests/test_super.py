@@ -3,6 +3,7 @@ import time
 from page_objects.elements.UserLoginForm import UserLoginForm
 from page_objects.elements.MainNavMenu import MainNavMenu
 from page_objects.orders.Order import Order
+from page_objects.orders.b2c.Hoz import Hoz
 from page_objects.orders.b2c.b2cFormWorkVolume import B2cFormWorkVolume
 from page_objects.orders.b2c.b2cFormSpecification import B2cFormSpecification
 from page_objects.orders.b2c.ComponentControlDate import ComponentControlDate
@@ -13,6 +14,7 @@ from page_objects.orders.b2c.ComponentCheckListWiFi import ComponentCheckListWiF
 from page_objects.orders.b2c.ComponentCheckListVideo import ComponentCheckListVideo
 from page_objects.orders.b2c.ComponentPanelMaterialPart import ComponentPanelMaterialPart
 from page_objects.orders.b2c.ComponentAddictionalIncome import ComponentAdditionalIncome
+from page_objects.orders.b2c.ComponenOrderstHierarchy import ComponentOrdersHierarchy
 from page_objects.orders.b2c.ComponentTypeProject import ComponentTypeProject
 from page_objects.orders.b2c.ComponentLinksSip import ComponentLinkSip
 
@@ -133,8 +135,16 @@ def test_check_type_project(driver):
     ComponentTypeProject(driver).check_type_project(value='ЛИП')
     time.sleep(5)
 
+
 def test_check_link_sip(driver):
     UserLoginForm(driver).autorization_default()
     driver.get('https://hermes-test.rt.ru/aggregator/1596646')
     ComponentLinkSip(driver).check_link_sip(lip="https://siptest.rt.ru/", kip="", kip_key="")
+    time.sleep(5)
+
+
+def test_open_hoz(driver):
+    UserLoginForm(driver).autorization_default()
+    driver.get('https://hermes-test.rt.ru/aggregator/1597719/344')
+    Hoz(driver).open_order(ComponentOrdersHierarchy(driver).get_hoz_number())
     time.sleep(5)

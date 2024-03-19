@@ -71,4 +71,6 @@ def driver(request, base_url):
     driver.open = open
     driver.open()
 
+    driver.base_url = base_url
+
     return driver
