@@ -58,7 +58,7 @@ class ComponentLinkSip(Order):
     def move_to_group(self):
         self.move_to_element(self._LOCATOR_GROUP)
 
-    def check_link_sip(self, lip: str, kip: str, kip_key: str):
+    def add_link_sip(self, lip: str, kip: str, kip_key: str):
         self.check_loader()
         self.move_to_group()
         self.push_edit_cart_form_button()

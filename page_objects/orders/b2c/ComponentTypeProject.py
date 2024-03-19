@@ -30,7 +30,7 @@ class ComponentTypeProject(Order):
     def move_to_group(self):
         self.move_to_element(self._LOCATOR_GROUP)
 
-    def check_type_project(self, value: str):
+    def change_type_project(self, value: str):
         self.check_loader()
         self.move_to_group()
         self.push_edit_form_button()

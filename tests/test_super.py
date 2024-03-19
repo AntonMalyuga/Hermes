@@ -130,11 +130,11 @@ def test_check_additional_income(driver):
 def test_check_type_project(driver):
     UserLoginForm(driver).autorization_default()
     driver.get('https://hermes-test.rt.ru/aggregator/1596646')
-    ComponentTypeProject(driver).check_type_project(value='ЛИП')
+    ComponentTypeProject(driver).change_type_project(value='ЛИП')
     time.sleep(5)
 
 def test_check_link_sip(driver):
     UserLoginForm(driver).autorization_default()
     driver.get('https://hermes-test.rt.ru/aggregator/1596646')
-    ComponentLinkSip(driver).check_link_sip(lip="https://siptest.rt.ru/", kip="", kip_key="")
+    ComponentLinkSip(driver).add_link_sip(lip="https://siptest.rt.ru/", kip="", kip_key="")
     time.sleep(5)
