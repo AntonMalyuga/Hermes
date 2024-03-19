@@ -13,6 +13,9 @@ class Order(BasePage):
     _LOCATOR_FORM_ODER_CLOSE_STAGE_COMMENT = (By.CSS_SELECTOR, '.agg-change-stage-form textarea[name="comment"]')
     _LOCATOR_FORM_BUTTON_CLOSE_STAGE = (By.CSS_SELECTOR, 'div[id^="moveOrderSelector"]')
 
+    def open_order(self, order_id):
+        self._driver.get(f'{self.get_origin()}/aggregator/{order_id}')
+
     def check_open_order_interface(self) -> bool:
         self.check_loader()
         self.find_element(locator=self._CHECK_OPEN_ORDER).get_property(
@@ -36,7 +39,17 @@ class Order(BasePage):
 
     def close_stage(self, pass_name: str, next_stage: str, reason: str = '', comment: str = '',
                     is_auto: bool = False, ):
+        """Закрытие этапа БП
 
+        Обязательные параметры:
+        pass_name - имя перехода
+        next_stage - имя следующего этапа
+
+        Необязательные параметры:
+        reason- причина
+        comment - комментарий
+        is_auto - закрытие этапа без проверок
+        """
         self.check_open_order_interface()
         try:
             pass_locator = (By.XPATH, f'{self._LOCATOR_FORM_ODER_CLOSE_STAGE_PASS[1]}[text()="{pass_name}"]')
