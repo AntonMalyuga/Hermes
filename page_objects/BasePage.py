@@ -38,7 +38,6 @@ class BasePage:
     def open(self):
         self._driver.get(self.current_url() + self.path)
 
-
     def current_url(self) -> str:
         return self._driver.current_url
 
