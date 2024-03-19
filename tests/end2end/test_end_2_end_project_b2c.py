@@ -2,6 +2,7 @@ import time
 
 from page_objects.b2cCreateConstructionProjectShow import B2CCreateConstructionProjectShow
 from page_objects.orders.b2c.Project import Project
+from page_objects.orders.b2c.Hoz import Hoz
 from page_objects.orders.b2c.b2cFormWorkVolume import B2cFormWorkVolume
 from page_objects.orders.b2c.b2cFormSpecification import B2cFormSpecification
 from page_objects.orders.b2c.ComponentControlDate import ComponentControlDate
@@ -9,6 +10,7 @@ from page_objects.orders.b2c.ComponentCapitalCosts import ComponentCapitalCosts
 from page_objects.orders.b2c.ComponentCheckListWiFi import ComponentCheckListWiFi
 from page_objects.orders.b2c.ComponentNaturalIndicators import ComponentNaturalIndicator
 from page_objects.orders.b2c.ComponentAddictionalIncome import ComponentAdditionalIncome
+from page_objects.orders.b2c.ComponenOrderstHierarchy import ComponentNaturalIndicator
 from page_objects.orders.b2c.ComponentFiles import ComponentFiles
 from page_objects.elements.UserLoginForm import UserLoginForm
 
@@ -67,5 +69,9 @@ def test_end_2_end_project_b2c(driver):
     ComponentFiles(driver).add_file(name='Калькулятор Ключ', type='Калькулятор Ключ', file_name='file.txt')
     Project(driver).close_stage(pass_name='Положительно', next_stage='Формирование доходной части и согласование ТЭО')
     ComponentAdditionalIncome(driver).add_addictional_income(name='Вайфай', infrastructure_type='Wi-Fi', income_type='WiFi', abonent_type='Приростная', value=10000)
-    time.sleep(20)
+    # Заполнение типа ИП
+    Project(driver).close_stage(pass_name='Согласование проекта будет проходить вне Гермес', next_stage='Согласование проекта вне Гермес и выделение инвестиций')
+    ComponentFiles(driver).add_file(name='Подтверждение ВХР', type='Подтверждение ВХР', file_name='file.txt')
+    Project(driver).close_stage(pass_name='Проект согласован вне Гермес. Инвестиции выделены', next_stage='Ожидание реализации проекта')
+    Hoz(driver).open_order(ComponentNaturalIndicator(driver).get_gph_number())
     assert True
