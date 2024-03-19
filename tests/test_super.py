@@ -13,6 +13,8 @@ from page_objects.orders.b2c.ComponentCheckListWiFi import ComponentCheckListWiF
 from page_objects.orders.b2c.ComponentCheckListVideo import ComponentCheckListVideo
 from page_objects.orders.b2c.ComponentPanelMaterialPart import ComponentPanelMaterialPart
 from page_objects.orders.b2c.ComponentAddictionalIncome import ComponentAdditionalIncome
+from page_objects.orders.b2c.ComponentTypeProject import ComponentTypeProject
+from page_objects.orders.b2c.ComponentLinksSip import ComponentLinkSip
 
 
 def test_close_stage(driver):
@@ -120,5 +122,19 @@ def test_change_material_part(driver):
 def test_check_additional_income(driver):
     UserLoginForm(driver).autorization_default()
     driver.get('https://hermes-test.rt.ru/aggregator/1595877')
-    ComponentAdditionalIncome(driver).add_addictional_income(name='Вайфай', infrastructure_type='Wi-Fi', income_type='WiFi', abonent_type='Приростная', value=10000)
+    ComponentAdditionalIncome(driver).add_addictional_income(name='Вайфай', infrastructure_type='Wi-Fi',
+                                                             income_type='WiFi', abonent_type='Приростная', value=10000)
+    time.sleep(5)
+
+
+def test_check_type_project(driver):
+    UserLoginForm(driver).autorization_default()
+    driver.get('https://hermes-test.rt.ru/aggregator/1596646')
+    ComponentTypeProject(driver).check_type_project(value='ЛИП')
+    time.sleep(5)
+
+def test_check_link_sip(driver):
+    UserLoginForm(driver).autorization_default()
+    driver.get('https://hermes-test.rt.ru/aggregator/1596646')
+    ComponentLinkSip(driver).check_link_sip(lip="https://siptest.rt.ru/", kip="", kip_key="")
     time.sleep(5)
