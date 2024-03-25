@@ -1,5 +1,6 @@
 from ..BasePage import BasePage
 
+
 class ExclusiveAddressesReport(BasePage):
     path = 'report/exclusive_addresses_report'
 
