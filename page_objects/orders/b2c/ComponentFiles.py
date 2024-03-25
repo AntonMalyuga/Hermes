@@ -3,6 +3,8 @@ from pathlib import Path
 from selenium.webdriver.common.by import By
 from page_objects.orders.Order import Order
 
+import urllib.request
+
 
 class ComponentFiles(Order):
     _LOCATOR_GROUP = (By.XPATH, '//div[@class="panel panel-material"]//span[contains(., "Вложения")]')
@@ -41,3 +43,12 @@ class ComponentFiles(Order):
 
     def submit(self):
         self.find_element(self._LOCATOR_FORM_ATTACHMENT_ADD_BUTTON).click()
+
+
+    def download_file(self, a):
+        directory = '/path/to/your/directory/'
+
+        try:
+            urllib.request.urlretrieve(url, filename)
+        except Exception as e:
+            print(f'Не удалось загрузить {url}: {e}')
