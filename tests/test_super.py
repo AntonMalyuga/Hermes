@@ -126,7 +126,7 @@ def test_check_additional_income(driver):
     driver.get('https://hermes-test.rt.ru/aggregator/1595877')
     ComponentAdditionalIncome(driver).add_addictional_income(name='Вайфай', infrastructure_type='Wi-Fi',
                                                              income_type='WiFi', abonent_type='Приростная', value=10000)
-    time.sleep(5)
+    time.sleep(8)
 
 
 def test_check_type_project(driver):
@@ -139,17 +139,8 @@ def test_check_type_project(driver):
 def test_check_link_sip(driver):
     UserLoginForm(driver).autorization_default()
     driver.get('https://hermes-test.rt.ru/aggregator/1596646')
-<<<<<<< HEAD
     ComponentLinkSip(driver).check_link_sip(lip="https://siptest.rt.ru/", kip="", kip_key="")
     time.sleep(5)
 
 
-def test_open_hoz(driver):
-    UserLoginForm(driver).autorization_default()
-    driver.get('https://hermes-test.rt.ru/aggregator/1597719/344')
-    Hoz(driver).open_order(ComponentOrdersHierarchy(driver).get_hoz_number())
-    time.sleep(5)
-=======
-    ComponentLinkSip(driver).add_link_sip(lip="https://siptest.rt.ru/", kip="", kip_key="")
-    time.sleep(5)
->>>>>>> 97fcc05dc6415d4281afb38d152c94238949cb88
+
