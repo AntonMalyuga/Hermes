@@ -12,6 +12,8 @@ class ComponentAdditionalIncome(Order):
         By.XPATH, '//div[@class="panel panel-material"]//span[contains(., "Проектные параметры")]/ancestor::div[2]')
     _LOCATOR_EDIT_FORM_BUTTON = (By.XPATH,
                                  '//div[@class="panel panel-material"]//span[contains(., "Проектные параметры")]/ancestor::div[2]//button[@title = "Редактировать дополнительные доходы"]')
+    _LOCATOR_TABLE_ROWS = (By.XPATH,
+                           '//div[@class="panel panel-material"]//span[contains(., "Проектные параметры")]/ancestor::div[2]//form[@action[contains(., "additionalIncome")]]//table[@class="b2c-table-component"]/tbody/tr')
     _LOCATOR_DELETE_STRING = (By.XPATH,
                               '//div[@class="panel panel-material"]//span[contains(., "Проектные параметры")]/ancestor::div[2]//tr[@class[not(contains(., "new-income"))]]//button[@title = "Удалить доход"]')
     _LOCATOR_CREATE_NEW_STRING = (By.XPATH,
@@ -34,9 +36,9 @@ class ComponentAdditionalIncome(Order):
         self.find_element(locator=self._LOCATOR_EDIT_FORM_BUTTON).click()
 
     def check_new_string_necessity(self):
-        try:
+        elements = self.find_elements(locator=self._LOCATOR_TABLE_ROWS)
+        if len(elements) > 1:
             self.find_element(locator=self._LOCATOR_DELETE_STRING).click()
-        except TimeoutException:
             self.find_element(locator=self._LOCATOR_CREATE_NEW_STRING).click()
         else:
             self.find_element(locator=self._LOCATOR_CREATE_NEW_STRING).click()
