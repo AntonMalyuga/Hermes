@@ -3,7 +3,6 @@ import time
 from selenium.webdriver.common.by import By
 from page_objects.orders.Order import Order
 from selenium.webdriver.support.select import Select
-from selenium.common.exceptions import TimeoutException
 from selenium.webdriver.common.keys import Keys
 
 
