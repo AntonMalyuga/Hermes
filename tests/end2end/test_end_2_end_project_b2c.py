@@ -85,7 +85,7 @@ def test_end_2_end_project_b2c(driver):
     Hoz(driver).close_stage(pass_name="Положительно", next_stage="Приемка выполненных работ")
     ComponentFiles(driver).add_file(name='Ведомость ВО (pdf)', type='Ведомость ВО (pdf)', file_name='file.txt')
     Hoz(driver).close_stage(pass_name="Положительно", next_stage="Пусконаладочные работы")
-    ComponentFiles(driver).add_file(name='Приёмка минимального комплекта ИД', type='Приёмка минимального комплекта ИД', file_name='file.txt')
+    ComponentFiles(driver).add_file(name='Квартирограмма', type='Квартирограмма', file_name='file.txt')
     Hoz(driver).close_stage(pass_name="Положительно", next_stage="Приёмка минимального комплекта ИД")
     Hoz(driver).close_stage(pass_name="Положительно", next_stage="Внесение в СЛТУ/предварительная готовность")
     Hoz(driver).close_stage(pass_name="Положительно", next_stage="Разработка ИД")
@@ -93,4 +93,6 @@ def test_end_2_end_project_b2c(driver):
     Hoz(driver).close_stage(pass_name="Положительно", next_stage="Приёмка ИД")
     Hoz(driver).close_stage(pass_name="Положительно", next_stage="Внесение данных в СЛТУ в статусе Готов")
     Hoz(driver).close_stage(pass_name="Положительно", next_stage="Строительство завершено")
+    Project(driver).open_order(ComponentOrdersHierarchy(driver).get_project_number())
+    Project(driver).check_current_stage('Проект реализован')
     assert True
