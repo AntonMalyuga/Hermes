@@ -17,3 +17,26 @@ from page_objects.orders.b2c.ComponentAddictionalIncome import ComponentAddition
 from page_objects.orders.b2c.ComponenOrderstHierarchy import ComponentOrdersHierarchy
 from page_objects.orders.b2c.ComponentTypeProject import ComponentTypeProject
 from page_objects.orders.b2c.ComponentLinksSip import ComponentLinkSip
+from page_objects.b2cCreationSMROrder import B2CCreateSMROrder
+
+
+def test_creation_smr(driver):
+    smr = {
+        'building_type': 'Комплексная новостройка',
+        'floors': 9,
+        'entrances': 4,
+        'flats': 4,
+        'dh_counter': 100,
+        'commerce_plan': 10,
+        'ap_year': '2019',
+        'location_name': 'Москва',
+        'street_name': 'ул Автозаводская',
+        'house_name': 'д. 10 стр. 3 (Милицейские)',
+        'client': '111111111',
+        'obj_type': 'Многоквартирный дом'
+    }
+
+    UserLoginForm(driver).autorization_default()
+    B2CCreateSMROrder(driver).open()
+    B2CCreateSMROrder(driver).create_smr_order_form(smr)
+    time.sleep(5)
