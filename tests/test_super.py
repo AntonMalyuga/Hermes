@@ -30,8 +30,6 @@ def test_creation_smr(driver):
         'commerce_plan': 10,
         'ap_year': '2019',
         'location_name': 'Москва',
-        'street_name': 'ул Автозаводская',
-        'house_name': 'д. 10 стр. 3 (Милицейские)',
         'client': '111111111',
         'obj_type': 'Многоквартирный дом'
     }
@@ -39,4 +37,5 @@ def test_creation_smr(driver):
     UserLoginForm(driver).autorization_default()
     B2CCreateSMROrder(driver).open()
     B2CCreateSMROrder(driver).create_smr_order_form(smr)
+    B2CCreateSMROrder(driver).set_random_street_and_house()
     time.sleep(5)
