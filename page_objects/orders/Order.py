@@ -5,6 +5,7 @@ import time
 
 class Order(BasePage):
     _CHECK_OPEN_ORDER = (By.CSS_SELECTOR, '.tab-content title')
+    _LOCATOR_ORDER_ID = (By.XPATH, '//div[text()="Номер заявки:"]/following::div[1]')
     _LOCATOR_ODER_CURRENT_STAGE = (
         By.CSS_SELECTOR, '.panel.panel-small-margin div.panel-body .agg-value:nth-child(3) .agg-key-value__value')
     _LOCATOR_FORM_ODER_CLOSE_STAGE_PASS = (
@@ -13,8 +14,11 @@ class Order(BasePage):
     _LOCATOR_FORM_ODER_CLOSE_STAGE_COMMENT = (By.CSS_SELECTOR, '.agg-change-stage-form textarea[name="comment"]')
     _LOCATOR_FORM_BUTTON_CLOSE_STAGE = (By.CSS_SELECTOR, 'div[id^="moveOrderSelector"]')
 
-    def open_order(self, order_id):
+    def open_order(self, order_id: int):
         self._driver.get(f'{self._driver.base_url}/aggregator/{order_id}')
+
+    def get_order_id(self) -> str:
+        return self.find_element(locator=self._LOCATOR_ORDER_ID).text
 
     def check_open_order_interface(self) -> bool:
         self.check_loader()

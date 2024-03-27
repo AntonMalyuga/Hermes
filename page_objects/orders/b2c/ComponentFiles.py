@@ -43,12 +43,3 @@ class ComponentFiles(Order):
 
     def submit(self):
         self.find_element(self._LOCATOR_FORM_ATTACHMENT_ADD_BUTTON).click()
-
-
-    def download_file(self, a):
-        directory = '/path/to/your/directory/'
-
-        try:
-            urllib.request.urlretrieve(url, filename)
-        except Exception as e:
-            print(f'Не удалось загрузить {url}: {e}')

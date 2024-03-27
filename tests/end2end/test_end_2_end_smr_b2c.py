@@ -1,7 +1,8 @@
-import time
-
-from page_objects.b2cCreateConstructionProjectShow import B2CCreateConstructionProjectShow
+from page_objects.b2cCreationSMROrder import B2CCreateSMROrder
+from page_objects.orders.b2c.SMR import SMR
 from page_objects.orders.b2c.Project import Project
+from page_objects.orders.b2c.ComponentCreateProjectButton import ComponentCreateProjectButton
+from page_objects.b2cCreateConstructionProjectShow import B2CCreateConstructionProjectShow
 from page_objects.orders.b2c.Hoz import Hoz
 from page_objects.orders.b2c.b2cFormWorkVolume import B2cFormWorkVolume
 from page_objects.orders.b2c.b2cFormSpecification import B2cFormSpecification
@@ -16,7 +17,20 @@ from page_objects.orders.b2c.ComponentFiles import ComponentFiles
 from page_objects.elements.UserLoginForm import UserLoginForm
 
 
-def test_end_2_end_project_b2c(driver):
+def test_end_2_end_smr_b2c(driver):
+    smr = {
+        'building_type': 'Комплексная новостройка',
+        'floors': 9,
+        'entrances': 4,
+        'flats': 4,
+        'dh_counter': 100,
+        'commerce_plan': 10,
+        'ap_year': 2019,
+        'location_name': 'Москва',
+        'client': '111111111',
+        'obj_type': 'Многоквартирный дом'
+    }
+
     works = {
         'Восстановление поврежденного канала кабельной канализации': {
             'type': 'СМР',
@@ -37,26 +51,23 @@ def test_end_2_end_project_b2c(driver):
     }
 
     UserLoginForm(driver).autorization_default()
-    B2CCreateConstructionProjectShow(driver).open()
-    B2CCreateConstructionProjectShow(driver).selected_rf('РФ Саратовский')
-    B2CCreateConstructionProjectShow(driver).selected_is_need_broad('Нет')
-    B2CCreateConstructionProjectShow(driver).selected_type_construct('Новостройка')
-    B2CCreateConstructionProjectShow(driver).selected_customer_by_inn('111111111111')
+    B2CCreateSMROrder(driver).open()
+    B2CCreateSMROrder(driver).create_smr_order_form(smr)
+    SMR(driver).open_order(B2CCreateSMROrder(driver).get_creation_order())
+    SMR(driver).close_stage(pass_name='Положительно', next_stage='Подготовка заявок и включение в проект',
+                            comment='Тестовый прогон')
+    ComponentCreateProjectButton(driver).confirm()
     B2CCreateConstructionProjectShow(driver).enter_project_name('Автопрогон')
-    B2CCreateConstructionProjectShow(driver).add_address('Саратов', 'Авиастроителей', 'д. 1')
-    B2CCreateConstructionProjectShow(driver).enter_dh_for_address(120)
-    B2CCreateConstructionProjectShow(driver).set_service_key('Wi-Fi')
     B2CCreateConstructionProjectShow(driver).enter_create_project()
-    Project(driver).check_current_stage(
-        'Корректировка состава объектов проекта, проработка подключения услуг ключа на объектах и формирование предКП по ключу')
+    Project(driver).close_not_current_tab()
     ComponentCheckListWiFi(driver).add_cost_wifi(value='capex')
     Project(driver).close_stage(pass_name='Положительно', next_stage='Уточнение лин. данных в ОТУ')
     Project(driver).open_form_work()
-    B2cFormWorkVolume(driver).set_construct_method('Хоз.способ')
+    B2cFormWorkVolume(driver).set_construct_method('ГПХ')
     B2cFormWorkVolume(driver).add_works(works)
     B2cFormWorkVolume(driver).close()
     Project(driver).open_form_specification()
-    B2cFormSpecification(driver).set_construct_method('Хоз. способ')
+    B2cFormSpecification(driver).set_construct_method('ГПХ')
     B2cFormSpecification(driver).add_specification(specifications)
     B2cFormSpecification(driver).close()
     Project(driver).close_stage(pass_name='Положительно', next_stage='Проработка ТР и внесение стоимости работ')
@@ -70,8 +81,6 @@ def test_end_2_end_project_b2c(driver):
     ComponentFiles(driver).add_file(name='КП Ключ', type='КП Ключ', file_name='file.txt')
     ComponentFiles(driver).add_file(name='Калькулятор Ключ', type='Калькулятор Ключ', file_name='file.txt')
     Project(driver).close_stage(pass_name='Положительно', next_stage='Формирование доходной части и согласование ТЭО')
-    ComponentAdditionalIncome(driver).add_addictional_income(name='Вайфай', infrastructure_type='Wi-Fi',
-                                                             income_type='WiFi', abonent_type='Приростная', value=10000)
     ComponentTypeProject(driver).change_type_project('ЛИП')
     Project(driver).close_stage(pass_name='Согласование проекта будет проходить вне Гермес',
                                 next_stage='Согласование проекта вне Гермес и выделение инвестиций')

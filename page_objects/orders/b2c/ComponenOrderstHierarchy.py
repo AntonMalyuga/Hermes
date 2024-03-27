@@ -1,7 +1,5 @@
 from selenium.webdriver.common.by import By
 from page_objects.orders.Order import Order
-from selenium.webdriver.common.keys import Keys
-import random
 
 
 class ComponentOrdersHierarchy(Order):

@@ -7,11 +7,14 @@ from selenium.webdriver.common.by import By
 from selenium.webdriver.support.select import Select
 from selenium.webdriver.common.action_chains import ActionChains
 from selenium.common.exceptions import ElementClickInterceptedException
+from selenium.common.exceptions import NoSuchElementException
+from selenium.common.exceptions import StaleElementReferenceException
 
 
 class BasePage:
     _LOADER = (By.CSS_SELECTOR, '.h-loader:not(.h-loader--show-loader)')
     _CURRENT_TAB = (By.XPATH, '//a[@aria-expanded="true"]/button')
+    _NOT_CURRENT_TAB = (By.XPATH, '//a[@aria-expanded="false"]//button')
 
     def __init__(self, driver: object):
         self._driver = driver
@@ -23,6 +26,9 @@ class BasePage:
             element.click()
         except ElementClickInterceptedException:
             self._driver.execute_script("arguments[0].click()", element)
+
+    def delete_text_by_js(self, element):
+        self._driver.execute_script("arguments[0].removeAttribute('value')", element)
 
     def check_loader(self):
         WebDriverWait(self._driver, 120).until(
@@ -43,18 +49,25 @@ class BasePage:
     def current_url(self) -> str:
         return self._driver.current_url
 
+    def close_not_current_tab(self):
+        self.check_loader()
+        tabs = self.find_elements(locator=self._NOT_CURRENT_TAB)
+        for tab in tabs:
+            tab.click()
+
     def move_to_element(self, locator):
         element = self.find_element(locator)
         ActionChains(self._driver).move_to_element(element).perform()
 
     def find_element(self, locator: [str, str], second: int = 40) -> 'WebElement':
-
-        return WebDriverWait(self._driver, second).until(
+        ignored_exceptions = (NoSuchElementException, StaleElementReferenceException)
+        return WebDriverWait(self._driver, timeout=second, ignored_exceptions=ignored_exceptions).until(
             EC.presence_of_element_located(locator=locator),
             message=f"Не смог найти элемент по CSS {locator[0]} {locator[1]}")
 
     def find_elements(self, locator: [str, str], second: int = 40) -> 'list[WebElement]':
-        return WebDriverWait(self._driver, second).until(
+        ignored_exceptions = (NoSuchElementException, StaleElementReferenceException)
+        return WebDriverWait(self._driver, timeout=second, ignored_exceptions=ignored_exceptions).until(
             EC.presence_of_all_elements_located(locator=locator),
             message=f"Не смог найти элементы по CSS {locator}")
 
