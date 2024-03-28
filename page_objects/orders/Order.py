@@ -15,6 +15,7 @@ class Order(BasePage):
     _LOCATOR_FORM_BUTTON_CLOSE_STAGE = (By.CSS_SELECTOR, 'div[id^="moveOrderSelector"]')
 
     def open_order(self, order_id: int):
+        time.sleep(7)
         self._driver.get(f'{self._driver.base_url}/aggregator/{order_id}')
 
     def get_order_id(self) -> str:
