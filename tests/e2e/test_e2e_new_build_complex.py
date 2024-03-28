@@ -8,9 +8,6 @@ from page_objects.orders.b2c.b2cFormWorkVolume import B2cFormWorkVolume
 from page_objects.orders.b2c.b2cFormSpecification import B2cFormSpecification
 from page_objects.orders.b2c.ComponentControlDate import ComponentControlDate
 from page_objects.orders.b2c.ComponentCapitalCosts import ComponentCapitalCosts
-from page_objects.orders.b2c.ComponentCheckListWiFi import ComponentCheckListWiFi
-from page_objects.orders.b2c.ComponentNaturalIndicators import ComponentNaturalIndicator
-from page_objects.orders.b2c.ComponentAddictionalIncome import ComponentAdditionalIncome
 from page_objects.orders.b2c.ComponenOrderstHierarchy import ComponentOrdersHierarchy
 from page_objects.orders.b2c.ComponentTypeProject import ComponentTypeProject
 from page_objects.orders.b2c.ComponentFiles import ComponentFiles

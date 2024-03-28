@@ -41,7 +41,10 @@ class BasePage:
             message=f"Не дождался загрузки обновления страницы")
 
     def open(self):
-        self._driver.get(self.current_url() + self.path)
+        self._driver.get(f'{self.current_url()}{self.path}')
+
+    def open_for_path(self, path):
+        self._driver.get(f'{self.base_url()}{self.path}{path}')
 
     def base_url(self) -> str:
         return self._driver.base_url

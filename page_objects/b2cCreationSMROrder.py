@@ -162,7 +162,6 @@ class B2CCreateSMROrder(BasePage):
             self.set_building_fields(smr['floors'], smr['entrances'], smr['flats'], smr['dh_counter'],
                                      smr['commerce_plan'])
             self.set_building_ap_years(smr['ap_year'])
-            self.set_wifi_checkbox()
             self.create_order()
         if smr['building_type'] == 'Коттеджный посёлок/частный сектор':
             self.set_building_type(smr['building_type'])

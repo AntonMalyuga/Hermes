@@ -18,8 +18,8 @@ class Order(BasePage):
         time.sleep(7)
         self._driver.get(f'{self._driver.base_url}/aggregator/{order_id}')
 
-    def get_order_id(self) -> str:
-        return self.find_element(locator=self._LOCATOR_ORDER_ID).text
+    def get_order_id(self) -> int:
+        return int(self.find_element(locator=self._LOCATOR_ORDER_ID).text)
 
     def check_open_order_interface(self) -> bool:
         self.check_loader()

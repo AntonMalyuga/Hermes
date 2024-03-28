@@ -1,11 +1,13 @@
 from page_objects.orders.Order import Order
-from page_objects.BasePage import BasePage
 from selenium.webdriver.common.by import By
 from pynput.keyboard import Key, Controller
 import time
 
 
 class B2CObjectOrder(Order):
+    path = 'b2c/group_orders'
+
+    _ORDER_ID = (By.CSS_SELECTOR, '.form-group.mb-0 .js--load-tab.js--new-tab')
     _LOCATOR_CHANGE_CONTRACTOR_BUTTON = (
         By.XPATH, '//button[@form[contains(., "form-change-client")]]')
     _LOCATOR_CONTRACTOR = (By.XPATH, '//div[@title = "Подрядчик"]')
@@ -13,6 +15,12 @@ class B2CObjectOrder(Order):
     _LOCATOR_SUBMIT_BUTTON = (By.XPATH, '//div[@class = "modal-footer"]/ancestor::div[2]//button[text() = "Сохранить"]')
     _LOCATOR_DISCOUNT = (By.XPATH, '//input[@name= "discount"]')
     _LOCATOR_SAVE_ORDER_BUTTON = (By.XPATH, '//div[@class= "row mb-10"]//button[@type = "submit"]')
+
+    def open_form(self, order_id):
+        self.open_for_path(f'/{order_id}')
+
+    def get_custom_order_order_id(self):
+        return int(str(self.find_element(locator=self._ORDER_ID).text).strip())
 
     def _custom_select_method(self, locator, text):
         element = self.find_element(locator)

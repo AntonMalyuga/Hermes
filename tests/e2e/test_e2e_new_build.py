@@ -13,8 +13,10 @@ from page_objects.orders.b2c.ComponentNaturalIndicators import ComponentNaturalI
 from page_objects.orders.b2c.ComponentAddictionalIncome import ComponentAdditionalIncome
 from page_objects.orders.b2c.ComponenOrderstHierarchy import ComponentOrdersHierarchy
 from page_objects.orders.b2c.ComponentTypeProject import ComponentTypeProject
+from page_objects.orders.b2c.ComponentNumberDSOFU import ComponentNumberDSOFU
 from page_objects.orders.b2c.ComponentFiles import ComponentFiles
 from page_objects.elements.UserLoginForm import UserLoginForm
+from page_objects.b2cObjectOrder import B2CObjectOrder
 
 
 def test_e2e_new_build(driver):
@@ -83,12 +85,11 @@ def test_e2e_new_build(driver):
     ComponentFiles(driver).add_file(name='Подтверждение ВХР', type='Подтверждение ВХР', file_name='file.txt')
     Project(driver).close_stage(pass_name='Проект согласован вне Гермес. Инвестиции выделены',
                                 next_stage='Ожидание реализации проекта', is_auto=True)
-    CustomerOrder(driver).open_order(ComponentOrdersHierarchy(driver).get_customer_order_number())
-    # Открытие схемы договоров через линк
-    # Заполнение схемы
-    # Открытие заявки заказа
+    B2CObjectOrder(driver).open_form(ComponentOrdersHierarchy(driver).get_customer_order_number())
+    B2CObjectOrder(driver).add_contractor(discount=10, contractor='Саратовский', frame=555555)
+    CustomerOrder(driver).open_order(B2CObjectOrder(driver).get_custom_order_order_id())
     CustomerOrder(driver).close_stage(pass_name="Положительно", next_stage="Подписание заказа (вне Гермес)", is_auto=True)
-    # Заполнить ДС ОФУ
+    ComponentNumberDSOFU(driver).add_DSOFU(kode=123456)
     CustomerOrder(driver).close_stage(pass_name="Положительно", next_stage="Создание ДС ОФУ (вне Гермес)", is_auto=True)
     CustomerOrder(driver).close_stage(pass_name="Положительно", next_stage="Формирование групповой КС-2 и их закрытие (вне Гермес)", is_auto=True)
     CustomerOrder(driver).close_stage(pass_name="Положительно", next_stage="Строительство завершено")
