@@ -2,7 +2,8 @@ import time
 
 from page_objects.b2cCreateConstructionProjectShow import B2CCreateConstructionProjectShow
 from page_objects.orders.b2c.Project import Project
-from page_objects.orders.b2c.Hoz import Hoz
+from page_objects.orders.b2c.Customer import Customer
+from page_objects.orders.b2c.CustomerOrder import CustomerOrder
 from page_objects.orders.b2c.b2cFormWorkVolume import B2cFormWorkVolume
 from page_objects.orders.b2c.b2cFormSpecification import B2cFormSpecification
 from page_objects.orders.b2c.ComponentControlDate import ComponentControlDate
@@ -16,23 +17,27 @@ from page_objects.orders.b2c.ComponentFiles import ComponentFiles
 from page_objects.elements.UserLoginForm import UserLoginForm
 
 
-def test_end_2_end_project_b2c(driver):
+def test_e2e_new_build(driver):
     works = {
-        'Восстановление поврежденного канала кабельной канализации': {
-            'type': 'СМР',
-            'qty': 12,
-            'natural_indicator': 'Точки доступа'
-        },
-        'Восстановление газонного покрытия': {
-            'type': 'СМР',
-            'qty': 10,
-            'natural_indicator': 'Точки доступа'
+        'works_keys': {
+            'Восстановление поврежденного канала кабельной канализации': {
+                'type': 'СМР',
+                'qty': 12,
+                'natural_indicator': 'Точки доступа'
+            },
+            'Восстановление газонного покрытия': {
+                'type': 'СМР',
+                'qty': 10,
+                'natural_indicator': 'Точки доступа'
+            }
         }
     }
 
     specifications = {
-        'Wi-Fi оборудование 1': {
-            'natural_indicator': 'Точки доступа'
+        'specifications_keys': {
+            'Wi-Fi оборудование 1': {
+                'natural_indicator': 'Точки доступа'
+            }
         }
     }
 
@@ -52,11 +57,11 @@ def test_end_2_end_project_b2c(driver):
     ComponentCheckListWiFi(driver).add_cost_wifi(value='capex')
     Project(driver).close_stage(pass_name='Положительно', next_stage='Уточнение лин. данных в ОТУ')
     Project(driver).open_form_work()
-    B2cFormWorkVolume(driver).set_construct_method('Хоз.способ')
+    B2cFormWorkVolume(driver).set_construct_method('Подрядный')
     B2cFormWorkVolume(driver).add_works(works)
     B2cFormWorkVolume(driver).close()
     Project(driver).open_form_specification()
-    B2cFormSpecification(driver).set_construct_method('Хоз. способ')
+    B2cFormSpecification(driver).set_construct_method('Подрядный способ')
     B2cFormSpecification(driver).add_specification(specifications)
     B2cFormSpecification(driver).close()
     Project(driver).close_stage(pass_name='Положительно', next_stage='Проработка ТР и внесение стоимости работ')
@@ -78,29 +83,43 @@ def test_end_2_end_project_b2c(driver):
     ComponentFiles(driver).add_file(name='Подтверждение ВХР', type='Подтверждение ВХР', file_name='file.txt')
     Project(driver).close_stage(pass_name='Проект согласован вне Гермес. Инвестиции выделены',
                                 next_stage='Ожидание реализации проекта', is_auto=True)
-    Hoz(driver).open_order(ComponentOrdersHierarchy(driver).get_hoz_number())
-    Hoz(driver).close_stage(pass_name="Положительно",
-                            next_stage="Подтверждение передачи в работу заказа по услугам ключа")
-    Hoz(driver).close_stage(pass_name="Положительно", next_stage="Разработка ПД и РД")
-    Hoz(driver).close_stage(pass_name="Положительно", next_stage="Согласование ПД и РД")
-    Hoz(driver).close_stage(pass_name="Положительно", next_stage="Выполнение СМР/внесение статусов работ")
+    CustomerOrder(driver).open_order(ComponentOrdersHierarchy(driver).get_customer_order_number())
+    # Открытие схемы договоров через линк
+    # Заполнение схемы
+    # Открытие заявки заказа
+    CustomerOrder(driver).close_stage(pass_name="Положительно", next_stage="Подписание заказа (вне Гермес)", is_auto=True)
+    # Заполнить ДС ОФУ
+    CustomerOrder(driver).close_stage(pass_name="Положительно", next_stage="Создание ДС ОФУ (вне Гермес)", is_auto=True)
+    CustomerOrder(driver).close_stage(pass_name="Положительно", next_stage="Формирование групповой КС-2 и их закрытие (вне Гермес)", is_auto=True)
+    CustomerOrder(driver).close_stage(pass_name="Положительно", next_stage="Строительство завершено")
+    Customer(driver).open_order(ComponentOrdersHierarchy(driver).get_customer_number())
+    ComponentFiles(driver).add_file(name='Проектная документация (pdf)', type='Проектная документация (pdf)', file_name='file.txt')
+    ComponentFiles(driver).add_file(name='Рабочая документация (pdf)', type='Рабочая документация (pdf)', file_name='file.txt')
+    Customer(driver).close_stage(pass_name="Положительно", next_stage="Разработка ПД и РД")
+    Customer(driver).close_stage(pass_name="Положительно", next_stage="Согласование ПД и РД")
+    Customer(driver).close_stage(pass_name="Положительно", next_stage="Выполнение СМР/внесение статусов работ")
     ComponentFiles(driver).add_file(name='Протокол измерений ВОК', type='Протокол измерений ВОК', file_name='file.txt')
     ComponentFiles(driver).add_file(name='Таблица терминации (xls)', type='Таблица терминации (xls)',
                                     file_name='file.txt')
     ComponentFiles(driver).add_file(name='Схема организации связи', type='Схема организации связи',
                                     file_name='file.txt')
-    Hoz(driver).close_stage(pass_name="Положительно", next_stage="Приемка выполненных работ")
+    Customer(driver).close_stage(pass_name="Положительно", next_stage="Приемка выполненных работ")
     ComponentFiles(driver).add_file(name='Ведомость ВО (pdf)', type='Ведомость ВО (pdf)', file_name='file.txt')
-    Hoz(driver).close_stage(pass_name="Положительно", next_stage="Пусконаладочные работы")
+    Customer(driver).close_stage(pass_name="Положительно", next_stage="Пусконаладочные работы")
     ComponentFiles(driver).add_file(name='Квартирограмма', type='Квартирограмма', file_name='file.txt')
-    Hoz(driver).close_stage(pass_name="Положительно", next_stage="Приёмка минимального комплекта ИД")
-    Hoz(driver).close_stage(pass_name="Положительно", next_stage="Внесение в СЛТУ/предварительная готовность")
-    Hoz(driver).close_stage(pass_name="Положительно", next_stage="Разработка ИД")
+    Customer(driver).close_stage(pass_name="Положительно", next_stage="Приёмка минимального комплекта ИД")
+    Customer(driver).close_stage(pass_name="Положительно", next_stage="Внесение в СЛТУ/предварительная готовность")
+    Customer(driver).close_stage(pass_name="Положительно", next_stage="Разработка ИД")
     ComponentFiles(driver).add_file(name='Исполнительная документация', type='Исполнительная документация',
                                     file_name='file.txt')
-    Hoz(driver).close_stage(pass_name="Положительно", next_stage="Приёмка ИД")
-    Hoz(driver).close_stage(pass_name="Положительно", next_stage="Внесение данных в СЛТУ в статусе Готов")
-    Hoz(driver).close_stage(pass_name="Положительно", next_stage="Строительство завершено")
+    Customer(driver).close_stage(pass_name="Положительно", next_stage="Приёмка ИД")
+    Customer(driver).close_stage(pass_name="Положительно", next_stage="Внесение данных в СЛТУ в статусе Готов")
+    Customer(driver).close_stage(pass_name="Положительно", next_stage="Создание КС")
+    Customer(driver).close_stage(pass_name="Положительно", next_stage="Проверка и фиксация КС", is_auto=True)
+    Customer(driver).close_stage(pass_name="Положительно", next_stage="Подписание КС у Подрядчика", is_auto=True)
+    Customer(driver).close_stage(pass_name="Положительно", next_stage="Подписание КС в РТК")
+    ComponentFiles(driver).add_file(name='КС-2 (скан pdf без штрих кода)', type='КС-2 (скан pdf без штрих кода)', file_name='file.txt')
+    Customer(driver).close_stage(pass_name="Положительно", next_stage="Объект завершен")
     Project(driver).open_order(ComponentOrdersHierarchy(driver).get_project_number())
     Project(driver).check_current_stage('Проект реализован')
     assert True

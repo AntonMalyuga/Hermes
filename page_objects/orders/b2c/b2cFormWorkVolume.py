@@ -23,15 +23,23 @@ class B2cFormWorkVolume(BasePage):
         self.find_element(locator=self._LOCATOR_BUTTON_OPEN_MODAL_ADD_WORK).click()
         self.check_open_modal()
 
+        if 'works_keys' in works:
+            self.add_works_by_modal(works['works_keys'])
+            self.set_works_value(works['works_keys'])
+            self.set_natural_indicators(works['works_keys'])
+
+        if 'works_core' in works:
+            self.add_works_by_modal(works['works_core'])
+            self.set_works_value(works['works_core'])
+            self.set_method_by_core(works['works_core'])
+        self.save_works()
+
+    def add_works_by_modal(self, works: dict):
         for work, work_params in works.items():
             self.find_element((By.XPATH,
                                f'{self._LOCATOR_TABLE_OPEN_MODAL_ADD_WORK[1]}//td[contains(text(),"{work_params["type"]}: {work}")]/ancestor::tr[1]')).click()
 
         self.find_element(self._LOCATOR_BUTTON_MODAL_ADD_WORK).click()
-
-        self.set_works_value(works)
-        self.set_natural_indicators(works)
-        self.save_works()
 
     def set_construct_method(self, type_construct):
         self.find_element((By.XPATH,
@@ -44,6 +52,12 @@ class B2cFormWorkVolume(BasePage):
             self.find_element((By.XPATH, work_locator)).send_keys(Keys.CONTROL, 'a')
             self.find_element((By.XPATH, work_locator)).send_keys(Keys.BACKSPACE)
             self.find_element((By.XPATH, work_locator)).send_keys(int(work_params["qty"]))
+
+    def set_method_by_core(self, works: dict):
+        for work, work_params in works.items():
+            time.sleep(1)
+            work_locator = f'//tr[@data-work-name[contains(., "{work}")] and @data-work-type="{work_params["type"]}"]//select[@class="form-control input-sm core-construction-method-selector"]'
+            self.selected_element_by_value(locator=(By.XPATH, work_locator), value=work_params["method"])
 
     def set_natural_indicators(self, works: dict):
         for work, work_params in works.items():

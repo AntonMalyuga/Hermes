@@ -50,6 +50,15 @@ class B2cFormSpecification(BasePage):
         self.check_open_modal()
         self.find_element(self._LOCATOR_CHECK_SHOW_MODAL_SPECIFICATION_LIST).click()
 
+        if 'specifications_keys' in specifications:
+            self.add_specification_by_modal(specifications['specifications_keys'])
+            self.set_natural_indicators(specifications['specifications_keys'])
+        if 'specifications_core' in specifications:
+            self.add_specification_by_modal(specifications['specifications_core'])
+            self.set_method_by_specification(specifications['specifications_core'])
+        self.create_specification()
+
+    def add_specification_by_modal(self, specifications: dict):
         for specification, specification_param in specifications.items():
             element = self.find_element((By.XPATH,
                                          f'{self._LOCATOR_TABLE_INSERT_SPECIFICATION[1]}//td[@data-name="name" and contains(.,"{specification}")]/ancestor::tr[1]//input'))
@@ -60,8 +69,13 @@ class B2cFormSpecification(BasePage):
 
         self.confirm_selected_specification()
         self.close_modal()
-        self.set_natural_indicators(specifications)
-        self.create_specification()
+
+    def set_method_by_specification(self, specification: dict):
+        for specification, specification_params in specification.items():
+            time.sleep(1)
+            specification_locator = f'//tr[@class="specification-new-equipment"]//td[contains(., "{specification}")]/following::td[11]/select[@name[contains(., "type_installation")]]'
+            self.selected_element_by_value(locator=(By.XPATH, specification_locator),
+                                           value=specification_params["method"])
 
     def set_natural_indicators(self, specification: dict):
         for specification, specification_params in specification.items():

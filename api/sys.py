@@ -10,11 +10,11 @@ class Sys:
 
     def _api(self, data: dict):
         headers = {
-            'Content-Type': 'text/html; charset=UTF-8',
             'User-Agent': 'Mozilla/5.0 (X11; Linux x86_64) AppleWebKit/537.36 (KHTML, like Gecko) Chrome/122.0.0.0 Safari/537.36'
         }
 
         res = requests.post(url=self.url, data=data, headers=headers, auth=(self.login, self.password))
+        print(res.text)
 
     def delete_order(self, order_id: int):
         data = {

@@ -1,10 +1,17 @@
 import time
 
 from page_objects.elements.UserLoginForm import UserLoginForm
+from api.sys import Sys
 from page_objects.elements.MainNavMenu import MainNavMenu
 from page_objects.orders.Order import Order
 from page_objects.orders.b2c.Hoz import Hoz
 from page_objects.orders.b2c.SMR import SMR
+<<<<<<< HEAD
+from page_objects.orders.b2c.Project import Project
+from page_objects.b2cCreateConstructionProjectShow import B2CCreateConstructionProjectShow
+from page_objects.orders.b2c.ComponentCreateProjectButton import ComponentCreateProjectButton
+=======
+>>>>>>> e5f89578c453fe6d70b6ffb378d1f186e946e717
 from page_objects.orders.b2c.b2cFormWorkVolume import B2cFormWorkVolume
 from page_objects.orders.b2c.b2cFormSpecification import B2cFormSpecification
 from page_objects.orders.b2c.ComponentControlDate import ComponentControlDate
@@ -75,3 +82,10 @@ def test_number_dsofu(driver):
     UserLoginForm(driver).autorization_default()
     driver.get('https://hermes-test.rt.ru/aggregator/1598830/344')
     ComponentNumberDSOFU(driver).add_DSOFU(kode=1223455667)
+
+# def test_component_adress_parameters(driver):
+#     UserLoginForm(driver).autorization_default()
+#     SMR(driver).open_order(1598797)
+#     ComponentLoaderDH(driver).add_dh(link='https://yandex.ru/maps/?um=constructor%3Ad3ebc1e3d9867f5332fa30f4418892459de4b6fc1da211fda23de869fe708924&source=constructorLink',
+#                                                           file_name='Загрузка_дх.xlsx')
+#     ComponentAdressParameters(driver).add_abonents(abonents=5)

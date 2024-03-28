@@ -31,12 +31,12 @@ class BasePage:
         self._driver.execute_script("arguments[0].removeAttribute('value')", element)
 
     def check_loader(self):
-        WebDriverWait(self._driver, 120).until(
+        WebDriverWait(self._driver, 150).until(
             EC.presence_of_element_located(locator=self._LOADER),
             message=f"Не дождался загрузки обновления страницы")
         time.sleep(2)
 
-        return WebDriverWait(self._driver, 120).until(
+        return WebDriverWait(self._driver, 150).until(
             EC.presence_of_element_located(locator=self._LOADER),
             message=f"Не дождался загрузки обновления страницы")
 
