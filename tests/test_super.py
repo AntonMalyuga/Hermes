@@ -1,9 +1,14 @@
 import time
 
 from page_objects.elements.UserLoginForm import UserLoginForm
+from api.sys import Sys
 from page_objects.elements.MainNavMenu import MainNavMenu
 from page_objects.orders.Order import Order
 from page_objects.orders.b2c.Hoz import Hoz
+from page_objects.orders.b2c.SMR import SMR
+from page_objects.orders.b2c.Project import Project
+from page_objects.b2cCreateConstructionProjectShow import B2CCreateConstructionProjectShow
+from page_objects.orders.b2c.ComponentCreateProjectButton import ComponentCreateProjectButton
 from page_objects.orders.b2c.b2cFormWorkVolume import B2cFormWorkVolume
 from page_objects.orders.b2c.b2cFormSpecification import B2cFormSpecification
 from page_objects.orders.b2c.ComponentControlDate import ComponentControlDate
@@ -20,22 +25,3 @@ from page_objects.orders.b2c.ComponentLinksSip import ComponentLinkSip
 from page_objects.b2cCreationSMROrder import B2CCreateSMROrder
 
 
-def test_creation_smr(driver):
-    smr = {
-        'building_type': 'Комплексная новостройка',
-        'floors': 9,
-        'entrances': 4,
-        'flats': 4,
-        'dh_counter': 100,
-        'commerce_plan': 10,
-        'ap_year': '2019',
-        'location_name': 'Москва',
-        'client': '111111111',
-        'obj_type': 'Многоквартирный дом'
-    }
-
-    UserLoginForm(driver).autorization_default()
-    B2CCreateSMROrder(driver).open()
-    B2CCreateSMROrder(driver).create_smr_order_form(smr)
-    B2CCreateSMROrder(driver).set_random_street_and_house()
-    time.sleep(5)
