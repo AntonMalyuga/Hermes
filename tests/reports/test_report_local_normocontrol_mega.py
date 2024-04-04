@@ -4,5 +4,5 @@ from page_objects.elements.UserLoginForm import UserLoginForm
 
 def test_open_report_local_normocontrol_mega(driver):
     LocalNormocontrolMega(driver).open()
-    UserLoginForm(driver).autorization_default()
+    UserLoginForm(driver).authorization_default()
     assert LocalNormocontrolMega(driver).check_report()

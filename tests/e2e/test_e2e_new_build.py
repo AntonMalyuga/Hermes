@@ -43,7 +43,7 @@ def test_e2e_new_build(driver):
         }
     }
 
-    UserLoginForm(driver).autorization_default()
+    UserLoginForm(driver).authorization_default()
     B2CCreateConstructionProjectShow(driver).open()
     B2CCreateConstructionProjectShow(driver).selected_rf('РФ Саратовский')
     B2CCreateConstructionProjectShow(driver).selected_is_need_broad('Нет')

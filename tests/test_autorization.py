@@ -1,21 +1,24 @@
 import pytest
+import testit
 
 from page_objects.elements.UserLoginForm import UserLoginForm
 
 
-@pytest.mark.smoke
-def test_user_autorization_success(driver, base_url):
-    """Положительная авторизация пользователя в Гермес"""
-    UserLoginForm(driver).autorization_default()
+@testit.title('Authorization')
+@testit.displayName('Positive authorization')
+@testit.description('Authorization positive test')
+def test_user_authorization_success(driver, base_url):
+    UserLoginForm(driver).authorization_default()
     assert UserLoginForm(driver).current_url() == base_url
 
 
-@pytest.mark.smoke
+@testit.title('Authorization')
+@testit.displayName('Negative authorization')
+@testit.description('Authorization negative test with invalid login and password')
 @pytest.mark.parametrize('login, password',
                          [('MalyugaAS', 'TestPass'), ('TestUser', 'TestPass')],
                          ids=['correct_login_and_not_correct_pass', 'not_correct_login_and_not_correct_pass'])
-def test_user_autorization_failed(driver, login, password):
-    """Отрицательная авторизация пользователя в "Гермес" с некорректным вводом логина и пароля"""
+def test_user_authorization_failed(driver, login, password):
     UserLoginForm(driver).enter_login(login)
     UserLoginForm(driver).enter_password(password)
     UserLoginForm(driver).click_log_in()

@@ -4,5 +4,5 @@ from page_objects.elements.UserLoginForm import UserLoginForm
 
 def test_open_report_investment_allocation(driver):
     InvestmentAllocation(driver).open()
-    UserLoginForm(driver).autorization_default()
+    UserLoginForm(driver).authorization_default()
     assert InvestmentAllocation(driver).check_report()

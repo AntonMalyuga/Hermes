@@ -2,8 +2,8 @@ from page_objects.BasePage import BasePage
 from selenium.webdriver.common.by import By
 from selenium.webdriver.support.select import Select
 from pynput.keyboard import Key, Controller
-from selenium.webdriver.common.keys import Keys
 import time
+import testit
 
 
 class B2CCreateSMROrder(BasePage):
@@ -45,12 +45,14 @@ class B2CCreateSMROrder(BasePage):
                           '//label[@for= "ADDRESS[ATDHOUSE]"]/ancestor::div[2]//div[@class[contains(., "suggest form-control select-service-address input-sm")]]')
     _LOCATOR_MISTAKE = (By.XPATH, '//h5[@class = "text-danger"]')
 
-    def is_mistake(self):
+    @testit.step('Check error add creation order by address in form b2c creation smr')
+    def is_error_add_address_on_creation_order(self):
         try:
             return len(self.find_elements(locator=self._LOCATOR_MISTAKE, second=2)) >= 1
         except:
             return False
 
+    @testit.step('Custom select value {value} by {locator} in form b2c creation smr')
     def _custom_select_method(self, locator, text):
         element = self.find_element(locator)
         locator_input = self.find_element((By.XPATH, f'{locator[1]}//input[@type="text"]'))
@@ -59,25 +61,30 @@ class B2CCreateSMROrder(BasePage):
         time.sleep(1)
         locator_input.send_keys('\n')
 
+    @testit.step('Set building type {building_type} in form b2c creation smr')
     def set_building_type(self, building_type: str):
         Select(self.find_element(locator=self._LOCATOR_BUILDING_TYPE)).select_by_visible_text(building_type)
 
+    @testit.step('Set location {location_name} in form b2c creation smr')
     def set_location(self, location_name: str):
         time.sleep(2)
         self._custom_select_method(locator=self._LOCATOR_LOCATION, text=location_name)
 
+    @testit.step('Get streets names in form b2c creation smr')
     def get_streets_name(self):
         time.sleep(2)
         elements = self.find_elements(locator=self._LOCATOR_ELEMENTS_STREETS)
         street_names = [element.get_property('innerText') for element in elements]
         return street_names
 
+    @testit.step('Get houses names in form b2c creation smr')
     def get_house_names(self):
         time.sleep(2)
         elements = self.find_elements(locator=self._LOCATOR_ELEMENTS_HOUSES)
         house_names = [element.get_property('innerText') for element in elements]
         return house_names
 
+    @testit.step('Set ramdom street and house in form b2c creation smr')
     def set_random_street_and_house(self):
         streets_name = self.get_streets_name()
         for street_name in streets_name:
@@ -87,11 +94,12 @@ class B2CCreateSMROrder(BasePage):
             if first_police_house:
                 self.set_house(first_police_house)
                 time.sleep(2)
-                if self.is_mistake():
+                if self.is_error_add_address_on_creation_order():
                     continue
                 else:
                     break
 
+    @testit.step('Get first police house in form b2c creation smr')
     def get_police_house(self):
         houses = self.find_elements(locator=self._LOCATOR_ELEMENTS_HOUSES)
         for house in houses:
@@ -102,20 +110,25 @@ class B2CCreateSMROrder(BasePage):
                 return house_name
         return False
 
+    @testit.step('Set house {house_name} in form b2c creation smr')
     def set_house(self, house_name: str):
         time.sleep(1)
         self._custom_select_method(locator=self._LOCATOR_HOUSE, text=house_name)
 
-    def set_client(self, client: str):
+    @testit.step('Set client {client_name} in form b2c creation smr')
+    def set_client(self, client_name: str):
         keyboard = Controller()
-        self._custom_select_method(locator=self._LOCATOR_CLIENT, text=client)
+        self._custom_select_method(locator=self._LOCATOR_CLIENT, text=client_name)
         time.sleep(3)
         keyboard.press(Key.tab)
         keyboard.release(Key.tab)
 
+    @testit.step('Set object type {obj_type} in form b2c creation smr')
     def set_object_type(self, obj_type: str):
         self._custom_select_method(locator=self._LOCATOR_OBJECT_TYPE, text=obj_type)
 
+    @testit.step(
+        'Set building field {floors}, {entrances}, {flats}, {dh_counter} and {commerce_plan} in form b2c creation smr')
     def set_building_fields(self, floors: int, entrances: int, flats: int, dh_counter: int, commerce_plan: int):
         def clear_and_set(locator, value):
             self.find_element(locator=locator).clear()
@@ -127,30 +140,38 @@ class B2CCreateSMROrder(BasePage):
         clear_and_set(locator=self._LOCATOR_BUILDING_DH_COUNTER, value=dh_counter)
         clear_and_set(locator=self._LOCATOR_BUILDING_COMMERCE_PLAN, value=commerce_plan)
 
+    @testit.step('Set building ap year {ap_year} in form b2c creation smr')
     def set_building_ap_years(self, ap_year: int):
         self._custom_select_method(locator=self._LOCATOR_BUILDING_AP_YEAR, text=ap_year)
 
+    @testit.step('Set checkbox wifi in form b2c creation name')
     def set_wifi_checkbox(self):
         self.find_element(locator=self._LOCATOR_WIFI_CHECKBOX).click()
 
+    @testit.step('Click create order in form b2c creation name')
     def create_order(self):
         self.find_element(locator=self._LOCATOR_CREATE_BUTTON).click()
 
+    @testit.step('Set area {area} in form b2c creation name')
     def set_area(self, area: str):
         time.sleep(1)
         self._custom_select_method(locator=self._LOCATOR_AREA, text=area)
 
+    @testit.step('Set village {village} in form b2c creation name')
     def set_village(self, village: str):
         time.sleep(1)
         self._custom_select_method(locator=self._LOCATOR_VILLAGE, text=village)
 
+    @testit.step('Set area name {area_name} in form b2c creation name')
     def set_area_name(self, area_name):
         time.sleep(1)
         self._custom_select_method(locator=self._LOCATOR_AREA_NAME, text=area_name)
 
+    @testit.step('Set commerce plan {commerce_plan} in form b2c creation name')
     def set_commerce_plan(self, commerce_plan):
         self.find_element(locator=self._LOCATOR_BUILDING_COMMERCE_PLAN).send_keys(commerce_plan)
 
+    @testit.step('Create smr order by template {smr}')
     def create_smr_order_form(self, smr: dict):
         if smr['building_type'] == 'Комплексная новостройка':
             time.sleep(2)
@@ -174,6 +195,7 @@ class B2CCreateSMROrder(BasePage):
             self.create_order()
         time.sleep(3)
 
+    @testit.step('Get cration order in form b2c creation name')
     def get_creation_order(self) -> int:
         self.check_loader()
         return int(self.find_element(self._LOCATOR_CREATION_ORDER).text)

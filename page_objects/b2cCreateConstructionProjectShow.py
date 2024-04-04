@@ -17,7 +17,7 @@ class B2CCreateConstructionProjectShow(BasePage):
     _LOCATOR_OPEN_DROPDOWN = (By.XPATH, '//div[@class = "suggest form-control input-sm"]')
 
     _LOCATOR_SELECT_AJAX_MODAL = (By.CSS_SELECTOR, '.modal-content')
-    _LOCATOR_SELECT_AJAX_MODAL_ADDRESS_CITY = (By.CSS_SELECTOR, '.modal-content [id^=city]')
+    _LOCATOR_SELECT_AJAX_MODAL_ADDRESS_CITY = (By.CSS_SELECTOR, '.modal-content input[id^=city]')
     _LOCATOR_SELECT_AJAX_MODAL_ADDRESS_STREET = (
         By.CSS_SELECTOR, '.modal-content .js--b2c-construction-projects-load-houses-on-street')
     _LOCATOR_SELECT_MODAL_ADDRESS_LIST_UNCHECKED = (
@@ -65,10 +65,17 @@ class B2CCreateConstructionProjectShow(BasePage):
         self.find_element(locator=self._LOCATOR_INPUT_PROJECT_NAME).send_keys(
             f'{value} (уникальный: {time.time()})')
 
+    def select_modal_address_city(self, locator, value):
+        self.find_element((By.CSS_SELECTOR, f'{locator[1]} ~ div')).click()
+        time.sleep(2)
+        self.find_element((By.CSS_SELECTOR, f'{locator[1]} ~ div input[type="text"]')).send_keys(value)
+        time.sleep(2)
+        self.find_element((By.CSS_SELECTOR, f'{locator[1]} ~ div .suggest--option')).click()
+
     def add_address(self, city_name, street_name, house):
         self.find_element(locator=self._LOCATOR_BUTTON_OPEN_MODAL_ADD_OBJECT_SMR).click()
         self.find_element(locator=self._LOCATOR_OPEN_DROPDOWN).click()
-        self.selected_element_by_value(locator=self._LOCATOR_SELECT_AJAX_MODAL_ADDRESS_CITY,
+        self.select_modal_address_city(locator=self._LOCATOR_SELECT_AJAX_MODAL_ADDRESS_CITY,
                                        value=city_name)
         self.selected_element_by_value(locator=self._LOCATOR_SELECT_AJAX_MODAL_ADDRESS_STREET,
                                        value=street_name)

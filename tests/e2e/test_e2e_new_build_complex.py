@@ -51,7 +51,7 @@ def test_e2e_new_build_complex(driver):
         }
     }
 
-    UserLoginForm(driver).autorization_default()
+    UserLoginForm(driver).authorization_default()
     B2CCreateSMROrder(driver).open()
     B2CCreateSMROrder(driver).create_smr_order_form(smr)
     SMR(driver).open_order(B2CCreateSMROrder(driver).get_creation_order())
