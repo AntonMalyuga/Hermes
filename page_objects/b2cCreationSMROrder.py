@@ -70,19 +70,19 @@ class B2CCreateSMROrder(BasePage):
         with testit.step(f'Set location {location_name} in form b2c creation smr'):
             self._custom_select_method(locator=self._LOCATOR_LOCATION, text=location_name)
 
-    @testit.step('Get streets names in form b2c creation smr')
     def _get_streets_name(self):
         time.sleep(2)
         elements = self.find_elements(locator=self._LOCATOR_ELEMENTS_STREETS)
         street_names = [element.get_property('innerText') for element in elements]
-        return street_names
+        with testit.step('Get streets names {street_names} in form b2c creation smr'):
+            return street_names
 
-    @testit.step('Get houses names in form b2c creation smr')
     def _get_house_names(self):
         time.sleep(2)
         elements = self.find_elements(locator=self._LOCATOR_ELEMENTS_HOUSES)
         house_names = [element.get_property('innerText') for element in elements]
-        return house_names
+        with testit.step(f'Get houses names {house_names} in form b2c creation smr'):
+            return house_names
 
     def _set_random_street_and_house(self):
         streets_name = self._get_streets_name()
@@ -99,7 +99,6 @@ class B2CCreateSMROrder(BasePage):
                     with testit.step(f'Set ramdom street {first_police_house} and house in form b2c creation smr'):
                         break
 
-    @testit.step('Get first police house in form b2c creation smr')
     def _get_police_house(self):
         houses = self.find_elements(locator=self._LOCATOR_ELEMENTS_HOUSES)
         for house in houses:
@@ -107,12 +106,14 @@ class B2CCreateSMROrder(BasePage):
             if str(house_name).find('Милицейские') == -1:
                 continue
             else:
-                return house_name
+                with testit.step(f'Get first police house {house_name} in form b2c creation smr'):
+                    return house_name
         return False
 
     def _set_house(self, house_name: str):
         time.sleep(1)
-        self._custom_select_method(locator=self._LOCATOR_HOUSE, text=house_name)
+        with testit.step(f'Set house {house_name} in form b2c creation smr'):
+            self._custom_select_method(locator=self._LOCATOR_HOUSE, text=house_name)
 
     def _set_client(self, client_name: str):
         with testit.step(f'Set client {client_name} in form b2c creation smr'):
