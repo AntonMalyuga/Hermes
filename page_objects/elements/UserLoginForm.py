@@ -16,11 +16,11 @@ class UserLoginForm(BasePage):
     _LOCATOR_BUTTON_SUBMIT_FORM = (By.CSS_SELECTOR, 'form button[type="submit"]')
     _LOCATOR_TEXT_ALERT_ELEMENT = (By.CSS_SELECTOR, 'form .error-container')
 
-    @testit.step('Authorization with {login} and {password}')
+    @testit.step('Authorization with login and password')
     def authorization_with(self, username: str, password: str):
-        self.find_element(self._LOCATOR_INPUT_LOGIN).send_keys(username)
-        self.find_element(self._LOCATOR_INPUT_PASSWORD).send_keys(password)
-        self.find_element(self._LOCATOR_BUTTON_SUBMIT_FORM).click()
+        self._enter_login(username)
+        self._enter_password(password)
+        self._click_log_in()
 
     @testit.step('Authorization default')
     def authorization_default(self):
@@ -28,20 +28,18 @@ class UserLoginForm(BasePage):
 
     @testit.step('Get alert text')
     def get_text_alert_error(self) -> str:
-        return self.find_element(self._LOCATOR_TEXT_ALERT_ELEMENT).text
+        text_alert = self.find_element(self._LOCATOR_TEXT_ALERT_ELEMENT).text
+        with testit.step(f'Get alert text {text_alert}', 'Text alert received'):
+            return text_alert
 
-    @testit.step('Enter login {login}')
-    def enter_login(self, login: str):
-        self.find_element(self._LOCATOR_INPUT_LOGIN).send_keys(login)
+    def _enter_login(self, login: str):
+        with testit.step(f'Enter the login {login}', 'login was entered'):
+            self.find_element(self._LOCATOR_INPUT_LOGIN).send_keys(login)
 
-    @testit.step('Enter login by default')
-    def enter_login_default(self):
-        self.find_element(self._LOCATOR_INPUT_LOGIN).send_keys(self.LOGIN)
+    def _enter_password(self, password: str):
+        with testit.step(f'Enter the password {password}', 'password was entered'):
+            self.find_element(self._LOCATOR_INPUT_PASSWORD).send_keys(password)
 
-    @testit.step('Enter password {password}')
-    def enter_password(self, password: str):
-        self.find_element(self._LOCATOR_INPUT_PASSWORD).send_keys(password)
-
-    @testit.step('Click log in button')
-    def click_log_in(self):
-        self.find_element(self._LOCATOR_BUTTON_SUBMIT_FORM).click()
+    def _click_log_in(self):
+        with testit.step('Click log in', 'login was entered'):
+            self.find_element(self._LOCATOR_BUTTON_SUBMIT_FORM).click()

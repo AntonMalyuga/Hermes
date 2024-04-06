@@ -1,4 +1,5 @@
 import pytest
+import testit
 import os
 from selenium import webdriver
 from selenium.webdriver.chrome.service import Service as ChromeService
@@ -28,7 +29,6 @@ def pytest_addoption(parser):
         ),
         help='Выбирает среду для запуска тестов, по умолчанию тест'
     )
-
 
 
 @pytest.fixture()
@@ -64,7 +64,9 @@ def driver(request, base_url):
     request.addfinalizer(driver.quit)
 
     def open(path=''):
-        return driver.get(base_url + path)
+        url = f'{base_url}{path}'
+        testit.addLink(url=url, title='Start open URL', type=testit.LinkType.RELATED)
+        return driver.get(url)
 
     driver.maximize_window()
     driver.implicitly_wait(5)

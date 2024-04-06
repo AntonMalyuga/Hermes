@@ -9,7 +9,8 @@ from page_objects.elements.UserLoginForm import UserLoginForm
 @testit.description('Authorization positive test')
 def test_user_authorization_success(driver, base_url):
     UserLoginForm(driver).authorization_default()
-    assert UserLoginForm(driver).current_url() == base_url
+    with testit.step('Base URL is current URL' 'Authorization success'):
+        assert UserLoginForm(driver).current_url() == base_url
 
 
 @testit.title('Authorization')
@@ -19,7 +20,6 @@ def test_user_authorization_success(driver, base_url):
                          [('MalyugaAS', 'TestPass'), ('TestUser', 'TestPass')],
                          ids=['correct_login_and_not_correct_pass', 'not_correct_login_and_not_correct_pass'])
 def test_user_authorization_failed(driver, login, password):
-    UserLoginForm(driver).enter_login(login)
-    UserLoginForm(driver).enter_password(password)
-    UserLoginForm(driver).click_log_in()
-    assert UserLoginForm(driver).get_text_alert_error() == 'Неверные учётные данные'
+    UserLoginForm(driver).authorization_with(username=login, password=password)
+    with testit.step(f'Check text error "Неверные учётные данные"', 'Authorization not successful'):
+        assert UserLoginForm(driver).get_text_alert_error() == 'Неверные учётные данные'

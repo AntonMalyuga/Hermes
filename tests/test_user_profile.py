@@ -6,19 +6,19 @@ from page_objects.elements.Alert import Alert
 
 def test_check_mail_user(driver):
     UserLoginForm(driver).authorization_default()
-    driver.get('https://hermes-test.rt.ru/user_management/sso/user_profile')
+    UserProfile(driver).open()
     assert UserProfile(driver).get_email() == 'testgermes@yandex.ru12'
 
 
 def test_check_login(driver):
     UserLoginForm(driver).authorization_default()
-    driver.get('https://hermes-test.rt.ru/user_management/sso/user_profile')
+    UserProfile(driver).open()
     assert UserProfile(driver).get_login() == UserLoginForm.LOGIN
 
 
 def test_enter_change_password_on_current_pass(driver):
     UserLoginForm(driver).authorization_default()
-    driver.get('https://hermes-test.rt.ru/user_management/sso/user_profile')
+    UserProfile(driver).open()
     time.sleep(2)
     UserProfile(driver).enter_current_pass(UserLoginForm.PASSWORD)
     UserProfile(driver).enter_new_pass(UserLoginForm.PASSWORD)
@@ -30,7 +30,7 @@ def test_enter_change_password_on_current_pass(driver):
 
 def test_moscow_number(driver):
     UserLoginForm(driver).authorization_default()
-    driver.get('https://hermes-test.rt.ru/user_management/sso/user_profile')
+    UserProfile(driver).open()
 
     def check_region_moscow_phone_number(telephone_number):
 
