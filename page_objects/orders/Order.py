@@ -1,6 +1,7 @@
 from page_objects.BasePage import BasePage
 from selenium.webdriver.common.by import By
 import time
+import testit
 
 
 class Order(BasePage):
@@ -15,13 +16,17 @@ class Order(BasePage):
     _LOCATOR_FORM_BUTTON_CLOSE_STAGE = (By.CSS_SELECTOR, 'div[id^="moveOrderSelector"]')
 
     def open_order(self, order_id: int):
-        time.sleep(7)
-        self._driver.get(f'{self._driver.base_url}/aggregator/{order_id}')
+        with testit.step(f'Open order {order_id}'):
+            time.sleep(7)
+            self._driver.get(f'{self._driver.base_url}/aggregator/{order_id}')
 
     def get_order_id(self) -> int:
-        return int(self.find_element(locator=self._LOCATOR_ORDER_ID).text)
+        order_id = int(self.find_element(locator=self._LOCATOR_ORDER_ID).text)
+        with testit.step(f'Get order_id in from order {order_id}'):
+            return order_id
 
-    def check_open_order_interface(self) -> bool:
+    @testit.step(f'Check opening interface order')
+    def check_open_order_interface(self):
         self.check_loader()
         self.find_element(locator=self._CHECK_OPEN_ORDER).get_property(
             'innerText')
@@ -32,29 +37,20 @@ class Order(BasePage):
             'innerText')
 
         if text.find(str(order_id)) != -1:
-            return True
+            with testit.step(f'Checking order in form order {order_id}'):
+                return True
 
     def check_current_stage(self, stage_name: str):
         self.check_open_order_interface()
         text = self.find_element(locator=self._LOCATOR_ODER_CURRENT_STAGE).get_property(
             'innerText')
 
-        if text.find(str(stage_name)) == -1:
-            raise Exception(f'Некорректный этап, ожидание {stage_name}, получен {text}')
+        with testit.step(f'Check current stage name in form order {text}'):
+            if text.find(str(stage_name)) == -1:
+                raise Exception(f'Некорректный этап, ожидание {stage_name}, получен {text}')
 
     def close_stage(self, pass_name: str, next_stage: str, reason: str = '', comment: str = '',
                     is_auto: bool = False, ):
-        """Закрытие этапа БП
-
-        Обязательные параметры:
-        pass_name - имя перехода
-        next_stage - имя следующего этапа
-
-        Необязательные параметры:
-        reason- причина
-        comment - комментарий
-        is_auto - закрытие этапа без проверок
-        """
         self.check_open_order_interface()
         try:
             pass_locator = (By.XPATH, f'{self._LOCATOR_FORM_ODER_CLOSE_STAGE_PASS[1]}[text()="{pass_name}"]')
@@ -78,5 +74,5 @@ class Order(BasePage):
         else:
             element = self.find_element(locator=(By.CSS_SELECTOR, f'{self._LOCATOR_FORM_BUTTON_CLOSE_STAGE[1]} button'))
             element.click()
-
-        self.check_current_stage(next_stage)
+        with testit.step(f'Close stage with result {pass_name}, reason {reason}, comment {comment} where is_auto = {is_auto}'):
+            self.check_current_stage(next_stage)
