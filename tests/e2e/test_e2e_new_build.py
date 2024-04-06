@@ -20,6 +20,21 @@ from page_objects.b2cObjectOrder import B2CObjectOrder
 
 
 def test_e2e_new_build(driver):
+    project = {
+        'rf': 'РФ Саратовский',
+        'is_need_broad': 'Нет',
+        'is_type_construct': 'Новостройка',
+        'customer_inn': '111111111111',
+        'project_name': 'Автопрогон',
+        'address': {
+            'city': 'Саратов',
+            'street': 'Авиастроителей',
+            'house_name': 'д. 1',
+        },
+        'dh': 120,
+        'service_key': 'Wi-Fi'
+
+    }
     works = {
         'works_keys': {
             'Восстановление поврежденного канала кабельной канализации': {
@@ -45,15 +60,7 @@ def test_e2e_new_build(driver):
 
     UserLoginForm(driver).authorization_default()
     B2CCreateConstructionProjectShow(driver).open()
-    B2CCreateConstructionProjectShow(driver).selected_rf('РФ Саратовский')
-    B2CCreateConstructionProjectShow(driver).selected_is_need_broad('Нет')
-    B2CCreateConstructionProjectShow(driver).selected_type_construct('Новостройка')
-    B2CCreateConstructionProjectShow(driver).selected_customer_by_inn('111111111111')
-    B2CCreateConstructionProjectShow(driver).enter_project_name('Автопрогон')
-    B2CCreateConstructionProjectShow(driver).add_address('Саратов', 'Авиастроителей', 'д. 1')
-    B2CCreateConstructionProjectShow(driver).enter_dh_for_address(120)
-    B2CCreateConstructionProjectShow(driver).set_service_key('Wi-Fi')
-    B2CCreateConstructionProjectShow(driver).enter_create_project()
+    B2CCreateConstructionProjectShow(driver).create_project(project)
     Project(driver).check_current_stage(
         'Корректировка состава объектов проекта, проработка подключения услуг ключа на объектах и формирование предКП по ключу')
     ComponentCheckListWiFi(driver).add_cost_wifi(value='capex')

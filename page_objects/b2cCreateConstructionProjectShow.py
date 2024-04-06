@@ -1,4 +1,5 @@
 import random
+import testit
 from page_objects.BasePage import BasePage
 from selenium.webdriver.common.by import By
 import time
@@ -47,60 +48,83 @@ class B2CCreateConstructionProjectShow(BasePage):
     _LOCATOR_BUTTON_DELETE_SERVICES = (By.CSS_SELECTOR, '.js--b2c-construction-projects-delete-objects')
     _LOCATOR_BUTTON_CREATE_PROJECT = (By.CSS_SELECTOR, '.js--b2c-construction-projects-create-project')
 
-    def selected_rf(self, rf_name: str):
-        self.selected_element_by_value(locator=self._LOCATOR_SELECT_RF, value=rf_name)
+    def _selected_rf(self, rf_name: str):
+        with testit.step(f'Set regional filial {rf_name}'):
+            self.selected_element_by_value(locator=self._LOCATOR_SELECT_RF, value=rf_name)
 
-    def selected_type_construct(self, value: str):
-        self.selected_element_by_value(locator=self._LOCATOR_SELECT_TYPE_BUILD_TYPE, value=value)
+    def _selected_type_construct(self, type_construct: str):
+        with testit.step(f'Set type constuct {type_construct}'):
+            self.selected_element_by_value(locator=self._LOCATOR_SELECT_TYPE_BUILD_TYPE, value=type_construct)
 
-    def selected_is_need_broad(self, is_need_broad: str = 'Нет'):
-        self.selected_element_by_value(locator=self._LOCATOR_SELECT_IS_NEED_BROAD_BAND,
-                                       value=is_need_broad)
+    def _selected_is_need_broad(self, is_need_broad: str = 'Нет'):
+        with testit.step(f'Set status is need broad {is_need_broad}'):
+            self.selected_element_by_value(locator=self._LOCATOR_SELECT_IS_NEED_BROAD_BAND,
+                                           value=is_need_broad)
 
-    def selected_customer_by_inn(self, value):
-        self.selected_element_by_value(locator=self._LOCATOR_SELECT_AJAX_CUSTOMER,
-                                       value=value)
+    def _selected_customer_by_inn(self, inn: str):
+        with testit.step(f'Set customer inn {inn}'):
+            self.selected_element_by_value(locator=self._LOCATOR_SELECT_AJAX_CUSTOMER,
+                                           value=inn)
 
-    def enter_project_name(self, value):
-        self.find_element(locator=self._LOCATOR_INPUT_PROJECT_NAME).send_keys(
-            f'{value} (уникальный: {time.time()})')
+    def _enter_project_name(self, project_name: str):
+        unique_project_name = f'{project_name} (уникальный: {time.time()})'
+        with testit.step(f'Set project name {project_name}'):
+            self.find_element(locator=self._LOCATOR_INPUT_PROJECT_NAME).send_keys(unique_project_name)
 
-    def select_modal_address_city(self, locator, value):
-        self.find_element((By.CSS_SELECTOR, f'{locator[1]} ~ div')).click()
-        time.sleep(2)
-        self.find_element((By.CSS_SELECTOR, f'{locator[1]} ~ div input[type="text"]')).send_keys(value)
-        time.sleep(2)
-        self.find_element((By.CSS_SELECTOR, f'{locator[1]} ~ div .suggest--option')).click()
+    def _select_modal_address_city(self, locator, address_city):
+        with testit.step(f'Set address city in modal {address_city}'):
+            self.find_element((By.CSS_SELECTOR, f'{locator[1]} ~ div')).click()
+            time.sleep(2)
+            self.find_element((By.CSS_SELECTOR, f'{locator[1]} ~ div input[type="text"]')).send_keys(address_city)
+            time.sleep(2)
+            self.find_element((By.CSS_SELECTOR, f'{locator[1]} ~ div .suggest--option')).click()
 
-    def add_address(self, city_name, street_name, house):
-        self.find_element(locator=self._LOCATOR_BUTTON_OPEN_MODAL_ADD_OBJECT_SMR).click()
-        self.find_element(locator=self._LOCATOR_OPEN_DROPDOWN).click()
-        self.select_modal_address_city(locator=self._LOCATOR_SELECT_AJAX_MODAL_ADDRESS_CITY,
-                                       value=city_name)
-        self.selected_element_by_value(locator=self._LOCATOR_SELECT_AJAX_MODAL_ADDRESS_STREET,
-                                       value=street_name)
-        self.selected_element_by_value(locator=self._LOCATOR_SELECT_MODAL_ADDRESS_LIST_UNCHECKED, value=house)
-        self.find_element(locator=self._LOCATOR_BUTTON_MODAL_ADDRESS_ADD_ADDRESS).click()
-        self.find_element(locator=self._LOCATOR_BUTTON_MODAL_ADDRESS_CONFIRM_ADDRESS).click()
+    def _add_address(self, city_name, street_name, house):
+        with testit.step(f'Set address {city_name}, {street_name} and {house}'):
+            self.find_element(locator=self._LOCATOR_BUTTON_OPEN_MODAL_ADD_OBJECT_SMR).click()
+            self.find_element(locator=self._LOCATOR_OPEN_DROPDOWN).click()
+            self._select_modal_address_city(locator=self._LOCATOR_SELECT_AJAX_MODAL_ADDRESS_CITY,
+                                            address_city=city_name)
+            self.selected_element_by_value(locator=self._LOCATOR_SELECT_AJAX_MODAL_ADDRESS_STREET,
+                                           value=street_name)
+            self.selected_element_by_value(locator=self._LOCATOR_SELECT_MODAL_ADDRESS_LIST_UNCHECKED, value=house)
+            self.find_element(locator=self._LOCATOR_BUTTON_MODAL_ADDRESS_ADD_ADDRESS).click()
+            self.find_element(locator=self._LOCATOR_BUTTON_MODAL_ADDRESS_CONFIRM_ADDRESS).click()
 
-    def enter_dh_for_address(self, dh_count):
-        self.find_element(locator=self._LOCATOR_TABLE_SERVICES_OPEN_DH).click()
-        self.find_element(locator=self._LOCATOR_TABLE_SERVICES_ENTER_DH).send_keys(f'{dh_count}\n')
+    def _enter_dh_for_address(self, dh_count):
+        with testit.step(f'Set dh count {dh_count}'):
+            self.find_element(locator=self._LOCATOR_TABLE_SERVICES_OPEN_DH).click()
+            self.find_element(locator=self._LOCATOR_TABLE_SERVICES_ENTER_DH).send_keys(f'{dh_count}\n')
 
-    def set_random_service_key(self):
+    @testit.step('Set random service key')
+    def _set_random_service_key(self):
         self.find_element(locator=self._LOCATOR_TABLE_SERVICES_OPEN_MODAL_SERVICES).click()
         self.find_element(locator=self._LOCATOR_BUTTON_MODAL_SERVICES_SUBMIT).is_displayed()
         time.sleep(3)
         self.find_elements(locator=self._LOCATOR_CHECKBOX_MODAL_SERVICES_LIST)[random.randint(0, 5)].click()
         self.find_element(locator=self._LOCATOR_BUTTON_MODAL_SERVICES_SUBMIT).click()
 
-    def set_service_key(self, service_name: str):
-        selector = f'{self._LOCATOR_CHECKBOX_MODAL_SERVICE[1]} and contains(., "{service_name}")]//input'
+    def _set_service_key(self, service_name: str):
+        with testit.step(f'Set servive name {service_name}'):
+            selector = f'{self._LOCATOR_CHECKBOX_MODAL_SERVICE[1]} and contains(., "{service_name}")]//input'
 
-        self.find_element(locator=self._LOCATOR_TABLE_SERVICES_OPEN_MODAL_SERVICES).click()
-        time.sleep(3)
-        self.find_element(locator=(By.XPATH, selector)).click()
-        self.find_element(locator=self._LOCATOR_BUTTON_MODAL_SERVICES_SUBMIT).click()
+            self.find_element(locator=self._LOCATOR_TABLE_SERVICES_OPEN_MODAL_SERVICES).click()
+            time.sleep(3)
+            self.find_element(locator=(By.XPATH, selector)).click()
+            self.find_element(locator=self._LOCATOR_BUTTON_MODAL_SERVICES_SUBMIT).click()
 
-    def enter_create_project(self):
+    @testit.step('Click create project')
+    def _enter_create_project(self):
         self.find_element(locator=self._LOCATOR_BUTTON_CREATE_PROJECT).click()
+
+    @testit.step('Create project')
+    def create_project(self, project: dict):
+        self._selected_rf(project['rf'])
+        self._selected_is_need_broad(project['is_need_broad'])
+        self._selected_type_construct(project['is_type_construct'])
+        self._selected_customer_by_inn(project['customer_inn'])
+        self._enter_project_name(project['project_name'])
+        self._add_address(project['address']['city'], project['address']['street'], project['address']['house_name'])
+        self._enter_dh_for_address(project['dh'])
+        self._set_service_key(project['service_key'])
+        self._enter_create_project()
