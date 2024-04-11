@@ -55,7 +55,8 @@ def test_e2e_new_build(driver):
             'Wi-Fi оборудование 1': {
                 'natural_indicator': 'Точки доступа'
             }
-        }
+        },
+        'constuct_method': 'Подрядный способ'
     }
 
     UserLoginForm(driver).authorization_default()
@@ -70,7 +71,7 @@ def test_e2e_new_build(driver):
     B2cFormWorkVolume(driver).add_works(works)
     B2cFormWorkVolume(driver).close()
     Project(driver).open_form_specification()
-    B2cFormSpecification(driver).set_construct_method('Подрядный способ')
+    B2cFormSpecification(driver).set_construct_method('')
     B2cFormSpecification(driver).add_specification(specifications)
     B2cFormSpecification(driver).close()
     Project(driver).close_stage(pass_name='Положительно', next_stage='Проработка ТР и внесение стоимости работ')
