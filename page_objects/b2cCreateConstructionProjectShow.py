@@ -68,7 +68,7 @@ class B2CCreateConstructionProjectShow(BasePage):
 
     def _enter_project_name(self, project_name: str):
         unique_project_name = f'{project_name} (уникальный: {time.time()})'
-        with testit.step(f'Set project name {project_name}'):
+        with testit.step(f'Set project name: {project_name}'):
             self.find_element(locator=self._LOCATOR_INPUT_PROJECT_NAME).send_keys(unique_project_name)
 
     def _select_modal_address_city(self, locator, address_city):
@@ -117,14 +117,19 @@ class B2CCreateConstructionProjectShow(BasePage):
     def _enter_create_project(self):
         self.find_element(locator=self._LOCATOR_BUTTON_CREATE_PROJECT).click()
 
-    @testit.step('Create project')
-    def create_project(self, project: dict):
-        self._selected_rf(project['rf'])
-        self._selected_is_need_broad(project['is_need_broad'])
-        self._selected_type_construct(project['is_type_construct'])
-        self._selected_customer_by_inn(project['customer_inn'])
-        self._enter_project_name(project['project_name'])
-        self._add_address(project['address']['city'], project['address']['street'], project['address']['house_name'])
-        self._enter_dh_for_address(project['dh'])
-        self._set_service_key(project['service_key'])
-        self._enter_create_project()
+    def create_project(self, project: dict, is_prepared: bool = False):
+        with testit.step('Create project', 'Project is created'):
+            if is_prepared:
+                self._enter_project_name(project['project_name'])
+                self._enter_create_project()
+            else:
+                self._selected_rf(project['rf'])
+                self._selected_is_need_broad(project['is_need_broad'])
+                self._selected_type_construct(project['is_type_construct'])
+                self._selected_customer_by_inn(project['customer_inn'])
+                self._enter_project_name(project['project_name'])
+                self._add_address(project['address']['city'], project['address']['street'],
+                                  project['address']['house_name'])
+                self._enter_dh_for_address(project['dh'])
+                self._set_service_key(project['service_key'])
+                self._enter_create_project()

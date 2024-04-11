@@ -1,5 +1,4 @@
 import time
-import testit
 from selenium.webdriver.remote.webelement import WebElement
 from selenium.webdriver.support.wait import WebDriverWait
 from selenium.webdriver.support import expected_conditions as EC
@@ -19,7 +18,6 @@ class BasePage:
     def __init__(self, driver: object):
         self._driver = driver
 
-    @testit.step('Close current tab hermes', 'Current tab is closed')
     def close(self):
         self.check_loader()
         try:
@@ -28,11 +26,9 @@ class BasePage:
         except ElementClickInterceptedException:
             self._driver.execute_script("arguments[0].click()", element)
 
-    @testit.step('Delete text in element', 'Text deleted')
     def delete_text_by_js(self, element):
         self._driver.execute_script("arguments[0].removeAttribute('value')", element)
 
-    @testit.step('Check update page hermes', 'Page updated')
     def check_loader(self):
         WebDriverWait(self._driver, 150).until(
             EC.presence_of_element_located(locator=self._LOADER),
@@ -45,22 +41,16 @@ class BasePage:
 
     def open(self):
         url = f'{self.current_url()}{self.path}'
-        with testit.step(f'Open URL path by class {url}', 'URL is open'):
-            testit.addLink(url=url, title='Open URL path by class', type=testit.LinkType.RELATED)
-            self._driver.get(url)
+        self._driver.get(url)
 
-    @testit.step('Open URL by path current site')
     def open_for_path(self, path):
         url = f'{self.__base_url()}{self.path}{path}'
-        with testit.step(f'Open URL by path current site {url}', 'URL is open'):
-            testit.addLink(url=url, title='Open URL by path current site', type=testit.LinkType.RELATED)
-            self._driver.get(url)
+        self._driver.get(url)
 
     def current_url(self) -> str:
         current_url = self._driver.current_url
         return self._driver.current_url
 
-    @testit.step('Close all not current tabs in hermes', 'All not currents tabs closed')
     def close_not_current_tab(self):
         self.check_loader()
         tabs = self.find_elements(locator=self._NOT_CURRENT_TAB)
@@ -69,24 +59,20 @@ class BasePage:
 
     def move_to_element(self, locator):
         element = self.find_element(locator)
-        with testit.step(f'Move to element by {locator[0]} and selector {locator[1]}'):
-            ActionChains(self._driver).move_to_element(element).perform()
+        ActionChains(self._driver).move_to_element(element).perform()
 
     def find_element(self, locator: [str, str], second: int = 40) -> 'WebElement':
         ignored_exceptions = (NoSuchElementException, StaleElementReferenceException)
-        with testit.step(f'Find element by {locator[0]} and selector {locator[1]}'):
-            return WebDriverWait(self._driver, timeout=second, ignored_exceptions=ignored_exceptions).until(
-                EC.presence_of_element_located(locator=locator),
-                message=f"Не смог найти элемент по CSS {locator[0]} {locator[1]}")
+        return WebDriverWait(self._driver, timeout=second, ignored_exceptions=ignored_exceptions).until(
+            EC.presence_of_element_located(locator=locator),
+            message=f"Не смог найти элемент по CSS {locator[0]} {locator[1]}")
 
     def find_elements(self, locator: [str, str], second: int = 40) -> 'list[WebElement]':
         ignored_exceptions = (NoSuchElementException, StaleElementReferenceException)
-        with testit.step(f'Find elements by {locator[0]} and selector {locator[1]}'):
-            return WebDriverWait(self._driver, timeout=second, ignored_exceptions=ignored_exceptions).until(
-                EC.presence_of_all_elements_located(locator=locator),
-                message=f"Не смог найти элементы по CSS {locator}")
+        return WebDriverWait(self._driver, timeout=second, ignored_exceptions=ignored_exceptions).until(
+            EC.presence_of_all_elements_located(locator=locator),
+            message=f"Не смог найти элементы по CSS {locator}")
 
-    @testit.step('Select option by value and locator')
     def selected_element_by_value(self, locator, value: str):
         def __check_class_names_by_select(select_element, *class_names) -> bool:
             for i in range(len(class_names)):
@@ -111,6 +97,5 @@ class BasePage:
             raise TypeError(
                 f'Тег не имеет соответствующий класс, получен {select.get_attribute("class")}')
 
-    @testit.step('Get base URL')
     def __base_url(self) -> str:
         return self._driver.base_url

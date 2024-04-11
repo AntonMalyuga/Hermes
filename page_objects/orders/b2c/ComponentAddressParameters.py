@@ -1,8 +1,6 @@
-import time
-
 from selenium.webdriver.common.by import By
 from page_objects.orders.Order import Order
-from pathlib import Path
+import testit
 
 
 class ComponentAdressParameters(Order):
@@ -23,24 +21,27 @@ class ComponentAdressParameters(Order):
     _LOCATOR_LOAD_FILE_BUTTON = (By.XPATH,
                                  '//div[@class="panel panel-material"]//span[contains(., "Параметры объекта на адресе")]/ancestor::div[2]//div[@class = "form-group"]//button[@type= "submit"]')
 
-    def push_edit_form(self):
+    @testit.step('Open editor address parametrs form')
+    def __push_edit_form(self):
         self.find_element(locator=self._LOCATOR_EDIT_FORM).click()
 
-    def set_abonents(self, abonents):
-        self.find_element(locator=self._LOCATOR_ABONENT_COUNT).clear()
-        self.find_element(locator=self._LOCATOR_ABONENT_COUNT).send_keys(abonents)
+    def __set_abonents(self, abonents):
+        with testit.step(f'Set abonent {abonents}'):
+            self.find_element(locator=self._LOCATOR_ABONENT_COUNT).clear()
+            self.find_element(locator=self._LOCATOR_ABONENT_COUNT).send_keys(abonents)
 
-    def push_set_abonents_button(self):
+    @testit.step('Click save address parameters by for address parametrs')
+    def __push_set_abonents_button(self):
         self.find_element(locator=self._LOCATOR_SET_ABONENTS_BUTTON).click()
 
+    @testit.step('Move to group')
     def move_to_group(self):
         self.move_to_element(self._LOCATOR_GROUP)
 
+    @testit.step('Add abbonents')
     def add_abonents(self, abonents: int):
         self.check_loader()
         self.move_to_group()
-        self.push_edit_form()
-        self.set_abonents(abonents)
-        self.push_set_abonents_button()
-
-
+        self.__push_edit_form()
+        self.__set_abonents(abonents)
+        self.__push_set_abonents_button()

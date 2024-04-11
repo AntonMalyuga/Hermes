@@ -4,6 +4,7 @@ from selenium.webdriver.support.select import Select
 from pynput.keyboard import Key, Controller
 import time
 import testit
+from api.HermesSys import Sys
 
 
 class B2CCreateSMROrder(BasePage):
@@ -44,6 +45,7 @@ class B2CCreateSMROrder(BasePage):
     _LOCATOR_AREA_NAME = (By.XPATH,
                           '//label[@for= "ADDRESS[ATDHOUSE]"]/ancestor::div[2]//div[@class[contains(., "suggest form-control select-service-address input-sm")]]')
     _LOCATOR_MISTAKE = (By.XPATH, '//h5[@class = "text-danger"]')
+    _LOCATOR_CREATING_ORDERS = (By.XPATH, '//table[@class="table table-condensed table-hover"]//td[text()="B2C"]/following::td[1]/a')
 
     @testit.step('Check error add creation order by address in form b2c creation smr')
     def _is_error_add_address_on_creation_order(self):
@@ -51,6 +53,12 @@ class B2CCreateSMROrder(BasePage):
             return len(self.find_elements(locator=self._LOCATOR_MISTAKE, second=2)) >= 1
         except:
             return False
+
+    def _delete_creating_orders(self):
+        order_list = self.find_elements(self._LOCATOR_CREATING_ORDERS)
+        for order in order_list:
+            time.sleep(4)
+            Sys().delete_order(int(order.text))
 
     def _custom_select_method(self, locator, text):
         with testit.step(f'Custom select value {text} by {locator} in form b2c creation smr'):
@@ -154,21 +162,21 @@ class B2CCreateSMROrder(BasePage):
 
     def _set_area(self, area: str):
         time.sleep(1)
-        with testit.step('Set area {area} in form b2c creation name'):
+        with testit.step(f'Set area {area} in form b2c creation name'):
             self._custom_select_method(locator=self._LOCATOR_AREA, text=area)
 
     def _set_village(self, village: str):
         time.sleep(1)
-        with testit.step('Set village {village} in form b2c creation name'):
+        with testit.step(f'Set village {village} in form b2c creation name'):
             self._custom_select_method(locator=self._LOCATOR_VILLAGE, text=village)
 
     def _set_area_name(self, area_name):
         time.sleep(1)
-        with testit.step('Set area name {area_name} in form b2c creation name'):
+        with testit.step(f'Set area name {area_name} in form b2c creation name'):
             self._custom_select_method(locator=self._LOCATOR_AREA_NAME, text=area_name)
 
     def _set_commerce_plan(self, commerce_plan):
-        with testit.step('Set commerce plan {commerce_plan} in form b2c creation name'):
+        with testit.step(f'Set commerce plan {commerce_plan} in form b2c creation name'):
             self.find_element(locator=self._LOCATOR_BUILDING_COMMERCE_PLAN).send_keys(commerce_plan)
 
     def _set_parameters_new_building(self, smr: dict):
@@ -187,18 +195,21 @@ class B2CCreateSMROrder(BasePage):
         self._set_area(smr['area'])
         self._set_village(smr['village'])
         self._set_area_name(smr['area_name'])
+        if self._is_error_add_address_on_creation_order:
+            self._delete_creating_orders()
+            raise 'Заявка B2C удалена по данному адресу, необходимо повторно выполнить тест'
         self._set_commerce_plan(smr['commerce_plan'])
         self._set_building_ap_years(smr['ap_year'])
 
+    @testit.step('Create smr order')
     def create_smr_order_form(self, smr: dict):
         if smr['building_type'] == 'Комплексная новостройка':
             self._set_parameters_new_building(smr)
         if smr['building_type'] == 'Коттеджный посёлок/частный сектор':
-            self._set_parameters_new_building(smr)
+            self._set_parameters_private_sector(smr)
         self._create_order()
-        with testit.step(f'Create smr order by template {smr}'):
-            time.sleep(3)
 
+    @testit.step('Get created order')
     def get_creation_order(self) -> int:
         self.check_loader()
         smr_order_id = int(self.find_element(self._LOCATOR_CREATION_ORDER).text)

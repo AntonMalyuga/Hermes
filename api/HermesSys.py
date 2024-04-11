@@ -1,5 +1,7 @@
 import os
+import sys
 import requests
+import exceptiongroup
 
 
 class Sys:
@@ -17,13 +19,15 @@ class Sys:
         print(res.text)
 
     def delete_order(self, order_id: int):
-        data = {
-            'Order_ID': order_id,
-            "delOrderFullOrder": 'Удалить конкретно'
-        }
+        try:
+            data = {
+                'Order_ID': order_id,
+                "delOrderFullOrder": 'Удалить конкретно',
+                "isForce": 1
+            }
 
-        self._api(data=data)
+            self._api(data=data)
 
-
-
+        except Exception:
+            print(f'Удаление заявки {order_id} невозможно')
 

@@ -51,28 +51,30 @@ class Order(BasePage):
 
     def close_stage(self, pass_name: str, next_stage: str, reason: str = '', comment: str = '',
                     is_auto: bool = False, ):
-        self.check_open_order_interface()
-        try:
-            pass_locator = (By.XPATH, f'{self._LOCATOR_FORM_ODER_CLOSE_STAGE_PASS[1]}[text()="{pass_name}"]')
-            self.find_element(locator=pass_locator).click()
-        except ValueError:
-            raise f'Не найден переход {pass_name}'
+        with testit.step(
+                f'Close stage with result: {pass_name}, reason: {reason}, comment: {comment} where is_auto = {is_auto}'):
+            self.check_open_order_interface()
+            try:
+                pass_locator = (By.XPATH, f'{self._LOCATOR_FORM_ODER_CLOSE_STAGE_PASS[1]}[text()="{pass_name}"]')
+                self.find_element(locator=pass_locator).click()
+            except ValueError:
+                raise f'Не найден переход {pass_name}'
 
-        if reason:
+            if reason:
+                time.sleep(3)
+                self.selected_element_by_value(value=reason, locator=self._LOCATOR_FORM_ODER_CLOSE_STAGE_REASON)
+
+            if comment:
+                time.sleep(3)
+                self.find_element(locator=self._LOCATOR_FORM_ODER_CLOSE_STAGE_COMMENT).send_keys(comment)
+
             time.sleep(3)
-            self.selected_element_by_value(value=reason, locator=self._LOCATOR_FORM_ODER_CLOSE_STAGE_REASON)
 
-        if comment:
-            time.sleep(3)
-            self.find_element(locator=self._LOCATOR_FORM_ODER_CLOSE_STAGE_COMMENT).send_keys(comment)
+            if is_auto:
+                self.find_elements(locator=(By.CSS_SELECTOR, f'{self._LOCATOR_FORM_BUTTON_CLOSE_STAGE[1]} button'))[
+                    1].click()
+            else:
+                element = self.find_element(locator=(By.CSS_SELECTOR, f'{self._LOCATOR_FORM_BUTTON_CLOSE_STAGE[1]} button'))
+                element.click()
 
-        time.sleep(3)
-
-        if is_auto:
-            self.find_elements(locator=(By.CSS_SELECTOR, f'{self._LOCATOR_FORM_BUTTON_CLOSE_STAGE[1]} button'))[
-                1].click()
-        else:
-            element = self.find_element(locator=(By.CSS_SELECTOR, f'{self._LOCATOR_FORM_BUTTON_CLOSE_STAGE[1]} button'))
-            element.click()
-        with testit.step(f'Close stage with result {pass_name}, reason {reason}, comment {comment} where is_auto = {is_auto}'):
-            self.check_current_stage(next_stage)
+                self.check_current_stage(next_stage)
