@@ -2,6 +2,7 @@ from selenium.webdriver.common.by import By
 from page_objects.orders.Order import Order
 from selenium.webdriver.common.keys import Keys
 import random
+import testit
 
 
 class ComponentNaturalIndicator(Order):
@@ -10,10 +11,12 @@ class ComponentNaturalIndicator(Order):
     _COMPONENT_BUTTON_SAVE = (By.XPATH, f'{_GROUP}//button[@type="submit"]')
 
     def move_to_group(self):
-        self.move_to_element((By.XPATH, self._GROUP))
+        with testit.step(f'Перейти к группе'):
+            self.move_to_element((By.XPATH, self._GROUP))
 
     def open_editor(self):
-        self.find_element(self._COMPONENT_BUTTON_OPEN_EDITOR).click()
+        with testit.step(f'Открыть редактор'):
+            self.find_element(self._COMPONENT_BUTTON_OPEN_EDITOR).click()
 
     def set_random_qty(self):
         locator = f'{self._GROUP}//input[@type="number"]'
@@ -25,11 +28,13 @@ class ComponentNaturalIndicator(Order):
             input_element.send_keys(random.randint(1, 9))
 
     def save(self):
-        self.find_element(self._COMPONENT_BUTTON_SAVE).click()
+        with testit.step(f'Сохранить'):
+            self.find_element(self._COMPONENT_BUTTON_SAVE).click()
 
     def add_random(self):
-        self.check_loader()
-        self.move_to_group()
-        self.open_editor()
-        self.set_random_qty()
-        self.save()
+        with testit.step(f'Добавить случайные'):
+            self.check_loader()
+            self.move_to_group()
+            self.open_editor()
+            self.set_random_qty()
+            self.save()

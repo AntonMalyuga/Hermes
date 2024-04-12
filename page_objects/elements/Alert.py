@@ -9,10 +9,10 @@ class Alert(BasePage):
 
     def get_alert_text(self) -> str:
         alert_text = str(self.find_presence_element_with_wait(second=2, css_selector=self._ALERT).text)
-        with testit.step('Get alert text {alert_text}'):
+        with testit.step(f'Получить текст предупреждения "{alert_text}"'):
             return alert_text
 
     def get_alert_resource_not_found(self):
         alert_text = str(self.find_presence_element_with_wait(second=1, css_selector=self._ALERT_404_STATUS).text)
-        with testit.step(f'Get alert text when resource not found {alert_text}'):
+        with testit.step(f'Получить предупреждение об ошибке если ресурс не найден "{alert_text}"'):
             return alert_text

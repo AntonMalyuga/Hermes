@@ -49,30 +49,30 @@ class B2CCreateConstructionProjectShow(BasePage):
     _LOCATOR_BUTTON_CREATE_PROJECT = (By.CSS_SELECTOR, '.js--b2c-construction-projects-create-project')
 
     def _selected_rf(self, rf_name: str):
-        with testit.step(f'Set regional filial {rf_name}'):
+        with testit.step(f'Установить региональный филиал "{rf_name}"'):
             self.selected_element_by_value(locator=self._LOCATOR_SELECT_RF, value=rf_name)
 
     def _selected_type_construct(self, type_construct: str):
-        with testit.step(f'Set type constuct {type_construct}'):
+        with testit.step(f'Установить тип строительства "{type_construct}"'):
             self.selected_element_by_value(locator=self._LOCATOR_SELECT_TYPE_BUILD_TYPE, value=type_construct)
 
     def _selected_is_need_broad(self, is_need_broad: str = 'Нет'):
-        with testit.step(f'Set status is need broad {is_need_broad}'):
+        with testit.step(f'Установить статус "требуется строительство ШПД" "{is_need_broad}"'):
             self.selected_element_by_value(locator=self._LOCATOR_SELECT_IS_NEED_BROAD_BAND,
                                            value=is_need_broad)
 
     def _selected_customer_by_inn(self, inn: str):
-        with testit.step(f'Set customer inn {inn}'):
+        with testit.step(f'Выбрать клиента по ИНН: "{inn}"'):
             self.selected_element_by_value(locator=self._LOCATOR_SELECT_AJAX_CUSTOMER,
                                            value=inn)
 
     def _enter_project_name(self, project_name: str):
         unique_project_name = f'{project_name} (уникальный: {time.time()})'
-        with testit.step(f'Set project name: {project_name}'):
+        with testit.step(f'Установить имя проекта: "{project_name}"'):
             self.find_element(locator=self._LOCATOR_INPUT_PROJECT_NAME).send_keys(unique_project_name)
 
     def _select_modal_address_city(self, locator, address_city):
-        with testit.step(f'Set address city in modal {address_city}'):
+        with testit.step(f'Установить адрес в модальном окне "{address_city}"'):
             self.find_element((By.CSS_SELECTOR, f'{locator[1]} ~ div')).click()
             time.sleep(2)
             self.find_element((By.CSS_SELECTOR, f'{locator[1]} ~ div input[type="text"]')).send_keys(address_city)
@@ -80,7 +80,7 @@ class B2CCreateConstructionProjectShow(BasePage):
             self.find_element((By.CSS_SELECTOR, f'{locator[1]} ~ div .suggest--option')).click()
 
     def _add_address(self, city_name, street_name, house):
-        with testit.step(f'Set address {city_name}, {street_name} and {house}'):
+        with testit.step(f'Установить адрес "{city_name}", "{street_name}" and "{house}"'):
             self.find_element(locator=self._LOCATOR_BUTTON_OPEN_MODAL_ADD_OBJECT_SMR).click()
             self.find_element(locator=self._LOCATOR_OPEN_DROPDOWN).click()
             self._select_modal_address_city(locator=self._LOCATOR_SELECT_AJAX_MODAL_ADDRESS_CITY,
@@ -92,20 +92,20 @@ class B2CCreateConstructionProjectShow(BasePage):
             self.find_element(locator=self._LOCATOR_BUTTON_MODAL_ADDRESS_CONFIRM_ADDRESS).click()
 
     def _enter_dh_for_address(self, dh_count):
-        with testit.step(f'Set dh count {dh_count}'):
+        with testit.step(f'Установить количество ДХ "{dh_count}"'):
             self.find_element(locator=self._LOCATOR_TABLE_SERVICES_OPEN_DH).click()
             self.find_element(locator=self._LOCATOR_TABLE_SERVICES_ENTER_DH).send_keys(f'{dh_count}\n')
 
-    @testit.step('Set random service key')
     def _set_random_service_key(self):
-        self.find_element(locator=self._LOCATOR_TABLE_SERVICES_OPEN_MODAL_SERVICES).click()
-        self.find_element(locator=self._LOCATOR_BUTTON_MODAL_SERVICES_SUBMIT).is_displayed()
-        time.sleep(3)
-        self.find_elements(locator=self._LOCATOR_CHECKBOX_MODAL_SERVICES_LIST)[random.randint(0, 5)].click()
-        self.find_element(locator=self._LOCATOR_BUTTON_MODAL_SERVICES_SUBMIT).click()
+        with testit.step('Установить рандомный сервисный ключ', 'Сервисный ключ установлен'):
+            self.find_element(locator=self._LOCATOR_TABLE_SERVICES_OPEN_MODAL_SERVICES).click()
+            self.find_element(locator=self._LOCATOR_BUTTON_MODAL_SERVICES_SUBMIT).is_displayed()
+            time.sleep(3)
+            self.find_elements(locator=self._LOCATOR_CHECKBOX_MODAL_SERVICES_LIST)[random.randint(0, 5)].click()
+            self.find_element(locator=self._LOCATOR_BUTTON_MODAL_SERVICES_SUBMIT).click()
 
     def _set_service_key(self, service_name: str):
-        with testit.step(f'Set servive name {service_name}'):
+        with testit.step(f'Установить услугу "{service_name}"'):
             selector = f'{self._LOCATOR_CHECKBOX_MODAL_SERVICE[1]} and contains(., "{service_name}")]//input'
 
             self.find_element(locator=self._LOCATOR_TABLE_SERVICES_OPEN_MODAL_SERVICES).click()
@@ -113,12 +113,12 @@ class B2CCreateConstructionProjectShow(BasePage):
             self.find_element(locator=(By.XPATH, selector)).click()
             self.find_element(locator=self._LOCATOR_BUTTON_MODAL_SERVICES_SUBMIT).click()
 
-    @testit.step('Click create project')
     def _enter_create_project(self):
-        self.find_element(locator=self._LOCATOR_BUTTON_CREATE_PROJECT).click()
+        with testit.step('Кликнуть кнопку проект', 'Проект создан'):
+            self.find_element(locator=self._LOCATOR_BUTTON_CREATE_PROJECT).click()
 
     def create_project(self, project: dict, is_prepared: bool = False):
-        with testit.step('Create project', 'Project is created'):
+        with testit.step('Создать проект', 'Проект создан'):
             if is_prepared:
                 self._enter_project_name(project['project_name'])
                 self._enter_create_project()

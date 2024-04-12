@@ -1,5 +1,5 @@
 import time
-
+import testit
 from selenium.webdriver.common.by import By
 from page_objects.orders.Order import Order
 
@@ -19,27 +19,35 @@ class ComponentOpexCosts(Order):
                                                        f'//div[@class="expenses-monitoring"]//button[@title[contains(., "Сохранить прочие капитальные расходы")]]')
 
     def open_drop_down_panel(self):
-        self.find_element(locator=self._LOCATOR_FORM_OTHER_CAPITAL_COSTS).click()
+        with testit.step(f'Открыть выпадающую панель'):
+            self.find_element(locator=self._LOCATOR_FORM_OTHER_CAPITAL_COSTS).click()
 
     def open_editor(self):
-        self.find_element(locator=self._LOCATOR_FORM_OPEN_EDITOR_BUTTON).click()
+        with testit.step(f'Открыть редактор'):
+            self.find_element(locator=self._LOCATOR_FORM_OPEN_EDITOR_BUTTON).click()
 
     def push_add_other_opex_costs_button(self):
-        self.find_element(locator=self._LOCATOR_PUSH_FORM_ADD_OTHER_CAPITAL_COSTS_BUTTON).click()
+        with testit.step(f'Нажать кнопку редактирования расходов OPEX'):
+            self.find_element(locator=self._LOCATOR_PUSH_FORM_ADD_OTHER_CAPITAL_COSTS_BUTTON).click()
 
     def fill_other_opex_costs_out_rate_form(self, name: str):
-        self.find_element(locator=self._LOCATOR_FORM_ADD_OTHER_CAPITAL_COSTS_RATE).send_keys(f'{name} {time.time()}')
+        with testit.step(f'Заполнить форму дополнительных расходов OPEX "{name}"'):
+            self.find_element(locator=self._LOCATOR_FORM_ADD_OTHER_CAPITAL_COSTS_RATE).send_keys(
+                f'{name} {time.time()}')
 
     def fill_other_opex_costs_out_rate_total(self, total: int):
-        self.find_element(locator=self._LOCATOR_FORM_ADD_OTHER_CAPITAL_COSTS_TOTAL).send_keys(total)
+        with testit.step(f'Заполнить форму суммарных дополнительных расходов OPEX "{total}"'):
+            self.find_element(locator=self._LOCATOR_FORM_ADD_OTHER_CAPITAL_COSTS_TOTAL).send_keys(total)
 
     def push_other_opex_costs_submit_button(self):
-        self.find_element(locator=self._LOCATOR_PUSH_SUBMIT_OTHER_CAPITAL_COSTS_BUTTON).click()
+        with testit.step(f'Нажать кнопку сохранения'):
+            self.find_element(locator=self._LOCATOR_PUSH_SUBMIT_OTHER_CAPITAL_COSTS_BUTTON).click()
 
     def add_cost(self, name: str, total: int):
-        self.open_drop_down_panel()
-        self.open_editor()
-        self.push_add_other_opex_costs_button()
-        self.fill_other_opex_costs_out_rate_form(name)
-        self.fill_other_opex_costs_out_rate_total(total)
-        self.push_other_opex_costs_submit_button()
+        with testit.step(f'Заполнить расходы OPEX: статья расходов "{name}" и суммарные расходы "{total}"'):
+            self.open_drop_down_panel()
+            self.open_editor()
+            self.push_add_other_opex_costs_button()
+            self.fill_other_opex_costs_out_rate_form(name)
+            self.fill_other_opex_costs_out_rate_total(total)
+            self.push_other_opex_costs_submit_button()

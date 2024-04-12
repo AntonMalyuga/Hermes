@@ -16,27 +16,29 @@ class ComponentLoaderDH(Order):
                                  '//div[@class="panel panel-material"]//span[contains(., "Параметры объекта на адресе")]/ancestor::div[2]//div[@class = "form-group"]//button[@type= "submit"]')
 
     def set_yandex_link(self, link):
-        with testit.step(f'Set Yandex link {link} by component loader DH'):
+        with testit.step(f'Добавить ссылку на Яндекс карты "{link}" для компонента загрузчик ДХ'):
             self.find_element(locator=self._LOCATOR_YANDEX_LINK).clear()
             self.find_element(locator=self._LOCATOR_YANDEX_LINK).send_keys(link)
 
     def set_file_path(self, file_name: str):
-        with testit.step(f'Set file name {file_name} by component loader DH'):
+        with testit.step(f'Добавить путь файла "{file_name}" для компонента загрузчик ДХ'):
             file_path = str(Path(__file__).resolve().parents[1].joinpath('b2c').joinpath('files').joinpath(file_name))
             self.find_element(self._LOCATOR_SET_FILE_BUTTON).send_keys(file_path)
 
-    @testit.step('Submit by component loader DH')
+
     def push_set_file_button(self):
-        self.find_element(locator=self._LOCATOR_LOAD_FILE_BUTTON).click()
+        with testit.step(f'Нажать кнопку добавить файл'):
+            self.find_element(locator=self._LOCATOR_LOAD_FILE_BUTTON).click()
 
-    @testit.step('Move to group')
+
     def move_to_group(self):
-        self.move_to_element(self._LOCATOR_GROUP)
+        with testit.step(f'Перейти к группе'):
+            self.move_to_element(self._LOCATOR_GROUP)
 
-    @testit.step('Add loader DH')
     def add_dh(self, link: str, file_name: str):
-        self.check_loader()
-        self.move_to_group()
-        self.set_yandex_link(link)
-        self.set_file_path(file_name)
-        self.push_set_file_button()
+        with testit.step(f'Добавить загрузку ДХ по ссылке "{link}" и именем файла "{file_name}"'):
+            self.check_loader()
+            self.move_to_group()
+            self.set_yandex_link(link)
+            self.set_file_path(file_name)
+            self.push_set_file_button()

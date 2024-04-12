@@ -4,6 +4,7 @@ from selenium.webdriver.common.by import By
 from page_objects.orders.Order import Order
 from selenium.webdriver.support.select import Select
 from selenium.webdriver.common.keys import Keys
+import testit
 
 
 class ComponentAdditionalIncome(Order):
@@ -32,33 +33,40 @@ class ComponentAdditionalIncome(Order):
                             '//div[@class="panel panel-material"]//span[contains(., "Проектные параметры")]/ancestor::div[2]//button[@class = "btn btn-primary"]')
 
     def push_edit_form_button(self):
-        self.find_element(locator=self._LOCATOR_EDIT_FORM_BUTTON).click()
+        with testit.step(f'Нажать кнопку редактирования формы', 'Кнопка редактирования формы нажата'):
+            self.find_element(locator=self._LOCATOR_EDIT_FORM_BUTTON).click()
 
     def check_new_string_necessity(self):
-        elements = self.find_elements(locator=self._LOCATOR_TABLE_ROWS)
-        if len(elements) > 1:
-            self.find_element(locator=self._LOCATOR_DELETE_STRING).click()
-            self.find_element(locator=self._LOCATOR_CREATE_NEW_STRING).click()
-        else:
-            self.find_element(locator=self._LOCATOR_CREATE_NEW_STRING).click()
+        with testit.step(f'Проверить необходимость создания нового поля'):
+            elements = self.find_elements(locator=self._LOCATOR_TABLE_ROWS)
+            if len(elements) > 1:
+                self.find_element(locator=self._LOCATOR_DELETE_STRING).click()
+                self.find_element(locator=self._LOCATOR_CREATE_NEW_STRING).click()
+            else:
+                self.find_element(locator=self._LOCATOR_CREATE_NEW_STRING).click()
 
     def fill_name_string(self, name):
-        self.find_element(locator=self._LOCATOR_ADD_NAME_STRING).send_keys(name)
+        with testit.step(f'Заполнить имя поля "{name}"'):
+            self.find_element(locator=self._LOCATOR_ADD_NAME_STRING).send_keys(name)
 
     def fill_infrastructure_string(self, infrastructure_type):
-        select = Select(self.find_element(locator=self._LOCATOR_ADD_INFRASTRUCTURE_TYPE_STRING))
-        select.select_by_visible_text(infrastructure_type)
+        with testit.step(f'Заполнить поле инфраструктуры "{infrastructure_type}"'):
+            select = Select(self.find_element(locator=self._LOCATOR_ADD_INFRASTRUCTURE_TYPE_STRING))
+            select.select_by_visible_text(infrastructure_type)
 
     def fill_income_string(self, income_type):
-        select = Select(self.find_element(locator=self._LOCATOR_ADD_INCOME_TYPE_STRING))
-        select.select_by_visible_text(income_type)
+        with testit.step(f'Заполнить поле доходов "{income_type}"'):
+            select = Select(self.find_element(locator=self._LOCATOR_ADD_INCOME_TYPE_STRING))
+            select.select_by_visible_text(income_type)
 
     def fill_abonent_string(self, abonent_type):
-        select = Select(self.find_element(locator=self._LOCATOR_ADD_ABONENT_BASE_STRING))
-        select.select_by_visible_text(abonent_type)
+        with testit.step(f'Заполнить абонента "{abonent_type}"'):
+            select = Select(self.find_element(locator=self._LOCATOR_ADD_ABONENT_BASE_STRING))
+            select.select_by_visible_text(abonent_type)
 
     def fill_years_income(self, value):
-        elements = self.find_elements(locator=self._LOCATOR_ADD_YEARS_STRING)
+        with testit.step(f'Заполнить поле доходов за год"{value}"'):
+            elements = self.find_elements(locator=self._LOCATOR_ADD_YEARS_STRING)
 
         for element in elements:
             element.send_keys(Keys.CONTROL, 'a')
@@ -66,20 +74,23 @@ class ComponentAdditionalIncome(Order):
             time.sleep(1)
 
     def push_save_button(self):
-        self.find_element(locator=self._LOCATOR_SAVE_BUTTON).click()
+        with testit.step(f'Нажать кнопку сохранения'):
+            self.find_element(locator=self._LOCATOR_SAVE_BUTTON).click()
 
     def move_to_group(self):
-        self.move_to_element(self._LOCATOR_GROUP)
+        with testit.step(f'Перейти к группе'):
+            self.move_to_element(self._LOCATOR_GROUP)
 
     def add_addictional_income(self, name: str, infrastructure_type: str, income_type: str, abonent_type: str,
                                value: int):
-        self.check_loader()
-        self.move_to_group()
-        self.push_edit_form_button()
-        self.check_new_string_necessity()
-        self.fill_name_string(name)
-        self.fill_infrastructure_string(infrastructure_type)
-        self.fill_income_string(income_type)
-        self.fill_abonent_string(abonent_type)
-        self.fill_years_income(value)
-        self.push_save_button()
+        with testit.step(f'Добавить в поле доп.доходов: тип инфрастуктуры "{infrastructure_type}", тип дохода "{income_type}", тип абонента "{abonent_type}", значение"{value}", название "{name}"'):
+            self.check_loader()
+            self.move_to_group()
+            self.push_edit_form_button()
+            self.check_new_string_necessity()
+            self.fill_name_string(name)
+            self.fill_infrastructure_string(infrastructure_type)
+            self.fill_income_string(income_type)
+            self.fill_abonent_string(abonent_type)
+            self.fill_years_income(value)
+            self.push_save_button()
