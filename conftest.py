@@ -65,7 +65,6 @@ def driver(request, base_url):
 
     def open(path=''):
         url = f'{base_url}{path}'
-        testit.addLink(url=url, title='Start open URL', type=testit.LinkType.RELATED)
         return driver.get(url)
 
     driver.maximize_window()

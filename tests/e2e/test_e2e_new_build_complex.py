@@ -1,3 +1,4 @@
+import testit
 from page_objects.b2cCreationSMROrder import B2CCreateSMROrder
 from page_objects.orders.b2c.SMR import SMR
 from page_objects.orders.b2c.Project import Project
@@ -14,6 +15,10 @@ from page_objects.orders.b2c.ComponentFiles import ComponentFiles
 from page_objects.elements.UserLoginForm import UserLoginForm
 
 
+@testit.workItemIds(930)
+@testit.title('E2E')
+@testit.displayName('E2E по типу строительства "Комплексная новостройка"')
+@testit.description('E2E по типу строительства "Комплексная новостройка" до полного завершения проекта')
 def test_e2e_new_build_complex(driver):
     smr = {
         'building_type': 'Комплексная новостройка',
@@ -26,6 +31,10 @@ def test_e2e_new_build_complex(driver):
         'location_name': 'Москва',
         'client': '111111111',
         'obj_type': 'Многоквартирный дом'
+    }
+
+    project = {
+        'project_name': 'Автопрогон'
     }
 
     works = {
@@ -58,8 +67,7 @@ def test_e2e_new_build_complex(driver):
     SMR(driver).close_stage(pass_name='Положительно', next_stage='Подготовка заявок и включение в проект',
                             comment='Тестовый прогон')
     ComponentCreateProjectButton(driver).confirm()
-    B2CCreateConstructionProjectShow(driver).enter_project_name('Автопрогон')
-    B2CCreateConstructionProjectShow(driver).enter_create_project()
+    B2CCreateConstructionProjectShow(driver).create_project(project)
     Project(driver).close_not_current_tab()
     Project(driver).close_stage(pass_name='Проработка целесообразна',
                                 next_stage='Корректировка состава объектов проекта, проработка подключения услуг ключа на объектах и формирование предКП по ключу')

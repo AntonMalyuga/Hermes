@@ -1,5 +1,4 @@
-import time
-
+import testit
 from page_objects.b2cCreateConstructionProjectShow import B2CCreateConstructionProjectShow
 from page_objects.orders.b2c.Project import Project
 from page_objects.orders.b2c.Customer import Customer
@@ -19,6 +18,10 @@ from page_objects.elements.UserLoginForm import UserLoginForm
 from page_objects.b2cObjectOrder import B2CObjectOrder
 
 
+@testit.workItemIds(925)
+@testit.title('E2E')
+@testit.displayName('E2E по типу строительства "Новостройка"')
+@testit.description('E2E по типу строительства "Новостройка" до полного завершения проекта')
 def test_e2e_new_build(driver):
     project = {
         'rf': 'РФ Саратовский',
@@ -71,7 +74,6 @@ def test_e2e_new_build(driver):
     B2cFormWorkVolume(driver).add_works(works)
     B2cFormWorkVolume(driver).close()
     Project(driver).open_form_specification()
-    B2cFormSpecification(driver).set_construct_method('')
     B2cFormSpecification(driver).add_specification(specifications)
     B2cFormSpecification(driver).close()
     Project(driver).close_stage(pass_name='Положительно', next_stage='Проработка ТР и внесение стоимости работ')
@@ -96,14 +98,18 @@ def test_e2e_new_build(driver):
     B2CObjectOrder(driver).open_form(ComponentOrdersHierarchy(driver).get_customer_order_number())
     B2CObjectOrder(driver).add_contractor(discount=10, contractor='Саратовский', frame=555555)
     CustomerOrder(driver).open_order(B2CObjectOrder(driver).get_custom_order_order_id())
-    CustomerOrder(driver).close_stage(pass_name="Положительно", next_stage="Подписание заказа (вне Гермес)", is_auto=True)
+    CustomerOrder(driver).close_stage(pass_name="Положительно", next_stage="Подписание заказа (вне Гермес)",
+                                      is_auto=True)
     ComponentNumberDSOFU(driver).add_DSOFU(kode=123456)
     CustomerOrder(driver).close_stage(pass_name="Положительно", next_stage="Создание ДС ОФУ (вне Гермес)", is_auto=True)
-    CustomerOrder(driver).close_stage(pass_name="Положительно", next_stage="Формирование групповой КС-2 и их закрытие (вне Гермес)", is_auto=True)
+    CustomerOrder(driver).close_stage(pass_name="Положительно",
+                                      next_stage="Формирование групповой КС-2 и их закрытие (вне Гермес)", is_auto=True)
     CustomerOrder(driver).close_stage(pass_name="Положительно", next_stage="Строительство завершено")
     Customer(driver).open_order(ComponentOrdersHierarchy(driver).get_customer_number())
-    ComponentFiles(driver).add_file(name='Проектная документация (pdf)', type='Проектная документация (pdf)', file_name='file.txt')
-    ComponentFiles(driver).add_file(name='Рабочая документация (pdf)', type='Рабочая документация (pdf)', file_name='file.txt')
+    ComponentFiles(driver).add_file(name='Проектная документация (pdf)', type='Проектная документация (pdf)',
+                                    file_name='file.txt')
+    ComponentFiles(driver).add_file(name='Рабочая документация (pdf)', type='Рабочая документация (pdf)',
+                                    file_name='file.txt')
     Customer(driver).close_stage(pass_name="Положительно", next_stage="Разработка ПД и РД")
     Customer(driver).close_stage(pass_name="Положительно", next_stage="Согласование ПД и РД")
     Customer(driver).close_stage(pass_name="Положительно", next_stage="Выполнение СМР/внесение статусов работ")
@@ -127,7 +133,8 @@ def test_e2e_new_build(driver):
     Customer(driver).close_stage(pass_name="Положительно", next_stage="Проверка и фиксация КС", is_auto=True)
     Customer(driver).close_stage(pass_name="Положительно", next_stage="Подписание КС у Подрядчика", is_auto=True)
     Customer(driver).close_stage(pass_name="Положительно", next_stage="Подписание КС в РТК")
-    ComponentFiles(driver).add_file(name='КС-2 (скан pdf без штрих кода)', type='КС-2 (скан pdf без штрих кода)', file_name='file.txt')
+    ComponentFiles(driver).add_file(name='КС-2 (скан pdf без штрих кода)', type='КС-2 (скан pdf без штрих кода)',
+                                    file_name='file.txt')
     Customer(driver).close_stage(pass_name="Положительно", next_stage="Объект завершен")
     Project(driver).open_order(ComponentOrdersHierarchy(driver).get_project_number())
     Project(driver).check_current_stage('Проект реализован')

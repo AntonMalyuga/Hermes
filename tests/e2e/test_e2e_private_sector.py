@@ -10,9 +10,10 @@ from api.HermesSys import Sys
 import testit
 
 
+@testit.workItemIds(929)
 @testit.title('E2E')
-@testit.displayName('Test E2E by private sector')
-@testit.description('Create SMR by private sector, create project with SMR and delete')
+@testit.displayName('E2E по типу строительства "Частный сектор"')
+@testit.description('E2E по типу строительства "Частный сектор" до удаления созданной заявки')
 def test_e2e_private_sector_and_delete(driver):
     smr = {
         'building_type': 'Коттеджный посёлок/частный сектор',
