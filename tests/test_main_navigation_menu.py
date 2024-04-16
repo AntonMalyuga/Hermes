@@ -5,7 +5,7 @@ from page_objects.elements.MainNavMenu import MainNavMenu
 from page_objects.orders.Order import Order
 
 
-@testit.title('Navigation menu')
+@testit.title('Навигационное меню')
 @testit.displayName('Check user name on main menu')
 @testit.description('Check user full name on main menu')
 def test_correct_user_name_on_page(driver):
@@ -13,7 +13,7 @@ def test_correct_user_name_on_page(driver):
     assert MainNavMenu(driver).get_user_name() == 'Малюга Антон Сергеевич'
 
 
-@testit.title('Navigation menu')
+@testit.title('Навигационное меню')
 @testit.displayName('Check open order')
 @testit.description('Check open order after enter in search order')
 def test_search_order_id_positive(driver, order_id):
@@ -23,7 +23,7 @@ def test_search_order_id_positive(driver, order_id):
     assert Order(driver).check_order_id(order_id)
 
 
-@testit.title('Navigation menu')
+@testit.title('Навигационное меню')
 @testit.displayName('Check alert not valid order')
 @testit.description('Check alert not valid order in search order')
 def test_search_order_id_for_important_order(driver, order_id):
@@ -33,7 +33,7 @@ def test_search_order_id_for_important_order(driver, order_id):
     assert Alert(driver).get_alert_text() == f'Заявка {order_id} не найдена.'
 
 
-@testit.title('Navigation menu')
+@testit.title('Навигационное меню')
 @testit.displayName('Check alert empty order')
 @testit.description('Check alert empty order in search order')
 def test_search_order_id_for_null_symbol(driver):
@@ -43,7 +43,7 @@ def test_search_order_id_for_null_symbol(driver):
     assert text.find('Не найден маршрут для адреса https://hermes-test.rt.ru/aggregator/') != -1
 
 
-@testit.title('Navigation menu')
+@testit.title('Навигационное меню')
 @testit.displayName('Check max length order symbol')
 @testit.description('Check max length order symbol in search order')
 def test_max_length_symbol_search_order_id(driver):

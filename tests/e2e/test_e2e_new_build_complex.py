@@ -1,17 +1,17 @@
 import testit
-from page_objects.b2cCreationSMROrder import B2CCreateSMROrder
+from page_objects.forms.b2cCreationSMROrder import B2CCreateSMROrder
 from page_objects.orders.b2c.SMR import SMR
 from page_objects.orders.b2c.Project import Project
-from page_objects.orders.b2c.ComponentCreateProjectButton import ComponentCreateProjectButton
-from page_objects.b2cCreateConstructionProjectShow import B2CCreateConstructionProjectShow
+from page_objects.components.ComponentCreateProjectButton import ComponentCreateProjectButton
+from page_objects.forms.b2cCreateConstructionProjectShow import B2CCreateConstructionProjectShow
 from page_objects.orders.b2c.GPH import GPH
-from page_objects.orders.b2c.b2cFormWorkVolume import B2cFormWorkVolume
-from page_objects.orders.b2c.b2cFormSpecification import B2cFormSpecification
-from page_objects.orders.b2c.ComponentControlDate import ComponentControlDate
-from page_objects.orders.b2c.ComponentCapitalCosts import ComponentCapitalCosts
-from page_objects.orders.b2c.ComponenOrderstHierarchy import ComponentOrdersHierarchy
-from page_objects.orders.b2c.ComponentTypeProject import ComponentTypeProject
-from page_objects.orders.b2c.ComponentFiles import ComponentFiles
+from page_objects.forms.b2cFormWorkVolume import B2cFormWorkVolume
+from page_objects.forms.b2cFormSpecification import B2cFormSpecification
+from page_objects.components.ComponentControlDate import ComponentControlDate
+from page_objects.components.ComponentCapitalCosts import ComponentCapitalCosts
+from page_objects.components.ComponenOrderstHierarchy import ComponentOrdersHierarchy
+from page_objects.components.ComponentTypeProject import ComponentTypeProject
+from page_objects.components.ComponentFiles import ComponentFiles
 from page_objects.elements.UserLoginForm import UserLoginForm
 
 

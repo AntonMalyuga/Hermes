@@ -1,10 +1,10 @@
-from page_objects.b2cCreationSMROrder import B2CCreateSMROrder
+from page_objects.forms.b2cCreationSMROrder import B2CCreateSMROrder
 from page_objects.orders.b2c.SMR import SMR
 from page_objects.orders.b2c.Project import Project
-from page_objects.orders.b2c.ComponentCreateProjectButton import ComponentCreateProjectButton
-from page_objects.b2cCreateConstructionProjectShow import B2CCreateConstructionProjectShow
-from page_objects.orders.b2c.ComponentLoaderDH import ComponentLoaderDH
-from page_objects.orders.b2c.ComponentAddressParameters import ComponentAdressParameters
+from page_objects.components.ComponentCreateProjectButton import ComponentCreateProjectButton
+from page_objects.forms.b2cCreateConstructionProjectShow import B2CCreateConstructionProjectShow
+from page_objects.components.ComponentLoaderDH import ComponentLoaderDH
+from page_objects.components.ComponentAddressParameters import ComponentAdressParameters
 from page_objects.elements.UserLoginForm import UserLoginForm
 from api.HermesSys import Sys
 import testit

@@ -1,21 +1,21 @@
 import testit
-from page_objects.b2cCreateConstructionProjectShow import B2CCreateConstructionProjectShow
+from page_objects.forms.b2cCreateConstructionProjectShow import B2CCreateConstructionProjectShow
 from page_objects.orders.b2c.Project import Project
 from page_objects.orders.b2c.Customer import Customer
 from page_objects.orders.b2c.CustomerOrder import CustomerOrder
-from page_objects.orders.b2c.b2cFormWorkVolume import B2cFormWorkVolume
-from page_objects.orders.b2c.b2cFormSpecification import B2cFormSpecification
-from page_objects.orders.b2c.ComponentControlDate import ComponentControlDate
-from page_objects.orders.b2c.ComponentCapitalCosts import ComponentCapitalCosts
-from page_objects.orders.b2c.ComponentCheckListWiFi import ComponentCheckListWiFi
-from page_objects.orders.b2c.ComponentNaturalIndicators import ComponentNaturalIndicator
-from page_objects.orders.b2c.ComponentAddictionalIncome import ComponentAdditionalIncome
-from page_objects.orders.b2c.ComponenOrderstHierarchy import ComponentOrdersHierarchy
-from page_objects.orders.b2c.ComponentTypeProject import ComponentTypeProject
-from page_objects.orders.b2c.ComponentNumberDSOFU import ComponentNumberDSOFU
-from page_objects.orders.b2c.ComponentFiles import ComponentFiles
+from page_objects.forms.b2cFormWorkVolume import B2cFormWorkVolume
+from page_objects.forms.b2cFormSpecification import B2cFormSpecification
+from page_objects.components.ComponentControlDate import ComponentControlDate
+from page_objects.components.ComponentCapitalCosts import ComponentCapitalCosts
+from page_objects.components.ComponentCheckListWiFi import ComponentCheckListWiFi
+from page_objects.components.ComponentNaturalIndicators import ComponentNaturalIndicator
+from page_objects.components.ComponentAddictionalIncome import ComponentAdditionalIncome
+from page_objects.components.ComponenOrderstHierarchy import ComponentOrdersHierarchy
+from page_objects.components.ComponentTypeProject import ComponentTypeProject
+from page_objects.components.ComponentNumberDSOFU import ComponentNumberDSOFU
+from page_objects.components.ComponentFiles import ComponentFiles
 from page_objects.elements.UserLoginForm import UserLoginForm
-from page_objects.b2cObjectOrder import B2CObjectOrder
+from page_objects.forms.b2cObjectOrder import B2CObjectOrder
 
 
 @testit.workItemIds(925)

@@ -1,5 +1,5 @@
 import time
-from page_objects.UserProfile import UserProfile
+from page_objects.forms.UserProfile import UserProfile
 from page_objects.elements.UserLoginForm import UserLoginForm
 from page_objects.elements.Alert import Alert
 
@@ -43,3 +43,4 @@ def test_moscow_number(driver):
             return False
 
     assert check_region_moscow_phone_number(UserProfile(driver).get_phone_number())
+
