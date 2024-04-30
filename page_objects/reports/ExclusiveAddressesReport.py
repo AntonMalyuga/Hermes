@@ -1,4 +1,5 @@
 from ..BasePage import BasePage
+import testit
 
 
 class ExclusiveAddressesReport(BasePage):
@@ -7,5 +8,6 @@ class ExclusiveAddressesReport(BasePage):
     _CHECK_REPORT = 'button[formaction="/report/exclusive_addresses_report/html"]'
 
     def check_report(self):
-        if len(self.find_elements(self._CHECK_REPORT)) > 0:
-            return True
+        with testit.step(f'Проверить открытие отчета по адресу "{self.path}", "Отчёт успешно открыт"'):
+            if len(self.find_elements(self._CHECK_REPORT)) > 0:
+                return True
