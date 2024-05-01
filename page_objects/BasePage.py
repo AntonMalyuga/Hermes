@@ -89,7 +89,7 @@ class BasePage:
             time.sleep(2)
             self.find_element((By.CSS_SELECTOR, f'{locator[1]} ~ div .suggest--option')).click()
 
-        elif __check_class_names_by_select(select, 'form-control input-sm', 'available-values'):
+        elif __check_class_names_by_select(select, 'form-control', 'available-values'):
 
             Select(select).select_by_visible_text(value)
 

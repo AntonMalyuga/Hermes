@@ -18,7 +18,7 @@ from page_objects.elements.UserLoginForm import UserLoginForm
 @testit.workItemIds(930)
 @testit.title('E2E')
 @testit.displayName('E2E по типу строительства "Комплексная новостройка"')
-@testit.description('E2E по типу строительства "Комплексная новостройка" до полного завершения проекта')
+@testit.description('E2E по типу строительства "Комплексная новостройка" с услугой WiFi  по ГПХ до полного завершения проекта')
 def test_e2e_new_build_complex(driver):
     smr = {
         'building_type': 'Комплексная новостройка',

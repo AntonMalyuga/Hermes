@@ -13,7 +13,7 @@ import testit
 @testit.workItemIds(929)
 @testit.title('E2E')
 @testit.displayName('E2E по типу строительства "Частный сектор"')
-@testit.description('E2E по типу строительства "Частный сектор" до удаления созданной заявки')
+@testit.description('E2E по типу строительства "Частный сектор"  с услугой CORE до удаления созданной заявки проекта и заявки СМР')
 def test_e2e_private_sector_and_delete(driver):
     smr = {
         'building_type': 'Коттеджный посёлок/частный сектор',

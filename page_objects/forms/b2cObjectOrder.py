@@ -6,6 +6,8 @@ import testit
 
 
 class B2CObjectOrder(Order):
+
+    name = 'Объекты заказа КИП'
     path = 'b2c/group_orders'
 
     _ORDER_ID = (By.CSS_SELECTOR, '.form-group.mb-0 .js--load-tab.js--new-tab')

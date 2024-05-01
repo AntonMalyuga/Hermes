@@ -21,7 +21,7 @@ from page_objects.forms.b2cObjectOrder import B2CObjectOrder
 @testit.workItemIds(925)
 @testit.title('E2E')
 @testit.displayName('E2E по типу строительства "Новостройка"')
-@testit.description('E2E по типу строительства "Новостройка" до полного завершения проекта')
+@testit.description('E2E по типу строительства "Новостройка" с услугой WiFi  по подрядному способу без УЗ до полного завершения проекта')
 def test_e2e_new_build(driver):
     project = {
         'rf': 'РФ Саратовский',

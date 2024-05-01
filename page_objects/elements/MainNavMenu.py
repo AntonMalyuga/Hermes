@@ -4,6 +4,9 @@ import testit
 
 
 class MainNavMenu(BasePage):
+
+    name = 'Навигационное меню'
+
     _LOCATOR_A_FULL_NAME = (By.CSS_SELECTOR, '.navbar-default .nav.navbar-nav.navbar-right a')
     _LOCATOR_A_FEEDBACK = (By.CSS_SELECTOR, '.navbar-default [link="/feedback"]')
     _LOCATOR_A_CALENDAR_SLA = (By.CSS_SELECTOR, '.navbar-default a[link="/show_case"]')

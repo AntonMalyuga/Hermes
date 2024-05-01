@@ -6,8 +6,8 @@ from page_objects.orders.Order import Order
 
 
 @testit.title('Навигационное меню')
-@testit.displayName('Check user name on main menu')
-@testit.description('Check user full name on main menu')
+@testit.displayName('Проверка ФИО в навигационном меню')
+@testit.description('Проверяется значения ФИО и учётной записи в навигационном меню')
 def test_correct_user_name_on_page(driver):
     UserLoginForm(driver).authorization_default()
     assert MainNavMenu(driver).get_user_name() == 'Малюга Антон Сергеевич'

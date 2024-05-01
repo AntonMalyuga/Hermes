@@ -7,6 +7,9 @@ from selenium.webdriver.common.keys import Keys
 
 
 class B2cFormWorkVolume(BasePage):
+
+    name = 'Редактировать объемы ПИР/СМР B2C'
+
     _LOCATOR_BUTTON_OPEN_MODAL_ADD_WORK = (By.CSS_SELECTOR, 'button[data-target^="#add-work-modal"]')
     _LOCATOR_TABLE_OPEN_MODAL_ADD_WORK = (By.XPATH, '//tbody[@id="add-work-table-tbody"]')
     _LOCATOR_CHECK_OPEN_MODAL = (By.CSS_SELECTOR, '.modal.fade.in')

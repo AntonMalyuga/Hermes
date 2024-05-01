@@ -1,4 +1,3 @@
-import time
 import testit
 from selenium.webdriver.common.by import By
 from page_objects.orders.Order import Order
@@ -8,7 +7,7 @@ from selenium.common.exceptions import TimeoutException
 
 class ComponentPanelMaterialPart(Order):
     _LOCATOR_GROUP = (
-    By.XPATH, '//div[@class="panel panel-material"]//span[contains(., "Затратная часть")]/ancestor::div[2]')
+        By.XPATH, '//div[@class="panel panel-material"]//span[contains(., "Затратная часть")]/ancestor::div[2]')
     _LOCATOR_COMPONENT_DROPDOWN_MENU = (By.XPATH,
                                         '//div[@class="panel panel-material"]//span[contains(., "Затратная часть")]/ancestor::div[2]//select[@class[contains(., "form-control input-medium input-sm change-expenses-monitoring-object")]]')
     _LOCATOR_COMPONENT_OTHER_CAPITAL_COSTS_DROPDOWN = (By.XPATH,

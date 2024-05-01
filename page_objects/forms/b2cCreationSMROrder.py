@@ -8,6 +8,7 @@ from api.HermesSys import Sys
 
 
 class B2CCreateSMROrder(BasePage):
+    name = 'Создать заявку СМР'
     path = 'client/createb2c'
 
     _LOCATOR_BUILDING_TYPE = (

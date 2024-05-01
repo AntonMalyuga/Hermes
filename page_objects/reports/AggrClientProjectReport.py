@@ -3,11 +3,12 @@ import testit
 
 
 class AggrClientProjectReport(BasePage):
+    name = 'Агрегированная Аналитика проекта'
     path = 'report/aggr_client_project_report'
 
     _CHECK_REPORT = 'button[formaction="/report/aggr_client_project_report/html"]'
 
     def check_report(self):
-        with testit.step(f'Проверить открытие отчета по адресу "{self.path}", "Отчёт успешно открыт"'):
+        with testit.step(f'Проверить открытие отчета "{self.name}" по адресу "{self.path}", "Отчёт успешно открыт"'):
             if len(self.find_elements(self._CHECK_REPORT)) > 0:
                 return True

@@ -9,7 +9,7 @@ from page_objects.elements.UserLoginForm import UserLoginForm
 @testit.workItemIds(1057)
 def test_user_authorization_success(driver, base_url):
     UserLoginForm(driver).authorization_default()
-    with testit.step('Проверить корректность входа в систему' 'Вход в систему выполнен'):
+    with testit.step('Проверить корректность входа в систему' 'Вход в Гермес выполнен'):
         assert UserLoginForm(driver).current_url() == base_url
 
 
@@ -23,5 +23,5 @@ def test_user_authorization_success(driver, base_url):
                          ids=['correct_login_and_not_correct_pass', 'not_correct_login_and_not_correct_pass'])
 def test_user_authorization_failed(driver, login, password):
     UserLoginForm(driver).authorization_with(username=login, password=password)
-    with testit.step(f'Проверить текст ошибки "Неверные учётные данные"', 'Вход в систему не выполнен'):
+    with testit.step(f'Проверить текст ошибки "Неверные учётные данные"', 'Вход в Гермес не выполнен'):
         assert UserLoginForm(driver).get_text_alert_error() == 'Неверные учётные данные'

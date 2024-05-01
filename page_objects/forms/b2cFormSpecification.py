@@ -6,6 +6,9 @@ from page_objects.BasePage import BasePage
 
 
 class B2cFormSpecification(BasePage):
+
+    name = 'Редактировать спецификацию оборудования B2C'
+
     _LOCATOR_BUTTON_OPEN_MODAL_ADD_SPECIFICATION = (By.CSS_SELECTOR, 'button[id="addEquipment"]')
     _LOCATOR_CHECK_OPEN_MODAL = (By.CSS_SELECTOR, '.modal.fade.in')
     _LOCATOR_SHOW_MODAL_SPECIFICATION_LIST = (By.XPATH, '//button[@data-url="/b2c/specification/equipment_list"]')

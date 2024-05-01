@@ -4,6 +4,9 @@ from selenium.webdriver.common.by import By
 
 
 class Alert(BasePage):
+
+    name = 'Предупреждение'
+
     _ALERT = (By.CSS_SELECTOR, '#toast-container span')
     _ALERT_404_STATUS = (By.CSS_SELECTOR, '#toast-container .toast-message')
 

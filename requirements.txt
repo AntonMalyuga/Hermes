@@ -8,3 +8,4 @@ pynput==1.7.6
 testit-api-client==2.0.2
 testit-adapter-pytest==2.0.4
 testit-python-commons==2.0.4
+mouse==0.7.1

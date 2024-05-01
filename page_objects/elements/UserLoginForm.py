@@ -8,6 +8,9 @@ load_dotenv()
 
 
 class UserLoginForm(BasePage):
+
+    name = 'Форма авторизации'
+
     LOGIN = os.getenv('HERMES_LOGIN')
     PASSWORD = os.getenv('HERMES_PASSWORD')
 

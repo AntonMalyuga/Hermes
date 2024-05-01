@@ -4,6 +4,8 @@ from page_objects.BasePage import BasePage
 
 
 class UserProfile(BasePage):
+
+    name = 'Профиль пользователя'
     path = 'user_management/sso/user_profile'
 
     _LOCATOR_INPUT_EMAIL = (By.CSS_SELECTOR, '.form-horizontal input.form-control')
