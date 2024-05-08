@@ -19,7 +19,7 @@ class B2CCreateConstructionProjectShow(BasePage):
     _LOCATOR_OPEN_DROPDOWN = (By.XPATH, '//div[@class = "suggest form-control input-sm"]')
 
     _LOCATOR_SELECT_AJAX_MODAL = (By.CSS_SELECTOR, '.modal-content')
-    _LOCATOR_SELECT_AJAX_MODAL_ADDRESS_CITY = (By.CSS_SELECTOR, '.modal-content input[id^=city]')
+    _LOCATOR_SELECT_AJAX_MODAL_ADDRESS_CITY = (By.XPATH, '//div[@class="modal-content"]//input[contains(@id, "city")]')
     _LOCATOR_SELECT_AJAX_MODAL_ADDRESS_STREET = (
         By.CSS_SELECTOR, '.modal-content .js--b2c-construction-projects-load-houses-on-street')
     _LOCATOR_SELECT_MODAL_ADDRESS_LIST_UNCHECKED = (
@@ -72,25 +72,41 @@ class B2CCreateConstructionProjectShow(BasePage):
         with testit.step(f'Установить имя проекта: "{project_name}"'):
             self.find_element(locator=self._LOCATOR_INPUT_PROJECT_NAME).send_keys(unique_project_name)
 
-    def _select_modal_address_city(self, locator, address_city):
+    def _set_modal_address_city(self, address_city):
+
+        locator = self._LOCATOR_SELECT_AJAX_MODAL_ADDRESS_CITY
+
         with testit.step(f'Установить адрес в модальном окне "{address_city}"'):
-            self.find_element((By.CSS_SELECTOR, f'{locator[1]} ~ div')).click()
+            self.find_element(locator=self._LOCATOR_OPEN_DROPDOWN).click()
+            self.find_element((By.CSS_SELECTOR, f'{locator[1]}/following::div[1]')).click()
             time.sleep(2)
-            self.find_element((By.CSS_SELECTOR, f'{locator[1]} ~ div input[type="text"]')).send_keys(address_city)
+            self.find_element((By.CSS_SELECTOR, f'{locator[1]}/following::div[1]//input[@type="text"]')).send_keys(
+                address_city)
             time.sleep(2)
-            self.find_element((By.CSS_SELECTOR, f'{locator[1]} ~ div .suggest--option')).click()
+            self.find_element((By.CSS_SELECTOR,
+                               f'{locator[1]}/following::div[1]//span/span[ontains(text(), "Город {address_city}")]')).click()
+
+    def _set_modal_address_street(self, street_name: str):
+        with testit.step(f'Установить улицу в модальном окне: {street_name}'):
+            self.selected_element_by_value(locator=self._LOCATOR_SELECT_AJAX_MODAL_ADDRESS_STREET,
+                                       value=street_name)
+
+    def _set_modal_address_house(self, house_name: str):
+        with testit.step(f'Установить дом в модальном окне: {house_name}'):
+            self.selected_element_by_value(locator=self._LOCATOR_SELECT_MODAL_ADDRESS_LIST_CHECKED, value=house_name)
+            self.find_element(locator=self._LOCATOR_BUTTON_MODAL_ADDRESS_ADD_ADDRESS).click()
+            self.find_element(locator=self._LOCATOR_BUTTON_MODAL_ADDRESS_CONFIRM_ADDRESS).click()
+
+    def _open_modal_address(self):
+        with testit.step(f'Открыть модальное окно'):
+            self.find_element(locator=self._LOCATOR_BUTTON_OPEN_MODAL_ADD_OBJECT_SMR).click()
 
     def _add_address(self, city_name, street_name, house):
         with testit.step(f'Установить адрес "{city_name}", "{street_name}" and "{house}"'):
-            self.find_element(locator=self._LOCATOR_BUTTON_OPEN_MODAL_ADD_OBJECT_SMR).click()
-            self.find_element(locator=self._LOCATOR_OPEN_DROPDOWN).click()
-            self._select_modal_address_city(locator=self._LOCATOR_SELECT_AJAX_MODAL_ADDRESS_CITY,
-                                            address_city=city_name)
-            self.selected_element_by_value(locator=self._LOCATOR_SELECT_AJAX_MODAL_ADDRESS_STREET,
-                                           value=street_name)
-            self.selected_element_by_value(locator=self._LOCATOR_SELECT_MODAL_ADDRESS_LIST_UNCHECKED, value=house)
-            self.find_element(locator=self._LOCATOR_BUTTON_MODAL_ADDRESS_ADD_ADDRESS).click()
-            self.find_element(locator=self._LOCATOR_BUTTON_MODAL_ADDRESS_CONFIRM_ADDRESS).click()
+            self._open_modal_address()
+            self._set_modal_address_city(address_city=city_name)
+            self._set_modal_address_street(street_name=street_name)
+            self._set_modal_address_house(house_name=house)
 
     def _enter_dh_for_address(self, dh_count):
         with testit.step(f'Установить количество ДХ "{dh_count}"'):

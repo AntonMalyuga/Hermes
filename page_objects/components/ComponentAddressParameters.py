@@ -21,7 +21,6 @@ class ComponentAdressParameters(Order):
     _LOCATOR_LOAD_FILE_BUTTON = (By.XPATH,
                                  '//div[@class="panel panel-material"]//span[contains(., "Параметры объекта на адресе")]/ancestor::div[2]//div[@class = "form-group"]//button[@type= "submit"]')
 
-
     def __push_edit_form(self):
         with testit.step(f'Открыть редактирование параметров адреса', 'Форма редактирования открыта'):
             self.find_element(locator=self._LOCATOR_EDIT_FORM).click()
@@ -34,7 +33,6 @@ class ComponentAdressParameters(Order):
     def __push_set_abonents_button(self):
         with testit.step(f'Нажать кнопку сохранения параметров адреса', 'Сохранение успешно'):
             self.find_element(locator=self._LOCATOR_SET_ABONENTS_BUTTON).click()
-
 
     def move_to_group(self):
         with testit.step(f'Перейти к группе'):

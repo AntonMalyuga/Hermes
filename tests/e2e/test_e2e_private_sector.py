@@ -5,7 +5,6 @@ from page_objects.components.ComponentCreateProjectButton import ComponentCreate
 from page_objects.forms.b2cCreateConstructionProjectShow import B2CCreateConstructionProjectShow
 from page_objects.components.ComponentLoaderDH import ComponentLoaderDH
 from page_objects.components.ComponentAddressParameters import ComponentAdressParameters
-from page_objects.elements.UserLoginForm import UserLoginForm
 from api.HermesSys import Sys
 import testit
 
@@ -29,7 +28,6 @@ def test_e2e_private_sector_and_delete(driver):
         'project_name': 'Автопрогон'
     }
 
-    UserLoginForm(driver).authorization_default()
     B2CCreateSMROrder(driver).open()
     B2CCreateSMROrder(driver).create_smr_order_form(smr)
     SMR(driver).open_order(B2CCreateSMROrder(driver).get_creation_order())

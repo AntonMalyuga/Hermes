@@ -1,5 +1,4 @@
 import pytest
-import testit
 import os
 from selenium import webdriver
 from selenium.webdriver.chrome.service import Service as ChromeService
@@ -74,5 +73,7 @@ def driver(request, base_url):
     driver.open()
 
     driver.base_url = base_url
-
     return driver
+
+
+

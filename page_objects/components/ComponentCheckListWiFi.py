@@ -6,15 +6,15 @@ from selenium.webdriver.support.select import Select
 
 
 class ComponentCheckListWiFi(Order):
-    _LOCATOR_GROUP = (By.XPATH, '//div[@class="panel panel-material"]//span[contains(., "Чек-лист")]/ancestor::div[2]')
+    GROUP = '//div[@class="panel panel-material"]//span[contains(., "Чек-лист")]/ancestor::div[2]'
     _LOCATOR_COMPONENT_COLLAPSED_MENU = (By.XPATH,
-                                         '//div[@class="panel panel-material"]//span[contains(., "Чек-лист")]/ancestor::div[2]//b[text()="Wi-Fi"]/ancestor::div[2]//div[@data-toggle = "collapse"]')
+                                         f'{GROUP}/b[text()="Wi-Fi"]/ancestor::div[2]//div[@data-toggle = "collapse"]')
     _LOCATOR_COMPONENT_EDIT_BUTTON = (By.XPATH,
-                                      '//div[@class="panel panel-material"]//span[contains(., "Чек-лист")]/ancestor::div[2]//form[@action = "https://hermes-test.rt.ru/b2c/checklist/save/wifi"]//button[@class="btn btn-info js--b2c-checklist-form-editor"]')
+                                      f'{GROUP}//form[contains(@action, "/b2c/checklist/save/wifi")]//button[@title="Редактировать"]')
     _LOCATOR_COMPONENT_SELECT_ITEM = (By.XPATH,
-                                      '//div[@class="panel panel-material"]//span[contains(., "Чек-лист")]/ancestor::div[2]//form[@class = "form-horizontal js--load-element"]//label[text() = "Статья затрат"]/ancestor::div[1]//select[@class = "form-control input-sm"]')
+                                      f'{GROUP}//form[@class = "form-horizontal js--load-element"]//label[text() = "Статья затрат"]/ancestor::div[1]//select[@class = "form-control input-sm"]')
     _LOCATOR_COMPONENT_SUBMIT_BUTTON = (By.XPATH,
-                                        '//div[@class="panel panel-material"]//span[contains(., "Чек-лист")]/ancestor::div[2]//div[@id[contains(., "collapseChecklist-wifi")]]//div[@class = "btn-group btn-group-sm"]//button[@class = "btn btn-primary"]')
+                                        f'{GROUP}//div[@id[contains(., "collapseChecklist-wifi")]]//div[@class = "btn-group btn-group-sm"]//button[@class = "btn btn-primary"]')
 
     def open_drop_down_panel(self):
         with testit.step(f'Открыть выпадающую панель'):
@@ -35,7 +35,7 @@ class ComponentCheckListWiFi(Order):
 
     def move_to_group(self):
         with testit.step(f'Перейти к группе'):
-            self.move_to_element(self._LOCATOR_GROUP)
+            self.move_to_element((By.XPATH, self.GROUP))
 
     def add_cost_wifi(self, value: str):
         with testit.step(f'Добавить стоимость услуги wi-fi "{value}"'):

@@ -8,5 +8,4 @@ import testit
 @testit.description('Проверяется открытие отчёта "Отчёт по услугам мини-кейса B2B"')
 def test_open_report_b2c_plan_fact_charts(driver):
     MinicaseB2BServiceReport(driver).open()
-    UserLoginForm(driver).authorization_default()
     assert MinicaseB2BServiceReport(driver).check_report()

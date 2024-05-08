@@ -1,4 +1,3 @@
-import pytest
 import testit
 from page_objects.forms.b2cCreateConstructionProjectShow import B2CCreateConstructionProjectShow
 from page_objects.orders.b2c.Project import Project
@@ -8,7 +7,6 @@ from page_objects.components.ComponentControlDate import ComponentControlDate
 from page_objects.components.ComponentCapitalCosts import ComponentCapitalCosts
 from page_objects.components.ComponentCheckListWiFi import ComponentCheckListWiFi
 from page_objects.components.ComponentNaturalIndicators import ComponentNaturalIndicator
-from page_objects.elements.UserLoginForm import UserLoginForm
 from page_objects.components.ComponentCloseStage import ComponentCloseStage
 
 
@@ -56,7 +54,6 @@ def test_e2e_new_build_prod(driver):
         'constuct_method': 'Подрядный способ'
     }
 
-    UserLoginForm(driver).authorization_default()
     B2CCreateConstructionProjectShow(driver).open()
     B2CCreateConstructionProjectShow(driver).create_project(project)
     ComponentCheckListWiFi(driver).add_cost_wifi(value='capex')

@@ -14,7 +14,6 @@ from page_objects.components.ComponenOrderstHierarchy import ComponentOrdersHier
 from page_objects.components.ComponentTypeProject import ComponentTypeProject
 from page_objects.components.ComponentNumberDSOFU import ComponentNumberDSOFU
 from page_objects.components.ComponentFiles import ComponentFiles
-from page_objects.elements.UserLoginForm import UserLoginForm
 from page_objects.forms.b2cObjectOrder import B2CObjectOrder
 
 
@@ -62,7 +61,6 @@ def test_e2e_new_build(driver):
         'constuct_method': 'Подрядный способ'
     }
 
-    UserLoginForm(driver).authorization_default()
     B2CCreateConstructionProjectShow(driver).open()
     B2CCreateConstructionProjectShow(driver).create_project(project)
     Project(driver).check_current_stage(

@@ -12,7 +12,6 @@ from page_objects.components.ComponentCapitalCosts import ComponentCapitalCosts
 from page_objects.components.ComponenOrderstHierarchy import ComponentOrdersHierarchy
 from page_objects.components.ComponentTypeProject import ComponentTypeProject
 from page_objects.components.ComponentFiles import ComponentFiles
-from page_objects.elements.UserLoginForm import UserLoginForm
 
 
 @testit.workItemIds(930)
@@ -60,7 +59,6 @@ def test_e2e_new_build_complex(driver):
         }
     }
 
-    UserLoginForm(driver).authorization_default()
     B2CCreateSMROrder(driver).open()
     B2CCreateSMROrder(driver).create_smr_order_form(smr)
     SMR(driver).open_order(B2CCreateSMROrder(driver).get_creation_order())
