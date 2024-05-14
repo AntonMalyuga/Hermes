@@ -1,5 +1,4 @@
 from page_objects.reports.MinicaseConstructDatesReport import MinicaseConstructDatesReport
-from page_objects.elements.UserLoginForm import UserLoginForm
 import testit
 
 
@@ -8,5 +7,4 @@ import testit
 @testit.description('Проверяется открытие отчёта "Постомониторинг аварийности"')
 def test_open_report_minicase_construct_dates_report(driver):
     MinicaseConstructDatesReport(driver).open()
-    UserLoginForm(driver).authorization_default()
     assert MinicaseConstructDatesReport(driver).check_report()

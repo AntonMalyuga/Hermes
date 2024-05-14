@@ -1,5 +1,5 @@
 import time
-from page_objects.forms.UserProfile import UserProfile
+from page_objects.forms.FormUserProfile import UserProfile
 from page_objects.elements.UserLoginForm import UserLoginForm
 from page_objects.elements.Alert import Alert
 

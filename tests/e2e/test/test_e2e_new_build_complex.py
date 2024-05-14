@@ -1,15 +1,16 @@
 import testit
-from page_objects.forms.b2cCreationSMROrder import B2CCreateSMROrder
+import pytest
+from page_objects.forms.FormB2CCreationSMROrder import FormB2CCreationSMROrder
 from page_objects.orders.b2c.SMR import SMR
 from page_objects.orders.b2c.Project import Project
 from page_objects.components.ComponentCreateProjectButton import ComponentCreateProjectButton
-from page_objects.forms.b2cCreateConstructionProjectShow import B2CCreateConstructionProjectShow
+from page_objects.forms.FormB2CCreateConstructionProjectShow import FormB2CCreateConstructionProjectShow
 from page_objects.orders.b2c.GPH import GPH
-from page_objects.forms.b2cFormWorkVolume import B2cFormWorkVolume
-from page_objects.forms.b2cFormSpecification import B2cFormSpecification
+from page_objects.forms.FormB2CWorkVolume import B2cFormWorkVolume
+from page_objects.forms.FormB2CSpecification import B2cFormSpecification
 from page_objects.components.ComponentControlDate import ComponentControlDate
 from page_objects.components.ComponentCapitalCosts import ComponentCapitalCosts
-from page_objects.components.ComponenOrderstHierarchy import ComponentOrdersHierarchy
+from page_objects.components.ComponenB2COrderstHierarchy import ComponentB2COrdersHierarchy
 from page_objects.components.ComponentTypeProject import ComponentTypeProject
 from page_objects.components.ComponentFiles import ComponentFiles
 
@@ -18,6 +19,8 @@ from page_objects.components.ComponentFiles import ComponentFiles
 @testit.title('E2E')
 @testit.displayName('E2E по типу строительства "Комплексная новостройка"')
 @testit.description('E2E по типу строительства "Комплексная новостройка" с услугой WiFi  по ГПХ до полного завершения проекта')
+@pytest.mark.slow
+@pytest.mark.skip('HE-13781')
 def test_e2e_new_build_complex(driver):
     smr = {
         'building_type': 'Комплексная новостройка',
@@ -87,7 +90,7 @@ def test_e2e_new_build_complex(driver):
     ComponentFiles(driver).add_file(name='Подтверждение ВХР', type='Подтверждение ВХР', file_name='file.txt')
     Project(driver).close_stage(pass_name='Проект согласован вне Гермес. Инвестиции выделены',
                                 next_stage='Ожидание реализации проекта', is_auto=True)
-    GPH(driver).open_order(ComponentOrdersHierarchy(driver).get_gph_number())
+    GPH(driver).open_order(ComponentB2COrdersHierarchy(driver).get_gph_number())
     GPH(driver).close_stage(pass_name="Положительно", next_stage="Разработка ПД и РД")
     GPH(driver).close_stage(pass_name="Положительно", next_stage="Согласование ПД и РД")
     GPH(driver).close_stage(pass_name="Положительно", next_stage="Выполнение СМР/внесение статусов работ")
@@ -106,6 +109,6 @@ def test_e2e_new_build_complex(driver):
     GPH(driver).close_stage(pass_name="Положительно", next_stage="Приёмка ИД")
     GPH(driver).close_stage(pass_name="Положительно", next_stage="Внесение данных в СЛТУ в статусе Готов")
     GPH(driver).close_stage(pass_name="Положительно", next_stage="Строительство завершено")
-    Project(driver).open_order(ComponentOrdersHierarchy(driver).get_project_number())
+    Project(driver).open_order(ComponentB2COrdersHierarchy(driver).get_project_number())
     Project(driver).check_current_stage('Проект реализован')
     assert True

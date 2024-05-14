@@ -1,9 +1,11 @@
+import testit
+
 from page_objects.reports.SLAReport import SLAReport
-from page_objects.elements.UserLoginForm import UserLoginForm
 
 
-
+@testit.title('reports')
+@testit.displayName('Проверить открытие отчёта "Отчёт о результатах работы по SLA"')
+@testit.description('Проверяется открытие отчёта "Отчёт о результатах работы по SLA"')
 def test_open_report_sla_report(driver):
     SLAReport(driver).open()
-    UserLoginForm(driver).authorization_default()
     assert SLAReport(driver).check_report()

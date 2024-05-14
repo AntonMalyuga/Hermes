@@ -1,5 +1,4 @@
 from page_objects.reports.ComplexInstallationReport import ComplexInstallationReport
-from page_objects.elements.UserLoginForm import UserLoginForm
 import testit
 
 
@@ -8,5 +7,4 @@ import testit
 @testit.description('Проверяется открытие отчёта "Отчёт по заявкам со Сложной инсталляцией"')
 def test_open_report_complex_installation_report(driver):
     ComplexInstallationReport(driver).open()
-    UserLoginForm(driver).authorization_default()
     assert ComplexInstallationReport(driver).check_report()

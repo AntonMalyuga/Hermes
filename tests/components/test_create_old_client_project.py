@@ -2,7 +2,7 @@ import time
 
 import pytest
 import testit
-from page_objects.forms.CreateOldClientProject import CreateOldClientProject
+from page_objects.forms.FormB2BCreateOldClientProject import CreateOldClientProject
 
 
 @testit.title('Старая форма создания клиентского проекта')

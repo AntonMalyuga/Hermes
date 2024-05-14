@@ -7,7 +7,7 @@ import testit
 from api.HermesSys import Sys
 
 
-class B2CCreateSMROrder(BasePage):
+class FormB2CCreationSMROrder(BasePage):
     name = 'Создать заявку СМР'
     path = 'client/createb2c'
 

@@ -1,10 +1,11 @@
+import testit
+
 from page_objects.reports.SLTUErrorsReport import SLTUErrorsReport
-from page_objects.elements.UserLoginForm import UserLoginForm
 
 
-
-
+@testit.title('reports')
+@testit.displayName('Проверить открытие отчёта "Отчёт по запросам АПТВ в шину"')
+@testit.description('Проверяется открытие отчёта "Отчёт по запросам АПТВ в шину"')
 def test_open_report_b2c_departments_rating(driver):
     SLTUErrorsReport(driver).open()
-    UserLoginForm(driver).authorization_default()
     assert SLTUErrorsReport(driver).check_report()

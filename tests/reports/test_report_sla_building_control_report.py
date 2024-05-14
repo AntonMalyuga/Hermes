@@ -1,8 +1,11 @@
+import testit
+
 from page_objects.reports.SLABuildingControlReport import SLABuildingControlReport
-from page_objects.elements.UserLoginForm import UserLoginForm
 
 
+@testit.title('reports')
+@testit.displayName('Проверить открытие отчёта "Контроль стройки"')
+@testit.description('Проверяется открытие отчёта "Контроль стройки"')
 def test_open_report_sla_building_control_report(driver):
     SLABuildingControlReport(driver).open()
-    UserLoginForm(driver).authorization_default()
     assert SLABuildingControlReport(driver).check_report()

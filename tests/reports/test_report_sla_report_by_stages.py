@@ -1,8 +1,11 @@
+import testit
+
 from page_objects.reports.SLAReportByStages import SLAReportByStages
-from page_objects.elements.UserLoginForm import UserLoginForm
 
 
+@testit.title('reports')
+@testit.displayName('Проверить открытие отчёта "Отчёт о результатах работы по SLA по этапам"')
+@testit.description('Проверяется открытие отчёта "Отчёт о результатах работы по SLA по этапам"')
 def test_open_report_sla_report_by_stages(driver):
     SLAReportByStages(driver).open()
-    UserLoginForm(driver).authorization_default()
     assert SLAReportByStages(driver).check_report()

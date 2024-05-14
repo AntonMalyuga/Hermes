@@ -7,6 +7,9 @@ import urllib.request
 
 
 class ComponentFiles(Order):
+
+    name = 'Вложения'
+
     _LOCATOR_GROUP = (By.XPATH, '//div[@class="panel panel-material"]//span[contains(., "Вложения")]')
     _FORM_ATTACHMENT = '//form[@action[contains(., "AddAttachment")]]'
     _LOCATOR_FORM_INPUT_FILE = (By.XPATH, f'{_FORM_ATTACHMENT}//input[@name[contains(., "file")]]')

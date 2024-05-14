@@ -1,18 +1,20 @@
-from page_objects.forms.b2cCreationSMROrder import B2CCreateSMROrder
+from page_objects.forms.FormB2CCreationSMROrder import FormB2CCreationSMROrder
 from page_objects.orders.b2c.SMR import SMR
 from page_objects.orders.b2c.Project import Project
 from page_objects.components.ComponentCreateProjectButton import ComponentCreateProjectButton
-from page_objects.forms.b2cCreateConstructionProjectShow import B2CCreateConstructionProjectShow
+from page_objects.forms.FormB2CCreateConstructionProjectShow import FormB2CCreateConstructionProjectShow
 from page_objects.components.ComponentLoaderDH import ComponentLoaderDH
 from page_objects.components.ComponentAddressParameters import ComponentAdressParameters
 from api.HermesSys import Sys
 import testit
+import pytest
 
 
 @testit.workItemIds(929)
 @testit.title('E2E')
 @testit.displayName('E2E по типу строительства "Частный сектор"')
 @testit.description('E2E по типу строительства "Частный сектор"  с услугой CORE до удаления созданной заявки проекта и заявки СМР')
+@pytest.mark.slow
 def test_e2e_private_sector_and_delete(driver):
     smr = {
         'building_type': 'Коттеджный посёлок/частный сектор',

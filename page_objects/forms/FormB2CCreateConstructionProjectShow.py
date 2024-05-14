@@ -5,7 +5,7 @@ from selenium.webdriver.common.by import By
 import time
 
 
-class B2CCreateConstructionProjectShow(BasePage):
+class FormB2CCreateConstructionProjectShow(BasePage):
     name = 'Создать строительный проект B2C'
     path = 'b2c/create_construction_project_show'
 

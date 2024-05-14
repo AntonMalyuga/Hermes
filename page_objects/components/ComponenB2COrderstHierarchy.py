@@ -3,7 +3,10 @@ from page_objects.orders.Order import Order
 import testit
 
 
-class ComponentOrdersHierarchy(Order):
+class ComponentB2COrdersHierarchy(Order):
+    
+    name = 'Иерархия заявок'
+
     _GROUP = '//div[@class="panel panel-material"]//span[contains(., "Иерархия заявок")]/ancestor::div[2]'
     _LOCATOR_LINK_PROJECT = (By.XPATH, f'{_GROUP}//tbody//td[2]/a')
     _LOCATOR_LINK_SMR = (By.XPATH, f'{_GROUP}//tbody//td[3]/a')

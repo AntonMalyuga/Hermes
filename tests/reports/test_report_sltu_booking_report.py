@@ -1,8 +1,11 @@
+import testit
+
 from page_objects.reports.SLTUBookingReport import SLTUBookingReport
-from page_objects.elements.UserLoginForm import UserLoginForm
 
 
+@testit.title('reports')
+@testit.displayName('Проверить открытие отчёта "Отчёт по запросам бронирования в шину"')
+@testit.description('Проверяется открытие отчёта "Отчёт по запросам бронирования в шину"')
 def test_open_report_sltu_booking_report(driver):
     SLTUBookingReport(driver).open()
-    UserLoginForm(driver).authorization_default()
     assert SLTUBookingReport(driver).check_report()

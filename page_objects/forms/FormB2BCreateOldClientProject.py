@@ -4,10 +4,9 @@ from selenium.webdriver.support.select import Select
 from selenium.webdriver.common.keys import Keys
 import time
 import testit
-from api.HermesSys import Sys
 
 
-class CreateOldClientProject(BasePage):
+class FormB2BCreateOldClientProject(BasePage):
     name = 'Создать старый клиентский проект'
     path = 'client/showkpform'
 
@@ -214,8 +213,14 @@ class CreateOldClientProject(BasePage):
             element.send_keys(Keys.CONTROL, 'a')
             element.send_keys(ruble)
 
+    def open_created_client_order(self) -> int:
+        self.find_elements(self._LOCATOR_STRONG_CREATED_ORDERS)[0].click()
+
     def get_created_client_order(self) -> int:
         return int(self.find_elements(self._LOCATOR_STRONG_CREATED_ORDERS)[0].text)
+
+    def open_created_client_project_order(self) -> int:
+        self.find_elements(self._LOCATOR_STRONG_CREATED_ORDERS)[1].click()
 
     def get_created_client_project_order(self) -> int:
         return int(self.find_elements(self._LOCATOR_STRONG_CREATED_ORDERS)[1].text)
@@ -228,12 +233,14 @@ class CreateOldClientProject(BasePage):
     def create_project_on_teo(self):
         self.set_teo_start_stage()
         time.sleep(2)
+        self.check_loader()
+        time.sleep(2)
         self.set_client_name('ТЕСТ-ГЕРМЕС')
         self.set_client_inn('006165139943')
         self.set_client_kpp('616501001')
         time.sleep(1)
         self.update_client()
-        time.sleep(5)
+        self.check_loader()
         self.insert_client(0)
         time.sleep(7)
         self.set_contact_name('Малюга А.С.')
@@ -266,4 +273,3 @@ class CreateOldClientProject(BasePage):
         self.set_scale_servie_speed('кбит/с')
         self.set_service_speed(250)
         self.submit()
-        time.sleep(20)

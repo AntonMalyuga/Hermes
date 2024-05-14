@@ -7,6 +7,8 @@ import testit
 
 
 class ComponentRTPoint(Order):
+    name = 'Точка РТ'
+
     _LOCATOR_GROUP = (
         By.XPATH, '//span[contains(., "Точка РТ")]')
     _LOCATOR_RF_POINT_BUTTON = (
@@ -25,7 +27,6 @@ class ComponentRTPoint(Order):
         with testit.step(f'Открыть форму редактирования'):
             self.find_element(locator=self._LOCATOR_RF_POINT_BUTTON).click()
 
-
     def fill_interface(self, interface):
         with testit.step(f'Заполнить селектовую форму со значением нового интерфейса "{interface}"'):
             select = Select(self.find_element(locator=self._LOCATOR_INTERFACE))
@@ -35,7 +36,6 @@ class ComponentRTPoint(Order):
         with testit.step(f'Установить тип оборудования {equipment}'):
             self.find_element(locator=self._LOCATOR_EQUIPMENT).clear()
             self.find_element(locator=self._LOCATOR_EQUIPMENT).send_keys(equipment)
-
 
     def push_submit_button(self):
         with testit.step(f'Нажать кнопку сохранения параметров', 'Сохранение успешно'):

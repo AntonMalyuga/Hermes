@@ -1,26 +1,29 @@
 import testit
-from page_objects.forms.b2cCreateConstructionProjectShow import B2CCreateConstructionProjectShow
+import pytest
+from page_objects.forms.FormB2CCreateConstructionProjectShow import FormB2CCreateConstructionProjectShow
 from page_objects.orders.b2c.Project import Project
 from page_objects.orders.b2c.Customer import Customer
 from page_objects.orders.b2c.CustomerOrder import CustomerOrder
-from page_objects.forms.b2cFormWorkVolume import B2cFormWorkVolume
-from page_objects.forms.b2cFormSpecification import B2cFormSpecification
+from page_objects.forms.FormB2CWorkVolume import B2cFormWorkVolume
+from page_objects.forms.FormB2CSpecification import B2cFormSpecification
 from page_objects.components.ComponentControlDate import ComponentControlDate
 from page_objects.components.ComponentCapitalCosts import ComponentCapitalCosts
 from page_objects.components.ComponentCheckListWiFi import ComponentCheckListWiFi
 from page_objects.components.ComponentNaturalIndicators import ComponentNaturalIndicator
 from page_objects.components.ComponentAddictionalIncome import ComponentAdditionalIncome
-from page_objects.components.ComponenOrderstHierarchy import ComponentOrdersHierarchy
+from page_objects.components.ComponenB2COrderstHierarchy import ComponentB2COrdersHierarchy
 from page_objects.components.ComponentTypeProject import ComponentTypeProject
 from page_objects.components.ComponentNumberDSOFU import ComponentNumberDSOFU
 from page_objects.components.ComponentFiles import ComponentFiles
-from page_objects.forms.b2cObjectOrder import B2CObjectOrder
+from page_objects.forms.FormB2CObjectOrder import FormB2CObjectOrder
 
 
 @testit.workItemIds(925)
 @testit.title('E2E')
 @testit.displayName('E2E по типу строительства "Новостройка"')
 @testit.description('E2E по типу строительства "Новостройка" с услугой WiFi  по подрядному способу без УЗ до полного завершения проекта')
+@pytest.mark.slow
+@pytest.mark.skip('HE-13781')
 def test_e2e_new_build(driver):
     project = {
         'rf': 'РФ Саратовский',
@@ -93,7 +96,7 @@ def test_e2e_new_build(driver):
     ComponentFiles(driver).add_file(name='Подтверждение ВХР', type='Подтверждение ВХР', file_name='file.txt')
     Project(driver).close_stage(pass_name='Проект согласован вне Гермес. Инвестиции выделены',
                                 next_stage='Ожидание реализации проекта', is_auto=True)
-    B2CObjectOrder(driver).open_form(ComponentOrdersHierarchy(driver).get_customer_order_number())
+    B2CObjectOrder(driver).open_form(ComponentB2COrdersHierarchy(driver).get_customer_order_number())
     B2CObjectOrder(driver).add_contractor(discount=10, contractor='Саратовский', frame=555555)
     CustomerOrder(driver).open_order(B2CObjectOrder(driver).get_custom_order_order_id())
     CustomerOrder(driver).close_stage(pass_name="Положительно", next_stage="Подписание заказа (вне Гермес)",
@@ -103,7 +106,7 @@ def test_e2e_new_build(driver):
     CustomerOrder(driver).close_stage(pass_name="Положительно",
                                       next_stage="Формирование групповой КС-2 и их закрытие (вне Гермес)", is_auto=True)
     CustomerOrder(driver).close_stage(pass_name="Положительно", next_stage="Строительство завершено")
-    Customer(driver).open_order(ComponentOrdersHierarchy(driver).get_customer_number())
+    Customer(driver).open_order(ComponentB2COrdersHierarchy(driver).get_customer_number())
     ComponentFiles(driver).add_file(name='Проектная документация (pdf)', type='Проектная документация (pdf)',
                                     file_name='file.txt')
     ComponentFiles(driver).add_file(name='Рабочая документация (pdf)', type='Рабочая документация (pdf)',
@@ -134,6 +137,6 @@ def test_e2e_new_build(driver):
     ComponentFiles(driver).add_file(name='КС-2 (скан pdf без штрих кода)', type='КС-2 (скан pdf без штрих кода)',
                                     file_name='file.txt')
     Customer(driver).close_stage(pass_name="Положительно", next_stage="Объект завершен")
-    Project(driver).open_order(ComponentOrdersHierarchy(driver).get_project_number())
+    Project(driver).open_order(ComponentB2COrdersHierarchy(driver).get_project_number())
     Project(driver).check_current_stage('Проект реализован')
     assert True

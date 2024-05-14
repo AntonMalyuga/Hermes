@@ -1,8 +1,11 @@
+import testit
+
 from page_objects.reports.SLAConcatenatedDetailsReport import SLAConcatenatedDetailsReport
-from page_objects.elements.UserLoginForm import UserLoginForm
 
 
+@testit.title('reports')
+@testit.displayName('Проверить открытие отчёта "Соединенный Детальный отчёт о результатах работы по SLA"')
+@testit.description('Проверяется открытие отчёта "Соединенный Детальный отчёт о результатах работы по SLA"')
 def test_open_report_rer_subtask(driver):
     SLAConcatenatedDetailsReport(driver).open()
-    UserLoginForm(driver).authorization_default()
     assert SLAConcatenatedDetailsReport(driver).check_report()

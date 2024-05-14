@@ -1,8 +1,20 @@
+import testit
+import pytest
 from page_objects.reports.SLADynamicReport import SLADynamicReport
-from page_objects.elements.UserLoginForm import UserLoginForm
 
 
+@testit.title('reports')
+@testit.displayName('Проверить открытие отчёта "Динамика показателей по SLA"')
+@testit.description('Проверяется открытие отчёта "Динамика показателей по SLA"')
 def test_open_report_sla_dynamic_report(driver):
     SLADynamicReport(driver).open()
-    UserLoginForm(driver).authorization_default()
     assert SLADynamicReport(driver).check_report()
+
+
+@testit.title('reports')
+@testit.displayName('Проверить наименование отчёта "Динамика показателей по SLA"')
+@testit.description('Проверяется наименование отчёта "Динамика показателей по SLA"')
+@pytest.mark.skip('HE-13931 - исправить некорректное имя отчёта в интерфейсе')
+def test_check_name_sla_dynamic_report(driver):
+    SLADynamicReport(driver).open()
+    assert SLADynamicReport(driver).get_name_report() == SLADynamicReport(driver).name

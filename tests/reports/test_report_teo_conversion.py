@@ -1,8 +1,11 @@
+import testit
+
 from page_objects.reports.TEOConversion import TEOConversion
-from page_objects.elements.UserLoginForm import UserLoginForm
 
 
+@testit.title('reports')
+@testit.displayName('Проверить открытие отчёта "Отчёт по конвертации ТЭО-Стройка с учетом срока окупаемости"')
+@testit.description('Проверяется открытие отчёта "Отчёт по конвертации ТЭО-Стройка с учетом срока окупаемости"')
 def test_open_report_teo_conversion(driver):
     TEOConversion(driver).open()
-    UserLoginForm(driver).authorization_default()
     assert TEOConversion(driver).check_report()

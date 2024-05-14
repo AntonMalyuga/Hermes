@@ -1,8 +1,8 @@
 import testit
-from page_objects.forms.b2cCreateConstructionProjectShow import B2CCreateConstructionProjectShow
+from page_objects.forms.FormB2CCreateConstructionProjectShow import B2CCreateConstructionProjectShow
 from page_objects.orders.b2c.Project import Project
-from page_objects.forms.b2cFormWorkVolume import B2cFormWorkVolume
-from page_objects.forms.b2cFormSpecification import B2cFormSpecification
+from page_objects.forms.FormB2CWorkVolume import B2cFormWorkVolume
+from page_objects.forms.FormB2CSpecification import B2cFormSpecification
 from page_objects.components.ComponentControlDate import ComponentControlDate
 from page_objects.components.ComponentCapitalCosts import ComponentCapitalCosts
 from page_objects.components.ComponentCheckListWiFi import ComponentCheckListWiFi

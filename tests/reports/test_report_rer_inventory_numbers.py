@@ -1,8 +1,10 @@
 from page_objects.reports.RerInventoryNumbers import RerInventoryNumbers
-from page_objects.elements.UserLoginForm import UserLoginForm
+import testit
 
 
+@testit.title('reports')
+@testit.displayName('Проверить открытие отчёта "Отчет по инвентарным номерам"')
+@testit.description('Проверяется открытие отчёта "Отчет по инвентарным номерам"')
 def test_open_report_rer_inventory_numbers(driver):
     RerInventoryNumbers(driver).open()
-    UserLoginForm(driver).authorization_default()
     assert RerInventoryNumbers(driver).check_report()

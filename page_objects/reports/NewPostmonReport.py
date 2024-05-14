@@ -1,9 +1,15 @@
 from ..BasePage import BasePage
+from selenium.webdriver.common.by import By
+import testit
+
 
 class NewPostmonReport(BasePage):
+    name = 'Отчёт по фактическим доходам для Постмониторинга'
     path = 'report/new_postmon_report'
-    _CHECK_REPORT = 'button[formaction="/report/new_postmon_report/html"]'
+
+    _CHECK_REPORT = (By.CSS_SELECTOR, 'button[formaction="/report/new_postmon_report/html"]')
 
     def check_report(self):
-        if len(self.find_elements(self._CHECK_REPORT)) > 0:
-            return True
+        with testit.step(f'Проверить открытие отчета "{self.name}" по адресу "{self.path}", "Отчёт успешно открыт"'):
+            if len(self.find_elements(self._CHECK_REPORT)) > 0:
+                return True

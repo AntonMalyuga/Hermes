@@ -1,8 +1,11 @@
+import testit
+
 from page_objects.reports.RerSubtask import RerSubtask
-from page_objects.elements.UserLoginForm import UserLoginForm
 
 
+@testit.title('reports')
+@testit.displayName('Проверить открытие отчёта "Детальный отчёт по подзадачам"')
+@testit.description('Проверяется открытие отчёта "Детальный отчёт по подзадачам"')
 def test_open_report_rer_subtask(driver):
     RerSubtask(driver).open()
-    UserLoginForm(driver).authorization_default()
     assert RerSubtask(driver).check_report()

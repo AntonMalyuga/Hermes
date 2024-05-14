@@ -7,6 +7,9 @@ import testit
 
 
 class ComponentConnectionParameters(Order):
+
+    name = 'Параметры подключения'
+
     _LOCATOR_GROUP = (
         By.XPATH, '//span[contains(., "Параметры подключения")]')
     _LOCATOR_PARAMETERS_BUTTON = (
@@ -67,8 +70,8 @@ class ComponentConnectionParameters(Order):
                                      last_mile: str, network: str):
         with testit.step(f'Изменить параметры подключения'):
             self.move_to_group()
-            self.push_edit_form_button()
             self.check_loader()
+            self.push_edit_form_button()
             self.fill_organization_way_field(value)
             self.fill_coordination(coordination)
             self.fill_special_conditions(conditions)

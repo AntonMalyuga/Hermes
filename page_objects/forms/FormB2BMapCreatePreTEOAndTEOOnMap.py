@@ -10,7 +10,7 @@ import mouse
 import testit
 
 
-class B2BMapCreatePreTEOAndTEOOnMap(BasePage):
+class FormB2BMapCreatePreTEOAndTEOOnMap(BasePage):
     _LOCATOR_MAP = (By.XPATH, '//div[@class="yandex-common-map"]')
     _LOCATOR_BTN_MAP_FULL_WINDOW = (
         By.XPATH, '//ymaps[@class="ymaps-2-1-79-float-button-icon ymaps-2-1-79-float-button-icon_icon_expand"]')
@@ -70,13 +70,15 @@ class B2BMapCreatePreTEOAndTEOOnMap(BasePage):
         self._click_start_cabling()
 
         time.sleep(2)
-        CableModal(self._driver).set_cable_params(by_client_area=False)
-        time.sleep(2)
-        CableModal(self._driver).set_cable_params(by_client_area=True)
+        CableModal(self._driver).set_cable_params(by_client_area=False, cable_type='Проектный_12', cable_line_type='Телефонная канализация', len_cable=100, mr_right='Оптическая муфта')
+        time.sleep(3)
+        CableModal(self._driver).set_cable_params(by_client_area=True, cable_type='Проектный_12', cable_line_type='Телефонная канализация', len_cable=100, mr_right='Оптическая муфта')
         time.sleep(2)
         self._click_save_in_mo()
         self._set_comment('Удачное сохранение комментария')
         self._confirm_save()
+        time.sleep(5)
+        self.check_loader()
 
 
 class CableModal(BasePage):
@@ -86,7 +88,8 @@ class CableModal(BasePage):
     _LOCATOR_SELECT_MF_RIGHT = (By.XPATH, '//select[@name="mf_right"]')
     _LOCATOR_BTN_SAVE_PROJECT = (By.XPATH, '//button[contains(@form, "btn-Projected-Save")]')
     _LOCATOR_BTN_SAVE_AND_CONNECT_CLIENT = (By.XPATH, '//div[@class="tab-pane active"]//button[@name="saveAndBind"]')
-    _LOCATOR_BTN_SAVE_BY_CLIENT = (By.XPATH, '//div[@class="tab-pane active"]//button[contains(@form, "btn-Projected-Save")]')
+    _LOCATOR_BTN_SAVE_BY_CLIENT = (
+    By.XPATH, '//div[@class="tab-pane active"]//button[contains(@form, "btn-Projected-Save")]')
 
     def _set_cable_line_type(self, cable_line_type_name: str):
         select_element = self.find_element(self._LOCATOR_SELECT_MAP_CABLE_LINE_TYPE)
@@ -117,13 +120,14 @@ class CableModal(BasePage):
     def _click_save_cable_parameters_by_client(self):
         self.find_element(self._LOCATOR_BTN_SAVE_BY_CLIENT).click()
 
-    def set_cable_params(self, by_client_area: bool):
-        self._set_cable_line_type('Телефонная канализация')
+    def set_cable_params(self, by_client_area: bool, cable_line_type: str, cable_type: str, mr_right: str,
+                         len_cable: int):
+        self._set_cable_line_type(cable_line_type)
         time.sleep(3)
-        self._set_cable_type('Проектный_12')
-        self._set_cable_len(100)
+        self._set_cable_type(cable_type)
+        self._set_cable_len(len_cable)
         time.sleep(3)
-        self._set_mf_right('Оптическая муфта')
+        self._set_mf_right(mr_right)
         if by_client_area:
             self._click_save_cable_parameters_by_client()
         else:

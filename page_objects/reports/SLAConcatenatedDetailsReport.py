@@ -1,10 +1,15 @@
 from ..BasePage import BasePage
+from selenium.webdriver.common.by import By
+import testit
+
 
 class SLAConcatenatedDetailsReport(BasePage):
+    name = 'Соединенный Детальный отчёт о результатах работы по SLA'
     path = 'report/sla_concatenated_details_report'
 
-    _CHECK_REPORT = 'button[formaction="/report/sla_concatenated_details_report/html"]'
+    _CHECK_REPORT = (By.CSS_SELECTOR, 'button[formaction="/report/sla_concatenated_details_report/html"]')
 
     def check_report(self):
-        if len(self.find_elements(self._CHECK_REPORT)) > 0:
-            return True
+        with testit.step(f'Проверить открытие отчета "{self.name}" по адресу "{self.path}", "Отчёт успешно открыт"'):
+            if len(self.find_elements(self._CHECK_REPORT)) > 0:
+                return True

@@ -1,11 +1,11 @@
+import testit
 
 from page_objects.reports.SummaryDynamicsReport import SummaryDynamicsReport
-from page_objects.elements.UserLoginForm import UserLoginForm
 
 
-
-
+@testit.title('reports')
+@testit.displayName('Проверить открытие отчёта "Сводный отчёт по динамике заявок за период"')
+@testit.description('Проверяется открытие отчёта "Сводный отчёт по динамике заявок за период"')
 def test_open_report_summary_dynamics_report(driver):
     SummaryDynamicsReport(driver).open()
-    UserLoginForm(driver).authorization_default()
     assert SummaryDynamicsReport(driver).check_report()

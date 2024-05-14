@@ -3,7 +3,7 @@ from selenium.webdriver.common.by import By
 from page_objects.BasePage import BasePage
 
 
-class UserProfile(BasePage):
+class FormUserProfile(BasePage):
 
     name = 'Профиль пользователя'
     path = 'user_management/sso/user_profile'

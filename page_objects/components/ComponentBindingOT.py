@@ -7,6 +7,9 @@ import testit
 
 
 class ComponentBindingOT(Order):
+
+    name = 'Привязка ОТ'
+
     _LOCATOR_GROUP = (
         By.XPATH, '//span[contains(., "Параметры подключения")]')
     _LOCATOR_BINDING_BUTTON = (
@@ -39,4 +42,3 @@ class ComponentBindingOT(Order):
             self.check_loader()
             self.fill_reference_point(value)
             self.push_submit_button()
-            time.sleep(10)

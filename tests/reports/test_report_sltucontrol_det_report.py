@@ -1,9 +1,11 @@
+import testit
 
 from page_objects.reports.SLTUControlDetReport import SLTUControlDetReport
-from page_objects.elements.UserLoginForm import UserLoginForm
 
 
+@testit.title('reports')
+@testit.displayName('Проверить открытие отчёта "Детальный Отчёт по контролю корректности данных в СЛТУ"')
+@testit.description('Проверяется открытие отчёта "Детальный Отчёт по контролю корректности данных в СЛТУ"')
 def test_open_report_sltucontrol_det_report(driver):
     SLTUControlDetReport(driver).open()
-    UserLoginForm(driver).authorization_default()
     assert SLTUControlDetReport(driver).check_report()

@@ -1,5 +1,4 @@
 from page_objects.reports.MinicaseB2BServiceReport import MinicaseB2BServiceReport
-from page_objects.elements.UserLoginForm import UserLoginForm
 import testit
 
 
