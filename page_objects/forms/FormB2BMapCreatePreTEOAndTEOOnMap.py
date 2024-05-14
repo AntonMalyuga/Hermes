@@ -11,6 +11,9 @@ import testit
 
 
 class FormB2BMapCreatePreTEOAndTEOOnMap(BasePage):
+
+    name = 'Создание ТЭО/предТЭО на карте'
+
     _LOCATOR_MAP = (By.XPATH, '//div[@class="yandex-common-map"]')
     _LOCATOR_BTN_MAP_FULL_WINDOW = (
         By.XPATH, '//ymaps[@class="ymaps-2-1-79-float-button-icon ymaps-2-1-79-float-button-icon_icon_expand"]')

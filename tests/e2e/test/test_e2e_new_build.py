@@ -64,8 +64,8 @@ def test_e2e_new_build(driver):
         'constuct_method': 'Подрядный способ'
     }
 
-    B2CCreateConstructionProjectShow(driver).open()
-    B2CCreateConstructionProjectShow(driver).create_project(project)
+    FormB2CCreateConstructionProjectShow(driver).open()
+    FormB2CCreateConstructionProjectShow(driver).create_project(project)
     Project(driver).check_current_stage(
         'Корректировка состава объектов проекта, проработка подключения услуг ключа на объектах и формирование предКП по ключу')
     ComponentCheckListWiFi(driver).add_cost_wifi(value='capex')
@@ -96,9 +96,9 @@ def test_e2e_new_build(driver):
     ComponentFiles(driver).add_file(name='Подтверждение ВХР', type='Подтверждение ВХР', file_name='file.txt')
     Project(driver).close_stage(pass_name='Проект согласован вне Гермес. Инвестиции выделены',
                                 next_stage='Ожидание реализации проекта', is_auto=True)
-    B2CObjectOrder(driver).open_form(ComponentB2COrdersHierarchy(driver).get_customer_order_number())
-    B2CObjectOrder(driver).add_contractor(discount=10, contractor='Саратовский', frame=555555)
-    CustomerOrder(driver).open_order(B2CObjectOrder(driver).get_custom_order_order_id())
+    FormB2CObjectOrder(driver).open_form(ComponentB2COrdersHierarchy(driver).get_customer_order_number())
+    FormB2CObjectOrder(driver).add_contractor(discount=10, contractor='Саратовский', frame=555555)
+    CustomerOrder(driver).open_order(FormB2CObjectOrder(driver).get_custom_order_order_id())
     CustomerOrder(driver).close_stage(pass_name="Положительно", next_stage="Подписание заказа (вне Гермес)",
                                       is_auto=True)
     ComponentNumberDSOFU(driver).add_DSOFU(kode=123456)

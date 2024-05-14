@@ -4,6 +4,9 @@ import testit
 
 
 class ComponentControlDate(Order):
+
+    name = 'B2C: Контрольные даты'
+
     _LOCATOR_GROUP = (By.XPATH, '//div[@class="panel panel-material"]//span[contains(., "Контрольные даты")]/ancestor::div[2]')
     _LOCATOR_BUTTON_CHANGE_ALL_CONTROL_DATES = (By.XPATH, '//div[@id[contains(., "btn-editor-control-dates")]]')
 

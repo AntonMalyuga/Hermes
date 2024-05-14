@@ -5,6 +5,9 @@ from page_objects.orders.Order import Order
 
 
 class ComponentOpexCosts(Order):
+
+    name = 'B2C: Прочие операционные расходы'
+
     _LOCATOR_FORM_OTHER_CAPITAL_COSTS = (
         By.XPATH, f'//div[@class="expenses-monitoring"]//span[contains(., "Прочие операционные расходы")]')
     _LOCATOR_FORM_OPEN_EDITOR_BUTTON = (By.XPATH,

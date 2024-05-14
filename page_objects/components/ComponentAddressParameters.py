@@ -4,6 +4,9 @@ import testit
 
 
 class ComponentAdressParameters(Order):
+
+    name = 'B2C: Параметры адреса'
+
     _LOCATOR_GROUP = (
         By.XPATH,
         '//div[@class="panel panel-material"]//span[contains(., "Параметры объекта на адресе")]/ancestor::div[2]')

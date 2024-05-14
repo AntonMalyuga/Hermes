@@ -7,6 +7,7 @@ from page_objects.elements.UserLoginForm import UserLoginForm
 @testit.displayName('Авторизация с валидными данными')
 @testit.description('Проверяется авторизация под рабочей учётной записи')
 @testit.workItemIds(1057)
+@pytest.mark.skip('Переделать форму авторизации, т.к. она происходит по умолчанию')
 def test_user_authorization_success(driver, base_url):
     UserLoginForm(driver).authorization_default()
     with testit.step('Проверить корректность входа в систему' 'Вход в Гермес выполнен'):
@@ -18,6 +19,7 @@ def test_user_authorization_success(driver, base_url):
 @testit.description(
     'Проверяется отображение ошибки при некорретных учётных данных и невозможность попасть в систему под ними')
 @testit.workItemIds(1058)
+@pytest.mark.skip('Переделать форму авторизации, т.к. она происходит по умолчанию')
 @pytest.mark.parametrize('login, password',
                          [('MalyugaAS', 'TestPass'), ('TestUser', 'TestPass')],
                          ids=['correct_login_and_not_correct_pass', 'not_correct_login_and_not_correct_pass'])

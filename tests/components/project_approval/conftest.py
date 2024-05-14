@@ -1,6 +1,17 @@
 import pytest
+from dataclasses import dataclass, field, asdict
+from faker import Faker
+
+Faker.seed()
+
+fake = Faker('ru_RU')
 
 
-@pytest.fixture
-def project_id() -> int:
-    return 1604034
+@dataclass
+class Order:
+    id: int = 1604034
+
+
+@pytest.fixture()
+def order():
+    return Order

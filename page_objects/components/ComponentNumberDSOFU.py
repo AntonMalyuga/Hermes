@@ -6,6 +6,9 @@ from pathlib import Path
 
 
 class ComponentNumberDSOFU(Order):
+
+    name = 'B2C: Номер ДС ОФУ'
+
     _LOCATOR_GROUP = (
         By.XPATH,
         '//div[@class="panel panel-material"]//span[contains(., "Подрядчики")]/ancestor::div[2]//div[@class = "panel-heading binding-flag"]')

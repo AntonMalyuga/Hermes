@@ -5,6 +5,9 @@ import testit
 
 
 class ComponentCreateProjectButton(Order):
+
+    name = 'B2C: Создать строительный проект'
+
     _GROUP = '//div[@class="panel panel-material"]//span[contains(., "Общая информация")]/ancestor::div[2]'
     _LOCATOR_CREATE_PROJECT_BUTTON = (By.XPATH, f'{_GROUP}//a[contains(., "Создать строительный проект")]')
 

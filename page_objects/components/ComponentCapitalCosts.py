@@ -6,7 +6,7 @@ from page_objects.orders.Order import Order
 
 class ComponentCapitalCosts(Order):
 
-    name = 'Прочие капитальные затраты'
+    name = 'B2C: Прочие капитальные затраты'
 
     _LOCATOR_GROUP = (By.XPATH, '//div[@class="panel panel-material"]//span[contains(., "Затратная часть")]')
     _LOCATOR_FORM_OTHER_CAPITAL_COSTS = (

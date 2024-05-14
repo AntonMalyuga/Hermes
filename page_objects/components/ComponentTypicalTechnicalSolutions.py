@@ -4,7 +4,8 @@ from page_objects.orders.Order import Order
 
 
 class ComponentTypicalTechnicalSolutions(Order):
-    name = 'Типовые технические решения'
+
+    name = 'B2B: Типовые технические решения'
 
     _GROUP = '//div[@class="panel panel-material"]//span[contains(., "Капитальные расходы")]/ancestor::div[2]'
     _LOCATOR_GROUP = (By.XPATH, _GROUP)

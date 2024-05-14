@@ -5,7 +5,7 @@ import time
 import testit
 
 
-class FormB2CWorkVolume(Order):
+class FormB2CObjectOrder(Order):
 
     name = 'Объекты заказа КИП'
     path = 'b2c/group_orders'

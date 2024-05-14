@@ -92,6 +92,10 @@ class BasePage:
         url = f'{self.current_url()}{self.path}'
         self._driver.get(url)
 
+    def open_for_link(self, path):
+        url = f'{self.__base_url()}{path}'
+        self._driver.get(url)
+
     def open_for_path(self, path):
         url = f'{self.__base_url()}{self.path}{path}'
         self._driver.get(url)

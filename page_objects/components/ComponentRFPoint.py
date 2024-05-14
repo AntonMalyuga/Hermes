@@ -7,7 +7,8 @@ import testit
 
 
 class ComponentRFPoint(Order):
-    name = 'Точка РФ'
+
+    name = 'B2B: Точка РФ'
 
     _LOCATOR_GROUP = (
         By.XPATH, '//span[contains(., "Точка РФ")]')

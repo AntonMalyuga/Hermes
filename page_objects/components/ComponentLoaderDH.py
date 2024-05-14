@@ -5,6 +5,9 @@ from pathlib import Path
 
 
 class ComponentLoaderDH(Order):
+
+    name = 'B2C: Загрузчик ДХ'
+
     _LOCATOR_GROUP = (
         By.XPATH,
         '//div[@class="panel panel-material"]//span[contains(., "Параметры объекта на адресе")]/ancestor::div[2]')

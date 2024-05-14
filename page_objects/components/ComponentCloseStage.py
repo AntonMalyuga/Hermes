@@ -5,6 +5,7 @@ import testit
 
 
 class ComponentCloseStage(BasePage):
+
     name = 'Управление этапом'
 
     _CHECK_OPEN_ORDER = (By.CSS_SELECTOR, '.tab-content title')

@@ -1,5 +1,6 @@
+import pytest
 import testit
-from page_objects.forms.FormB2CCreateConstructionProjectShow import B2CCreateConstructionProjectShow
+from page_objects.forms.FormB2CCreateConstructionProjectShow import FormB2CCreateConstructionProjectShow
 from page_objects.orders.b2c.Project import Project
 from page_objects.forms.FormB2CWorkVolume import B2cFormWorkVolume
 from page_objects.forms.FormB2CSpecification import B2cFormSpecification
@@ -15,6 +16,7 @@ from page_objects.components.ComponentCloseStage import ComponentCloseStage
 @testit.displayName('E2E по типу строительства "Новостройка" на продуктивной среде')
 @testit.description(
     'E2E по типу строительства "Новостройка" с услугой WiFi  по подрядному способу и с отправкой в архив')
+@pytest.mark.slow
 def test_e2e_new_build_prod(driver):
     project = {
         'rf': 'РФ Ульяновский',

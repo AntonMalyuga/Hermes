@@ -6,6 +6,9 @@ from selenium.common.exceptions import TimeoutException
 
 
 class ComponentPanelMaterialPart(Order):
+
+    name = 'B2C: Прочие капитальные расходы'
+
     _LOCATOR_GROUP = (
         By.XPATH, '//div[@class="panel panel-material"]//span[contains(., "Затратная часть")]/ancestor::div[2]')
     _LOCATOR_COMPONENT_DROPDOWN_MENU = (By.XPATH,

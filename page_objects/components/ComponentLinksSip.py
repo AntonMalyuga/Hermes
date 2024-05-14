@@ -7,6 +7,9 @@ from selenium.webdriver.common.keys import Keys
 
 
 class ComponentLinkSip(Order):
+
+    name = 'B2C: Ссылка на карточку ИП в СИП'
+
     _LOCATOR_GROUP = (
         By.XPATH, '//div[@class="panel panel-material"]//span[contains(., "Инвестиционный проект")]/ancestor::div[2]')
     _LOCATOR_EDIT_FORM_BUTTON_CART = (By.XPATH,

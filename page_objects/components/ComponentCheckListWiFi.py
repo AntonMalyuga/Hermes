@@ -6,6 +6,9 @@ from selenium.webdriver.support.select import Select
 
 
 class ComponentCheckListWiFi(Order):
+
+    name = 'B2C: WiFi'
+
     GROUP = '//div[@class="panel panel-material"]//span[contains(., "Чек-лист")]/ancestor::div[2]'
     _LOCATOR_COMPONENT_COLLAPSED_MENU = (By.XPATH,
                                          f'{GROUP}/b[text()="Wi-Fi"]/ancestor::div[2]//div[@data-toggle = "collapse"]')

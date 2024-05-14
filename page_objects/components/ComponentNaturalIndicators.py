@@ -6,6 +6,9 @@ import testit
 
 
 class ComponentNaturalIndicator(Order):
+
+    name = 'B2C: Натуральные показатели'
+
     _GROUP = '//div[@class="panel panel-material"]//span[contains(., "Натуральные показатели")]/ancestor::div[2]'
     _COMPONENT_BUTTON_OPEN_EDITOR = (By.XPATH, f'{_GROUP}//a[@title="Редактировать"]')
     _COMPONENT_BUTTON_SAVE = (By.XPATH, f'{_GROUP}//button[@type="submit"]')

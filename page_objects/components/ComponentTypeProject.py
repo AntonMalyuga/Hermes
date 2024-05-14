@@ -5,6 +5,9 @@ import testit
 
 
 class ComponentTypeProject(Order):
+
+    name = 'B2C: Инвестиционный проект'
+
     _LOCATOR_GROUP = (
         By.XPATH, '//div[@class="panel panel-material"]//span[contains(., "Инвестиционный проект")]/ancestor::div[2]')
     _LOCATOR_EDIT_FORM_BUTTON = (By.XPATH,

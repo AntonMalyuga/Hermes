@@ -8,6 +8,9 @@ import testit
 
 
 class ComponentAdditionalIncome(Order):
+
+    name = 'B2C: Дополнительные доходы'
+
     _LOCATOR_GROUP = (
         By.XPATH, '//div[@class="panel panel-material"]//span[contains(., "Проектные параметры")]/ancestor::div[2]')
     _LOCATOR_EDIT_FORM_BUTTON = (By.XPATH,

@@ -4,6 +4,7 @@ import testit
 
 
 class ComponentCreatePreTEOAndTEOOnMap(Order):
+
     name = 'Создание предТЭО и ТЭО на карте'
 
     _GROUP = '//div[@class="panel panel-material"]//span[contains(., "Общая информация")]/ancestor::div[2]'

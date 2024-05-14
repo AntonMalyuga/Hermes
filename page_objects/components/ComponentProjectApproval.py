@@ -8,7 +8,8 @@ import testit
 
 
 class ComponentProjectApproval(BasePage):
-    name = 'Согласование проекта'
+
+    name = 'B2B: Согласование проекта'
 
     _GROUP = '//div[@class="panel panel-material"]//span[contains(., "Инвестиционный проект")]/ancestor::div[2]'
     _LOCATOR_GROUP = (By.XPATH, _GROUP)

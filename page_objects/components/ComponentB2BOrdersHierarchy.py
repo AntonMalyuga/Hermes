@@ -4,7 +4,7 @@ import testit
 
 
 class ComponentB2BOrdersHierarchy(Order):
-    name = 'Иерархия заявок'
+    name = 'B2B: Иерархия заявок'
 
     _GROUP = '//div[@class="panel panel-material"]//span[contains(., "Иерархия заявок")]/ancestor::div[2]'
     _LOCATOR_LINK_PROJECT = (By.XPATH, f'{_GROUP}//tbody//td[1]/a')
