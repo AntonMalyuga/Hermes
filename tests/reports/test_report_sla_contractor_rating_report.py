@@ -1,3 +1,4 @@
+import pytest
 import testit
 
 from page_objects.reports.SLAContractorRatingReport import SLAContractorRatingReport
@@ -6,6 +7,7 @@ from page_objects.reports.SLAContractorRatingReport import SLAContractorRatingRe
 @testit.title('reports')
 @testit.displayName('Проверить открытие отчёта "Отчёт рейтинг Подрядчиков по SLA"')
 @testit.description('Проверяется открытие отчёта "Отчёт рейтинг Подрядчиков по SLA"')
+@pytest.mark.smoke
 def test_open_report_sla_contractor_rating_report(driver):
     SLAContractorRatingReport(driver).open()
     assert SLAContractorRatingReport(driver).check_report()

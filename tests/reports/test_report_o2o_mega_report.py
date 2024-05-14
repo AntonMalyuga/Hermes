@@ -8,6 +8,7 @@ import testit
 @testit.displayName('Проверить открытие отчёта "Отчёт БП O2O"')
 @testit.description('Проверяется открытие отчёта "Отчёт БП O2O"')
 @pytest.mark.skip('Отчёт удалён HE-13415')
+@pytest.mark.smoke
 def test_open_report_o2o_mega_report(driver):
     O2OMegaReport(driver).open()
     assert O2OMegaReport(driver).check_report()

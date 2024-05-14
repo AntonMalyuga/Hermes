@@ -14,7 +14,7 @@ def test_open_report_sla_dynamic_report(driver):
 @testit.title('reports')
 @testit.displayName('Проверить наименование отчёта "Динамика показателей по SLA"')
 @testit.description('Проверяется наименование отчёта "Динамика показателей по SLA"')
-@pytest.mark.skip('HE-13931 - исправить некорректное имя отчёта в интерфейсе')
+@pytest.mark.smoke
 def test_check_name_sla_dynamic_report(driver):
     SLADynamicReport(driver).open()
     assert SLADynamicReport(driver).get_name_report() == SLADynamicReport(driver).name
