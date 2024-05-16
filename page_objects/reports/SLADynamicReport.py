@@ -1,19 +1,26 @@
-from ..BasePage import BasePage
-from selenium.webdriver.common.by import By
 import testit
+from driver import Driver
 
 
-class SLADynamicReport(BasePage):
+class SLADynamicReport:
     name = 'Динамика показателей по SLA'
     path = 'report/sla_dynamic_report'
 
-    _CHECK_REPORT = (By.CSS_SELECTOR, 'button[formaction="/report/sla_dynamic_report/html"]')
-    _LOCATOR_H2_NAME_REPORT = (By.XPATH, '//h2')
+    @staticmethod
+    def check_report():
+        Driver().get_by_role('button', 'Показать на экране').click()
 
-    def check_report(self):
-        with testit.step(f'Проверить открытие отчета "{self.name}" по адресу "{self.path}", "Отчёт успешно открыт"'):
-            if len(self.find_elements(self._CHECK_REPORT)) > 0:
-                return True
+    #
+    # _LOCATOR_H2_NAME_REPORT = (By.XPATH, '//h2')
 
-    def get_name_report(self) -> str:
-        return self.find_element(self._LOCATOR_H2_NAME_REPORT).text
+    # @classmethod
+    # def check_report(cls):
+    #     with testit.step(f'Проверить открытие отчета "{cls.name}" по адресу "{cls.path}"'):
+    #         if len(cls.find_elements(cls._CHECK_REPORT)) > 0:
+    #             return True
+    #
+    # @classmethod
+    # def get_name_report(cls) -> str:
+    #     name = cls.find_element(cls._LOCATOR_H2_NAME_REPORT).text
+    #     with testit.step(f'Получить имя отчёта в интерфейсе: {name}'):
+    #         return name
