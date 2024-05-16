@@ -1,5 +1,3 @@
-import pytest
-import os
 from selenium import webdriver
 from selenium.webdriver.chrome.service import Service as ChromeService
 from selenium.webdriver.firefox.service import Service as FirefoxService
@@ -42,7 +40,7 @@ def base_url(request):
 
 
 @pytest.fixture()
-def driver(request, base_url):
+def driver(request, base_url) -> Driver:
     browser = request.config.getoption('--browser')
     options = Options()
     if request.config.getoption('--headless'):
