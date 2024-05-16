@@ -28,7 +28,6 @@ from page_objects.components.ComponentB2BOrdersHierarchy import ComponentB2BOrde
 @testit.displayName('E2E B2B по строительству сети enternet')
 @testit.description('E2E по строительству сети интернет с ТЭО и проработкой хоз. способа до конечного этапа')
 @pytest.mark.slow
-@pytest.mark.skip('HE-13926')
 def test_e2e_b2b(driver):
     FormB2BCreateOldClientProject(driver).open()
     FormB2BCreateOldClientProject(driver).create_project_on_teo()

@@ -1,5 +1,3 @@
-import time
-
 import pytest
 from page_objects.elements.UserLoginForm import UserLoginForm
 

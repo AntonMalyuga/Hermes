@@ -1,5 +1,3 @@
-import time
-
 from selenium.webdriver.common.by import By
 from page_objects.orders.Order import Order
 from selenium.webdriver.support.select import Select
@@ -26,7 +24,7 @@ class ComponentBindingOT(Order):
         with testit.step(f'Открыть форму редактирования'):
             self.find_element(locator=self._LOCATOR_BINDING_BUTTON).click()
 
-    def fill_reference_point(self, value):
+    def set_reference_point(self, value):
         with testit.step(f'Заполнить селектовую форму со значением опорной точки "{value}"'):
             select = Select(self.find_element(locator=self._LOCATOR_REFERENCE_POINT))
             select.select_by_visible_text(value)
@@ -40,5 +38,5 @@ class ComponentBindingOT(Order):
             self.move_to_group()
             self.push_edit_form_button()
             self.check_loader()
-            self.fill_reference_point(value)
+            self.set_reference_point(value)
             self.push_submit_button()

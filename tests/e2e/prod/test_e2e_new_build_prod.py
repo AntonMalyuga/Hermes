@@ -56,8 +56,8 @@ def test_e2e_new_build_prod(driver):
         'constuct_method': 'Подрядный способ'
     }
 
-    B2CCreateConstructionProjectShow(driver).open()
-    B2CCreateConstructionProjectShow(driver).create_project(project)
+    FormB2CCreateConstructionProjectShow(driver).open()
+    FormB2CCreateConstructionProjectShow(driver).create_project(project)
     ComponentCheckListWiFi(driver).add_cost_wifi(value='capex')
     ComponentCloseStage(driver).close_stage(pass_name='Положительно', next_stage='Уточнение лин. данных в ОТУ')
     Project(driver).open_form_work()

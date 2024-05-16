@@ -1,24 +1,24 @@
 from selenium.webdriver.common.by import By
-from page_objects.orders.Order import Order
+from page_objects.BasePage import BasePage
 import testit
 
 
-class ComponentB2BOrdersHierarchy(Order):
+class ComponentB2BOrdersHierarchy(BasePage):
     name = 'B2B: Иерархия заявок'
+    group = 'Иерархия заявок'
 
-    _GROUP = '//div[@class="panel panel-material"]//span[contains(., "Иерархия заявок")]/ancestor::div[2]'
-    _LOCATOR_LINK_PROJECT = (By.XPATH, f'{_GROUP}//tbody//td[1]/a')
-    _LOCATOR_LINK_CLIENT = (By.XPATH, f'{_GROUP}//tbody//td[2]/a')
-    _LOCATOR_LINK_CONSTRUCT = (By.XPATH, f'{_GROUP}//tbody//td[3]/a')
-    _LOCATOR_LINK_SMU = (By.XPATH, f'{_GROUP}//tbody//td[4]/a')
-    _LOCATOR_LINK_HOZ = (By.XPATH, f'{_GROUP}//tbody//td[5]/a')
-    _LOCATOR_LINK_GPH = (By.XPATH, f'{_GROUP}//tbody//td[6]/a')
-    _LOCATOR_LINK_CUSTOMER = (By.XPATH, f'{_GROUP}//tbody//td[7]/a')
-    _LOCATOR_LINK_VTR = (By.XPATH, f'{_GROUP}//tbody//td[8]/a')
+    _SELECTOR_GROUP = f'//div[@class="panel panel-material"]//span[contains(., "{group}")]/ancestor::div[2]'
+    _LOCATOR_LINK_PROJECT = (By.XPATH, f'{_SELECTOR_GROUP}//tbody//td[1]/a')
+    _LOCATOR_LINK_CLIENT = (By.XPATH, f'{_SELECTOR_GROUP}//tbody//td[2]/a')
+    _LOCATOR_LINK_CONSTRUCT = (By.XPATH, f'{_SELECTOR_GROUP}//tbody//td[3]/a')
+    _LOCATOR_LINK_SMU = (By.XPATH, f'{_SELECTOR_GROUP}//tbody//td[4]/a')
+    _LOCATOR_LINK_HOZ = (By.XPATH, f'{_SELECTOR_GROUP}//tbody//td[5]/a')
+    _LOCATOR_LINK_GPH = (By.XPATH, f'{_SELECTOR_GROUP}//tbody//td[6]/a')
+    _LOCATOR_LINK_CUSTOMER = (By.XPATH, f'{_SELECTOR_GROUP}//tbody//td[7]/a')
+    _LOCATOR_LINK_VTR = (By.XPATH, f'{_SELECTOR_GROUP}//tbody//td[8]/a')
 
     def move_to_group(self):
-        with testit.step(f'Перейти к группе'):
-            self.move_to_element((By.XPATH, self._GROUP))
+        self.move_to_element((By.XPATH, self._SELECTOR_GROUP))
 
     def get_project_number(self) -> int:
         self.move_to_group()

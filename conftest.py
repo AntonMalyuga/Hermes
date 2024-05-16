@@ -28,6 +28,12 @@ def pytest_addoption(parser):
         ),
         help='Выбирает среду для запуска тестов, по умолчанию тест'
     )
+    parser.addoption(
+        '--headless',
+        default=True,
+        choices=(True, False),
+        help='Запускает фоновый режим автотестов'
+    )
 
 
 @pytest.fixture()
@@ -38,19 +44,22 @@ def base_url(request):
 @pytest.fixture()
 def driver(request, base_url):
     browser = request.config.getoption('--browser')
+    options = Options()
+    if request.config.getoption('--headless'):
+        options.add_argument('--headless')
 
     def get_driver_by_windows():
         if browser == 'chrome':
-            return webdriver.Chrome(service=ChromeService(ChromeDriverManager().install()))
+            return webdriver.Chrome(service=ChromeService(ChromeDriverManager().install(), options=options))
         elif browser == 'firefox':
-            return webdriver.Firefox(service=FirefoxService(GeckoDriverManager().install()))
+            return webdriver.Firefox(service=FirefoxService(GeckoDriverManager().install(), options=options))
         else:
             raise ValueError(f'Браузер {browser} не поддерживается')
 
     def get_driver_by_linux():
         if browser == 'chrome':
-            options = Options()
             options.add_argument('--disable-dev-shm-usage')
+
             return webdriver.Chrome(service=Service(ChromeDriverManager().install()), options=options)
         else:
             raise ValueError(f'Браузер {browser} не поддерживается')
@@ -73,6 +82,3 @@ def driver(request, base_url):
     driver.open()
     driver.base_url = base_url
     return driver
-
-
-
