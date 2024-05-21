@@ -2,20 +2,19 @@ import time
 import testit
 
 from selenium.webdriver.common.by import By
-from page_objects.BasePage import BasePage
 from selenium.webdriver.common.keys import Keys
 
 
-class B2cFormWorkVolume(BasePage):
+class B2cFormWorkVolume:
 
     name = 'Редактировать объемы ПИР/СМР B2C'
 
-    _LOCATOR_BUTTON_OPEN_MODAL_ADD_WORK = (By.CSS_SELECTOR, 'button[data-target^="#add-work-modal"]')
+    _LOCATOR_BUTTON_OPEN_MODAL_ADD_WORK = 'button[data-target^="#add-work-modal"]')
     _LOCATOR_TABLE_OPEN_MODAL_ADD_WORK = (By.XPATH, '//tbody[@id="add-work-table-tbody"]')
-    _LOCATOR_CHECK_OPEN_MODAL = (By.CSS_SELECTOR, '.modal.fade.in')
+    _LOCATOR_CHECK_OPEN_MODAL = '.modal.fade.in')
     _LOCATOR_BUTTON_MODAL_ADD_WORK = (By.XPATH, '//div[@class="modal-content"]//button[text()="Добавить"]')
     _LOCATOR_TABLE_INSERT_WORKS = (By.XPATH, '//table[contains(@class, "hook--work-table")]')
-    _LOCATOR_BUTTON_SAVE_WORKS = (By.CSS_SELECTOR, 'button.btn.btn-primary.js--validation-hidden-forms')
+    _LOCATOR_BUTTON_SAVE_WORKS = 'button.btn.btn-primary.js--validation-hidden-forms')
     _LOCATOR_LABEL_CONSTRUCTION_METHOD = (By.XPATH, '//label[@class="radio-inline"')
 
     def check_open_modal(self):

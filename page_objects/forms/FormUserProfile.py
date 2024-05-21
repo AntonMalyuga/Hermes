@@ -1,27 +1,26 @@
 import testit
 from selenium.webdriver.common.by import By
-from page_objects.BasePage import BasePage
 
 
-class FormUserProfile(BasePage):
+class FormUserProfile:
 
     name = 'Профиль пользователя'
     path = 'user_management/sso/user_profile'
 
-    _LOCATOR_INPUT_EMAIL = (By.CSS_SELECTOR, '.form-horizontal input.form-control')
-    _LOCATOR_INPUT_LOGIN = (By.CSS_SELECTOR, 'input[name="new_login"]')
+    _LOCATOR_INPUT_EMAIL = '.form-horizontal input.form-control')
+    _LOCATOR_INPUT_LOGIN = 'input[name="new_login"]')
     _LOCATOR_INPUT_PASSWORD = (
         By.CSS_SELECTOR, '[action="/user_management/sso/user_profile/change_login"] input[name="current_password"]')
     _LOCATOR_BUTTON_CHANGE_PASSWORD = (
         By.CSS_SELECTOR, 'form[action="/user_management/sso/user_profile/change_password"] button')
     _LOCATOR_INPUT_CURRENT_PASSWORD = (
         By.CSS_SELECTOR, '[action="/user_management/sso/user_profile/change_password"] input[name="current_password"]')
-    _LOCATOR_INPUT_NEW_PASSWORD = (By.CSS_SELECTOR, 'input[name="new_password"]')
-    _LOCATOR_INPUT_SUBMIT_NEW_PASSWORD = (By.CSS_SELECTOR, 'input[name="new_password_repeat"]')
-    _LOCATOR_INPUT_PHONE_NUMBER = (By.CSS_SELECTOR, 'input[id="param0"]')
+    _LOCATOR_INPUT_NEW_PASSWORD = 'input[name="new_password"]')
+    _LOCATOR_INPUT_SUBMIT_NEW_PASSWORD = 'input[name="new_password_repeat"]')
+    _LOCATOR_INPUT_PHONE_NUMBER = 'input[id="param0"]')
     _LOCATOR_BUTTON_SAVE_PHONE = (
         By.CSS_SELECTOR, 'form[action="/user_management/sso/user_profile/change_params"] button')
-    _LOCATOR_SELECT_DEFAULT_ROLE = (By.CSS_SELECTOR, 'select[name="default_role"] option[value="344"]')
+    _LOCATOR_SELECT_DEFAULT_ROLE = 'select[name="default_role"] option[value="344"]')
     _LOCATOR_BUTTON_SAVE_ROLE = (
         By.CSS_SELECTOR,
         'form[action="https://hermes-test.rt.ru/user_management/sso/user_profile/change_settings"] button')

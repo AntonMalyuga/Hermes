@@ -3,18 +3,19 @@ import pytest
 from page_objects.reports.SLADynamicReport import SLADynamicReport
 
 
-@testit.title('reports')
-@testit.displayName('Проверить открытие отчёта "Динамика показателей по SLA"')
-@testit.description('Проверяется открытие отчёта "Динамика показателей по SLA"')
-def test_open_report_sla_dynamic_report(driver):
-    SLADynamicReport(driver).open()
-    assert SLADynamicReport(driver).check_report()
+class TestSLADynamicReport:
+    @testit.title('reports')
+    @testit.displayName('Проверить открытие отчёта')
+    @testit.description('Проверяется открытие отчёта')
+    @pytest.mark.smoke
+    def test_open_report(self):
+        SLADynamicReport.open_by_default()
+        assert SLADynamicReport.is_open_report()
 
-
-@testit.title('reports')
-@testit.displayName('Проверить наименование отчёта "Динамика показателей по SLA"')
-@testit.description('Проверяется наименование отчёта "Динамика показателей по SLA"')
-@pytest.mark.smoke
-def test_check_name_sla_dynamic_report(driver):
-    SLADynamicReport(driver).open()
-    assert SLADynamicReport(driver).get_name_report() == SLADynamicReport(driver).name
+    @testit.title('reports')
+    @testit.displayName('Проверить наименование отчёта')
+    @testit.description('Проверяется наименование отчёта')
+    @pytest.mark.smoke
+    def test_check_name(self):
+        SLADynamicReport.open_by_default()
+        assert SLADynamicReport.get_name_report() == SLADynamicReport.name

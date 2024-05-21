@@ -1,4 +1,3 @@
-from page_objects.BasePage import BasePage
 from selenium.webdriver.common.by import By
 from selenium.webdriver.support.select import Select
 from pynput.keyboard import Key, Controller
@@ -7,7 +6,7 @@ import testit
 from api.HermesSys import Sys
 
 
-class FormB2CCreationSMROrder(BasePage):
+class FormB2CCreationSMROrder:
     name = 'Создать заявку СМР'
     path = 'client/createb2c'
 
@@ -38,7 +37,7 @@ class FormB2CCreationSMROrder(BasePage):
     _LOCATOR_ELEMENTS_HOUSES = (By.XPATH, '//label[@for = "ADDRESS[ATDHOUSE]"]/ancestor::div[2]//span[@class = "name"]')
     _LOCATOR_ELEMENTS_STREETS = (
         By.XPATH, '//label[@for = "ADDRESS[ATDSTREET]"]/ancestor::div[2]//span[@class = "name"]')
-    _LOCATOR_CREATION_ORDER = (By.CSS_SELECTOR, '#CreateOrderb2C a')
+    _LOCATOR_CREATION_ORDER = '#CreateOrderb2C a')
     _LOCATOR_AREA = (By.XPATH,
                      '//label[@for= "ADDRESS[ATDOBJECT][1]"]/ancestor::div[2]//div[@class[contains(., "suggest form-control select-service-address input-sm")]]')
     _LOCATOR_VILLAGE = (By.XPATH,

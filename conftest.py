@@ -1,82 +1,80 @@
-from selenium import webdriver
-from selenium.webdriver.chrome.service import Service as ChromeService
-from selenium.webdriver.firefox.service import Service as FirefoxService
-from webdriver_manager.chrome import ChromeDriverManager
-from webdriver_manager.firefox import GeckoDriverManager
-from selenium.webdriver.chrome.options import Options
-from selenium.webdriver.chrome.service import Service
+import pytest
+from driver import Driver
 
 
-def pytest_addoption(parser):
-    parser.addoption(
-        '--browser', '-B',
-        default='chrome',
-        choices=('chrome', 'firefox'),
-        help='Выбирает необходимый драйвер для работы с браузером, по умолчанию Firefox'
-    )
-    parser.addoption(
-        '--url', '-U',
-        default='https://hermes-test.rt.ru/',
-        choices=(
-            'https://hermes-test.rt.ru/',
-            'http://hermes-pp.rt.ru/',
-            'https://hermes-prod.rt.ru/',
-            'http://hermes-beta.rt.ru',
-            'https://hermes-gamma.rt.ru/'
-        ),
-        help='Выбирает среду для запуска тестов, по умолчанию тест'
-    )
-    parser.addoption(
-        '--headless',
-        default=True,
-        choices=(True, False),
-        help='Запускает фоновый режим автотестов'
-    )
+# from selenium import webdriver
+# from selenium.webdriver.chrome.service import Service as ChromeService
+# from selenium.webdriver.firefox.service import Service as FirefoxService
+# from selenium.webdriver.chrome.options import Options
+# from selenium.webdriver.chrome.service import Service
+# from webdriver_manager.chrome import ChromeDriverManager
+# from webdriver_manager.firefox import GeckoDriverManager
 
+#
+# def pytest_addoption(parser):
+#     parser.addoption(
+#         '--browser', '-B',
+#         default='firefox',
+#         choices=('chrome', 'firefox'),
+#         help='Выбирает необходимый драйвер для работы с браузером, по умолчанию Firefox'
+#     )
+#     parser.addoption(
+#         '--url', '-U',
+#         default='https://hermes-test.rt.ru/',
+#         choices=(
+#             'https://hermes-test.rt.ru/',
+#             'http://hermes-pp.rt.ru/',
+#             'https://hermes-prod.rt.ru/',
+#             'http://hermes-beta.rt.ru',
+#             'https://hermes-gamma.rt.ru/'
+#         ),
+#         help='Выбирает среду для запуска тестов, по умолчанию тест'
+#     )
+#     parser.addoption(
+#         '--headless',
+#         default=False,
+#         choices=(True, False),
+#         help='Запускает фоновый режим автотестов'
+#     )
+#
+#
+# @pytest.fixture()
+# def base_url(request):
+#     return request.config.getoption('--url')
+#
+#
+# @pytest.fixture(autouse=True)
+# def browser(request, base_url) -> dr:
+#     options = Options()
+#
+#     if request.config.getoption('--headless'):
+#         options.add_argument('--headless')
+#
+#     options.add_argument('--disable-dev-shm-usage')
+#
+#     driver = dr(service=Service(ChromeDriverManager().install()), options=options)
+#     driver.maximize_window()
+#
+#     request.addfinalizer(driver.quit)
+#     driver.get(url=base_url)
+#
+#     return driver
 
-@pytest.fixture()
-def base_url(request):
-    return request.config.getoption('--url')
-
-
-@pytest.fixture()
-def driver(request, base_url) -> Driver:
-    browser = request.config.getoption('--browser')
-    options = Options()
-    if request.config.getoption('--headless'):
-        options.add_argument('--headless')
-
-    def get_driver_by_windows():
-        if browser == 'chrome':
-            return webdriver.Chrome(service=ChromeService(ChromeDriverManager().install(), options=options))
-        elif browser == 'firefox':
-            return webdriver.Firefox(service=FirefoxService(GeckoDriverManager().install(), options=options))
-        else:
-            raise ValueError(f'Браузер {browser} не поддерживается')
-
-    def get_driver_by_linux():
-        if browser == 'chrome':
-            options.add_argument('--disable-dev-shm-usage')
-
-            return webdriver.Chrome(service=Service(ChromeDriverManager().install()), options=options)
-        else:
-            raise ValueError(f'Браузер {browser} не поддерживается')
-
-    if os.name == 'posix':
-        driver = get_driver_by_linux()
+def is_mobile(request) -> bool:
+    markers = request.node.own_markers
+    if [mark for mark in markers if mark.name.lower() == 'mobile']:
+        return True
     else:
-        driver = get_driver_by_windows()
+        return False
 
-    request.addfinalizer(driver.quit)
 
-    def open(path=''):
-        url = f'{base_url}{path}'
-        return driver.get(url)
+def driver(request):
+    mobile = is_mobile(request=request)
+    webdriver = Driver(mobile=mobile)
 
-    driver.maximize_window()
-    driver.implicitly_wait(5)
+    yield webdriver
 
-    driver.open = open
-    driver.open()
-    driver.base_url = base_url
-    return driver
+    try:
+        webdriver.quit()
+    finally:
+        webdriver.__class__._instances = {}

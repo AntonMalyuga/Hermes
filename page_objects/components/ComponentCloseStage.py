@@ -1,20 +1,19 @@
-from page_objects.BasePage import BasePage
 from selenium.webdriver.common.by import By
 import time
 import testit
 
 
-class ComponentCloseStage(BasePage):
+class ComponentCloseStage:
 
     name = 'Управление этапом'
 
-    _CHECK_OPEN_ORDER = (By.CSS_SELECTOR, '.tab-content title')
+    _CHECK_OPEN_ORDER = '.tab-content title')
 
     _LOCATOR_FORM_ODER_CLOSE_STAGE_PASS = (
         By.XPATH, '//select[@name="passDescriptionId"]/optgroup[@label="Ручные переходы"]/option')
-    _LOCATOR_FORM_ODER_CLOSE_STAGE_REASON = (By.CSS_SELECTOR, 'select.js--show-reason-description')
-    _LOCATOR_FORM_ODER_CLOSE_STAGE_COMMENT = (By.CSS_SELECTOR, '.agg-change-stage-form textarea[name="comment"]')
-    _LOCATOR_FORM_BUTTON_CLOSE_STAGE = (By.CSS_SELECTOR, 'div[id^="moveOrderSelector"]')
+    _LOCATOR_FORM_ODER_CLOSE_STAGE_REASON = 'select.js--show-reason-description')
+    _LOCATOR_FORM_ODER_CLOSE_STAGE_COMMENT = '.agg-change-stage-form textarea[name="comment"]')
+    _LOCATOR_FORM_BUTTON_CLOSE_STAGE = 'div[id^="moveOrderSelector"]')
 
     @testit.step(f'Check opening interface order')
     def check_open_order_interface(self):
@@ -42,11 +41,11 @@ class ComponentCloseStage(BasePage):
 
     def __click_go(self):
         with testit.step('Нажать "Перейти"'):
-            self.find_element(locator=(By.CSS_SELECTOR, f'{self._LOCATOR_FORM_BUTTON_CLOSE_STAGE[1]} button')).click()
+            self.find_element(locator=f'{self._LOCATOR_FORM_BUTTON_CLOSE_STAGE[1]} button')).click()
 
     def __click_go_auto(self):
         with testit.step('Нажать "Перейти без проверок"'):
-            self.find_elements(locator=(By.CSS_SELECTOR, f'{self._LOCATOR_FORM_BUTTON_CLOSE_STAGE[1]} button'))[
+            self.find_elements(locator=f'{self._LOCATOR_FORM_BUTTON_CLOSE_STAGE[1]} button'))[
                 1].click()
 
     def close_stage(self, pass_name: str, next_stage: str = '', reason: str = '', comment: str = '',

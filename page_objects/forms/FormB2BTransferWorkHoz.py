@@ -1,11 +1,10 @@
 from selenium.webdriver.common.by import By
 from selenium.webdriver.remote.webelement import WebElement
 
-from page_objects.BasePage import BasePage
 import testit
 
 
-class FormB2BTransferWorkHoz(BasePage):
+class FormB2BTransferWorkHoz:
     name = 'B2B: Выбор работ хоз. способом'
     path = 'aggregator/works/'
 

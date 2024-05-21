@@ -7,7 +7,7 @@ from page_objects.orders.Order import BasePage
 import testit
 
 
-class ComponentProjectApproval(BasePage):
+class ComponentProjectApproval:
 
     name = 'B2B: Согласование проекта'
 

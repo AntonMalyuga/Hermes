@@ -3,10 +3,20 @@ import testit
 from page_objects.reports.MinicaseB2BServiceReport import MinicaseB2BServiceReport
 
 
-@testit.title('reports')
-@testit.displayName('Проверить открытие отчёта "Отчёт по услугам мини-кейса B2B"')
-@testit.description('Проверяется открытие отчёта "Отчёт по услугам мини-кейса B2B"')
-@pytest.mark.smoke
-def test_open_report_b2c_plan_fact_charts(driver):
-    MinicaseB2BServiceReport(driver).open()
-    assert MinicaseB2BServiceReport(driver).check_report()
+class TestMinicaseB2BServiceReport:
+
+    @testit.title('reports')
+    @testit.displayName('Проверить открытие отчёта')
+    @testit.description('Проверяется открытие отчёта')
+    @pytest.mark.smoke
+    def test_open_report(self):
+        MinicaseB2BServiceReport.open_by_default()
+        assert MinicaseB2BServiceReport.is_open_report()
+
+    @testit.title('reports')
+    @testit.displayName('Проверить наименование отчёта')
+    @testit.description('Проверяется наименование отчёта')
+    @pytest.mark.smoke
+    def test_check_name(self):
+        MinicaseB2BServiceReport.open_by_default()
+        assert MinicaseB2BServiceReport.get_name_report() == MinicaseB2BServiceReport.name

@@ -2,19 +2,18 @@ import time
 import testit
 from selenium.common.exceptions import ElementClickInterceptedException
 from selenium.webdriver.common.by import By
-from page_objects.BasePage import BasePage
 
 
-class B2cFormSpecification(BasePage):
+class B2cFormSpecification:
 
     name = 'Редактировать спецификацию оборудования B2C'
 
-    _LOCATOR_BUTTON_OPEN_MODAL_ADD_SPECIFICATION = (By.CSS_SELECTOR, 'button[id="addEquipment"]')
-    _LOCATOR_CHECK_OPEN_MODAL = (By.CSS_SELECTOR, '.modal.fade.in')
+    _LOCATOR_BUTTON_OPEN_MODAL_ADD_SPECIFICATION = 'button[id="addEquipment"]')
+    _LOCATOR_CHECK_OPEN_MODAL = '.modal.fade.in')
     _LOCATOR_SHOW_MODAL_SPECIFICATION_LIST = (By.XPATH, '//button[@data-url="/b2c/specification/equipment_list"]')
     _LOCATOR_TABLE_INSERT_SPECIFICATION = (
         By.XPATH, '//div[@id="specification-equipment-list"]/table')
-    _LOCATOR_BUTTON_SAVE_WORKS = (By.CSS_SELECTOR, 'button.btn.btn-primary.js--validation-hidden-forms')
+    _LOCATOR_BUTTON_SAVE_WORKS = 'button.btn.btn-primary.js--validation-hidden-forms')
     _LOCATOR_LABEL_CONSTRUCTION_METHOD = (By.XPATH, '//label[@class="radio-inline"')
     _LOCATOR_BUTTON_MODAL_ADD_SPECIFICATION = (
         By.XPATH, '//button[@class[contains(.,"b2c-specification-add-equipments")]]')

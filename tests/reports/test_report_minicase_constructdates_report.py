@@ -4,10 +4,19 @@ from page_objects.reports.MinicaseConstructDatesReport import MinicaseConstructD
 import testit
 
 
-@testit.title('reports')
-@testit.displayName('Проверить открытие отчёта "Постомониторинг аварийности"')
-@testit.description('Проверяется открытие отчёта "Постомониторинг аварийности"')
-@pytest.mark.smoke
-def test_open_report_minicase_construct_dates_report(driver):
-    MinicaseConstructDatesReport(driver).open()
-    assert MinicaseConstructDatesReport(driver).check_report()
+class TestMinicaseConstructDatesReport:
+    @testit.title('reports')
+    @testit.displayName('Проверить открытие отчёта')
+    @testit.description('Проверяется открытие отчёта')
+    @pytest.mark.smoke
+    def test_open_report(self):
+        MinicaseConstructDatesReport.open_by_default()
+        assert MinicaseConstructDatesReport.is_open_report()
+
+    @testit.title('reports')
+    @testit.displayName('Проверить наименование отчёта')
+    @testit.description('Проверяется наименование отчёта')
+    @pytest.mark.smoke
+    def test_check_name(self):
+        MinicaseConstructDatesReport.open_by_default()
+        assert MinicaseConstructDatesReport.get_name_report() == MinicaseConstructDatesReport.name

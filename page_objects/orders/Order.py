@@ -1,14 +1,13 @@
-from page_objects.BasePage import BasePage
 from selenium.webdriver.common.by import By
 import time
 import testit
 
 
-class Order(BasePage):
+class Order:
     id = ''
     name = ''
 
-    _CHECK_OPEN_ORDER = (By.CSS_SELECTOR, '.tab-content title')
+    _CHECK_OPEN_ORDER = '.tab-content title')
     _LOCATOR_ORDER_ID = (By.XPATH, '//div[text()="Номер заявки:"]/following::div[1]')
 
     def open_order(self, order_id: int):

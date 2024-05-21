@@ -1,21 +1,23 @@
-from ..BasePage import BasePage
-from selenium.webdriver.common.by import By
+from locator import Locator
+from page import Page
 import testit
 
 
-class MinicaseB2BServiceReport(BasePage):
+class MinicaseB2BServiceReport(Page):
     name = 'Отчёт по услугам мини-кейса B2B'
     path = 'report/minicase_b2b_service_report'
 
-    _CHECK_REPORT = (By.CSS_SELECTOR, 'button[formaction="/report/minicase_b2b_service_report/html"]')
-    _LOCATOR_H2_NAME_REPORT = (By.XPATH, '//h2')
+    _is_open_report = '//button[contains(., "Показать на экране")]'
+    _LOCATOR_H2_NAME_REPORT = '//h2'
 
-    def check_report(self):
-        with testit.step(f'Проверить открытие отчета "{self.name}" по адресу "{self.path}"'):
-            if len(self.find_elements(self._CHECK_REPORT)) > 0:
-                return True
+    @staticmethod
+    def is_open_report() -> bool:
+        with testit.step(
+                f'Проверить открытие отчета "{MinicaseB2BServiceReport.name}" по адресу "{MinicaseB2BServiceReport.path}"'):
+            return Locator(MinicaseB2BServiceReport._is_open_report).is_on_page()
 
-    def get_name_report(self) -> str:
-        name = self.find_element(self._LOCATOR_H2_NAME_REPORT).text
+    @staticmethod
+    def get_name_report() -> str:
+        name = Locator(MinicaseB2BServiceReport._LOCATOR_H2_NAME_REPORT).text
         with testit.step(f'Получить имя отчёта в интерфейсе: {name}'):
             return name

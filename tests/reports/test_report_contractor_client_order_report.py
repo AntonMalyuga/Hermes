@@ -4,10 +4,19 @@ from page_objects.reports.ContractorClientOrderReport import ContractorClientOrd
 import testit
 
 
-@testit.title('reports')
-@testit.displayName('Проверить открытие отчёта "Отчёт по КЗ для Подрядчиков"')
-@testit.description('Проверяется открытие отчёта "Отчёт по КЗ для Подрядчиков"')
-@pytest.mark.smoke
-def test_open_report_contractor_client_order_report(driver):
-    ContractorClientOrderReport(driver).open()
-    assert ContractorClientOrderReport(driver).check_report()
+class TestContractorClientOrderReport:
+    @testit.title('reports')
+    @testit.displayName('Проверить открытие отчёта')
+    @testit.description('Проверяется открытие отчёта')
+    @pytest.mark.smoke
+    def test_open_report(self):
+        ContractorClientOrderReport.open_by_default()
+        assert ContractorClientOrderReport.is_open_report()
+
+    @testit.title('reports')
+    @testit.displayName('Проверить наименование отчёта')
+    @testit.description('Проверяется наименование отчёта')
+    @pytest.mark.smoke
+    def test_check_name(self):
+        ContractorClientOrderReport.open_by_default()
+        assert ContractorClientOrderReport.get_name_report() == ContractorClientOrderReport.name

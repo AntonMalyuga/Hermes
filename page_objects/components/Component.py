@@ -1,10 +1,10 @@
-from abc import ABCMeta, abstractmethod
 from selenium.webdriver.common.by import By
-from page_objects.BasePage import BasePage
+
+
 # from page_objects.components.InterfaceComponent import InterfaceComponent
 
 
-class Component(BasePage):
+class Component:
 
     name: str
     group: str

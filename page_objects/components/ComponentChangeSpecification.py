@@ -7,7 +7,7 @@ import testit
 class ComponentChangeSpecification(Order):
     name = 'Редактировать спецификацию оборудования'
 
-    _LOCATOR_BUTTON_FORM_SPECIFICATION = (By.CSS_SELECTOR, 'a[href*="specification"]')
+    _LOCATOR_BUTTON_FORM_SPECIFICATION = 'a[href*="specification"]')
 
     def open_form_specification(self):
         with testit.step(f'Открыть форму спецификации'):

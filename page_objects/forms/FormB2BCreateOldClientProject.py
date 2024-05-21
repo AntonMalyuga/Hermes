@@ -1,4 +1,3 @@
-from page_objects.BasePage import BasePage
 from selenium.webdriver.common.by import By
 from selenium.webdriver.support.select import Select
 from selenium.webdriver.common.keys import Keys
@@ -6,7 +5,7 @@ import time
 import testit
 
 
-class FormB2BCreateOldClientProject(BasePage):
+class FormB2BCreateOldClientProject:
     name = 'Создать старый клиентский проект'
     path = 'client/showkpform'
 

@@ -1,21 +1,23 @@
-from ..BasePage import BasePage
-from selenium.webdriver.common.by import By
+from locator import Locator
+from page import Page
 import testit
 
 
-class B2CConstructionProjectMegaReport(BasePage):
+class B2CConstructionProjectMegaReport(Page):
     name = 'Мега отчёт по строительным проектам B2C'
     path = 'report/b2c_construction_project_mega_report'
 
-    _CHECK_REPORT = (By.CSS_SELECTOR, 'button[formaction="/report/b2c_construction_project_mega_report/html"]')
-    _LOCATOR_H2_NAME_REPORT = (By.XPATH, '//h2')
+    _is_open_report = '//button[contains(., "Показать на экране")]'
+    _LOCATOR_H2_NAME_REPORT = '//h2'
 
-    def check_report(self):
-        with testit.step(f'Проверить открытие отчета "{self.name}" по адресу "{self.path}"'):
-            if len(self.find_elements(self._CHECK_REPORT)) > 0:
-                return True
+    @staticmethod
+    def is_open_report() -> bool:
+        with testit.step(
+                f'Проверить открытие отчета "{B2CConstructionProjectMegaReport.name}" по адресу "{B2CConstructionProjectMegaReport.path}"'):
+            return Locator(B2CConstructionProjectMegaReport._is_open_report).is_on_page()
 
-    def get_name_report(self) -> str:
-        name = self.find_element(self._LOCATOR_H2_NAME_REPORT).text
+    @staticmethod
+    def get_name_report() -> str:
+        name = Locator(B2CConstructionProjectMegaReport._LOCATOR_H2_NAME_REPORT).text
         with testit.step(f'Получить имя отчёта в интерфейсе: {name}'):
             return name

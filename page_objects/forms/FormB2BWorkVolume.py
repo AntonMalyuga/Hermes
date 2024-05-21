@@ -1,13 +1,11 @@
 import random
-import time
 
 import testit
 from selenium.webdriver.common.by import By
 from selenium.webdriver.remote.webelement import WebElement
-from page_objects.BasePage import BasePage
 
 
-class FormB2BWorkVolume(BasePage):
+class FormB2BWorkVolume:
     name = 'Редактировать объемы ПИР/СМР B2B'
 
     _LOCATOR_BTN_SHOW_ALL_WORKS = (By.XPATH, '//button[@title="Отобразить все объемы работ"]')

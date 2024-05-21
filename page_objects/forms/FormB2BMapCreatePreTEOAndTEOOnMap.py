@@ -2,15 +2,12 @@ import time
 
 from selenium.common import ElementNotInteractableException
 from selenium.webdriver.common.by import By
-from page_objects.BasePage import BasePage
 from selenium.webdriver.common.action_chains import ActionChains
 from selenium.webdriver.support.select import Select
 from selenium.webdriver.common.keys import Keys
-import mouse
-import testit
 
 
-class FormB2BMapCreatePreTEOAndTEOOnMap(BasePage):
+class FormB2BMapCreatePreTEOAndTEOOnMap:
 
     name = 'Создание ТЭО/предТЭО на карте'
 
@@ -84,7 +81,7 @@ class FormB2BMapCreatePreTEOAndTEOOnMap(BasePage):
         self.check_loader()
 
 
-class CableModal(BasePage):
+class CableModal:
     _LOCATOR_SELECT_MAP_CABLE_LINE_TYPE = (By.XPATH, '//select[@name="cabling_type_id"]')
     _LOCATOR_SELECT_MAP_CABLE_TYPE = (By.XPATH, '//select[@name="cable_type_id"]')
     _LOCATOR_INPUT_MAP_CABLE_LEN = (By.XPATH, '//input[@name="CABLE_LEN"]')

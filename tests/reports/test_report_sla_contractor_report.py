@@ -4,10 +4,19 @@ import testit
 from page_objects.reports.SLAContractorReport import SLAContractorReport
 
 
-@testit.title('reports')
-@testit.displayName('Проверить открытие отчёта "Отчёт по Подрядчикам"')
-@testit.description('Проверяется открытие отчёта "Отчёт по Подрядчикам"')
-@pytest.mark.smoke
-def test_open_report_sla_contractor_report(driver):
-    SLAContractorReport(driver).open()
-    assert SLAContractorReport(driver).check_report()
+class TestSLAContractorReport:
+    @testit.title('reports')
+    @testit.displayName('Проверить открытие отчёта')
+    @testit.description('Проверяется открытие отчёта')
+    @pytest.mark.smoke
+    def test_open_report(self):
+        SLAContractorReport.open_by_default()
+        assert SLAContractorReport.is_open_report()
+
+    @testit.title('reports')
+    @testit.displayName('Проверить наименование отчёта')
+    @testit.description('Проверяется наименование отчёта')
+    @pytest.mark.smoke
+    def test_check_name(self):
+        SLAContractorReport.open_by_default()
+        assert SLAContractorReport.get_name_report() == SLAContractorReport.name

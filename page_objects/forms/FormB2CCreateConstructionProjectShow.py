@@ -1,24 +1,23 @@
 import random
 import testit
-from page_objects.BasePage import BasePage
 from selenium.webdriver.common.by import By
 import time
 
 
-class FormB2CCreateConstructionProjectShow(BasePage):
+class FormB2CCreateConstructionProjectShow:
     name = 'Создать строительный проект B2C'
     path = 'b2c/create_construction_project_show'
 
-    _LOCATOR_SELECT_RF = (By.CSS_SELECTOR, 'select#rfId')
-    _LOCATOR_SELECT_IS_NEED_BROAD_BAND = (By.CSS_SELECTOR, '#needBroadband')
-    _LOCATOR_SELECT_TYPE_BUILD_TYPE = (By.CSS_SELECTOR, '#buildTypeId')
-    _LOCATOR_SELECT_AJAX_CUSTOMER = (By.CSS_SELECTOR, '#customerId')
-    _LOCATOR_SELECT_TECHNOLOGY = (By.CSS_SELECTOR, '#technology')
-    _LOCATOR_INPUT_PROJECT_NAME = (By.CSS_SELECTOR, '#projectName')
-    _LOCATOR_BUTTON_OPEN_MODAL_ADD_OBJECT_SMR = (By.CSS_SELECTOR, '.btn-group button')
+    _LOCATOR_SELECT_RF = 'select#rfId')
+    _LOCATOR_SELECT_IS_NEED_BROAD_BAND = '#needBroadband')
+    _LOCATOR_SELECT_TYPE_BUILD_TYPE = '#buildTypeId')
+    _LOCATOR_SELECT_AJAX_CUSTOMER = '#customerId')
+    _LOCATOR_SELECT_TECHNOLOGY = '#technology')
+    _LOCATOR_INPUT_PROJECT_NAME = '#projectName')
+    _LOCATOR_BUTTON_OPEN_MODAL_ADD_OBJECT_SMR = '.btn-group button')
     _LOCATOR_OPEN_DROPDOWN = (By.XPATH, '//div[@class = "suggest form-control input-sm"]')
 
-    _LOCATOR_SELECT_AJAX_MODAL = (By.CSS_SELECTOR, '.modal-content')
+    _LOCATOR_SELECT_AJAX_MODAL = '.modal-content')
     _LOCATOR_SELECT_AJAX_MODAL_ADDRESS_CITY = (By.XPATH, '//div[@class="modal-content"]//input[contains(@id, "city")]')
     _LOCATOR_SELECT_AJAX_MODAL_ADDRESS_STREET = (
         By.CSS_SELECTOR, '.modal-content .js--b2c-construction-projects-load-houses-on-street')
@@ -32,22 +31,22 @@ class FormB2CCreateConstructionProjectShow(BasePage):
         By.CSS_SELECTOR, '.modal-content .construction-projects-address-div .js--b2c-multi-selected-values-left')
     _LOCATOR_BUTTON_MODAL_ADDRESS_CONFIRM_ADDRESS = (
         By.CSS_SELECTOR, '.modal-content .js--b2c-construction-projects-add-selected-addresses')
-    _LOCATOR_BUTTON_MODAL_ADDRESS_CLOSE_MODAL = (By.CSS_SELECTOR, '.modal-content [data-dismiss="modal"]:last-child')
+    _LOCATOR_BUTTON_MODAL_ADDRESS_CLOSE_MODAL = '.modal-content [data-dismiss="modal"]:last-child')
 
-    _LOCATOR_TABLE_SERVICES = (By.CSS_SELECTOR, '.b2c-create-construction-project-objects')
-    _LOCATOR_TABLE_SERVICES_OPEN_DH = (By.CSS_SELECTOR, '.b2c-objects :nth-child(7)')
-    _LOCATOR_TABLE_SERVICES_ENTER_DH = (By.CSS_SELECTOR, '.b2c-objects :nth-child(7) input')
+    _LOCATOR_TABLE_SERVICES = '.b2c-create-construction-project-objects')
+    _LOCATOR_TABLE_SERVICES_OPEN_DH = '.b2c-objects :nth-child(7)')
+    _LOCATOR_TABLE_SERVICES_ENTER_DH = '.b2c-objects :nth-child(7) input')
 
-    _LOCATOR_TABLE_SERVICES_OPEN_MODAL_SERVICES = (By.CSS_SELECTOR, '.b2c-objects :nth-child(8)')
+    _LOCATOR_TABLE_SERVICES_OPEN_MODAL_SERVICES = '.b2c-objects :nth-child(8)')
 
-    _LOCATOR_CHECKBOX_MODAL_SERVICES_LIST = (By.CSS_SELECTOR, '.modal-body .b2c-service-group:nth-child(2) input')
+    _LOCATOR_CHECKBOX_MODAL_SERVICES_LIST = '.modal-body .b2c-service-group:nth-child(2) input')
     _LOCATOR_CHECKBOX_MODAL_SERVICE = (By.XPATH, '//div[@class="b2c-service-name"')
-    _LOCATOR_BUTTON_MODAL_SERVICES_SUBMIT = (By.CSS_SELECTOR, '.js--b2c-construction-btn-save-key-services')
+    _LOCATOR_BUTTON_MODAL_SERVICES_SUBMIT = '.js--b2c-construction-btn-save-key-services')
     _LOCATOR_BUTTON_MODAL_SERVICES_CLOSE_MODAL = (
         By.CSS_SELECTOR, '.b2c-construction-projects-modal-services .modal-dialog .modal-footer button')
 
-    _LOCATOR_BUTTON_DELETE_SERVICES = (By.CSS_SELECTOR, '.js--b2c-construction-projects-delete-objects')
-    _LOCATOR_BUTTON_CREATE_PROJECT = (By.CSS_SELECTOR, '.js--b2c-construction-projects-create-project')
+    _LOCATOR_BUTTON_DELETE_SERVICES = '.js--b2c-construction-projects-delete-objects')
+    _LOCATOR_BUTTON_CREATE_PROJECT = '.js--b2c-construction-projects-create-project')
 
     def _selected_rf(self, rf_name: str):
         with testit.step(f'Установить региональный филиал "{rf_name}"'):
@@ -78,9 +77,9 @@ class FormB2CCreateConstructionProjectShow(BasePage):
 
         with testit.step(f'Установить адрес в модальном окне "{address_city}"'):
             self.find_element(locator=self._LOCATOR_OPEN_DROPDOWN).click()
-            self.find_element((By.CSS_SELECTOR, f'{locator[1]}/following::div[1]')).click()
+            self.find_element(f'{locator[1]}/following::div[1]')).click()
             time.sleep(2)
-            self.find_element((By.CSS_SELECTOR, f'{locator[1]}/following::div[1]//input[@type="text"]')).send_keys(
+            self.find_element(f'{locator[1]}/following::div[1]//input[@type="text"]')).send_keys(
                 address_city)
             time.sleep(2)
             self.find_element((By.CSS_SELECTOR,

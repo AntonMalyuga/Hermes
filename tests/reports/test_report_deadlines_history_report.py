@@ -4,10 +4,19 @@ from page_objects.reports.DeadlinesHistoryReport import DeadlinesHistoryReport
 import testit
 
 
-@testit.title('reports')
-@testit.displayName('Проверить открытие отчёта "Отчёт по переносу дат и сроков"')
-@testit.description('Проверяется открытие отчёта "Отчёт по переносу дат и сроков"')
-@pytest.mark.smoke
-def test_open_report_deadlines_history_report(driver):
-    DeadlinesHistoryReport(driver).open()
-    assert DeadlinesHistoryReport(driver).check_report()
+class TestDeadlinesHistoryReport:
+    @testit.title('reports')
+    @testit.displayName('Проверить открытие отчёта')
+    @testit.description('Проверяется открытие отчёта')
+    @pytest.mark.smoke
+    def test_open_report(self):
+        DeadlinesHistoryReport.open_by_default()
+        assert DeadlinesHistoryReport.is_open_report()
+
+    @testit.title('reports')
+    @testit.displayName('Проверить наименование отчёта')
+    @testit.description('Проверяется наименование отчёта')
+    @pytest.mark.smoke
+    def test_check_name(self):
+        DeadlinesHistoryReport.open_by_default()
+        assert DeadlinesHistoryReport.get_name_report() == DeadlinesHistoryReport.name

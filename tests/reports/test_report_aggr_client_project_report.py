@@ -1,13 +1,21 @@
 import pytest
-
 from page_objects.reports.AggrClientProjectReport import AggrClientProjectReport
 import testit
 
 
-@testit.title('reports')
-@testit.displayName('Проверить открытие отчёта "Агрегированная Аналитика проекта"')
-@testit.description('Проверяется открытие отчёта "Агрегированная Аналитика проекта"')
-@pytest.mark.smoke
-def test_open_report_aggr_client_project_report(driver):
-    AggrClientProjectReport(driver).open()
-    assert AggrClientProjectReport(driver).check_report()
+class TestAggrClientProjectReport:
+    @testit.title('reports')
+    @testit.displayName('Проверить открытие отчёта')
+    @testit.description('Проверяется открытие отчёта')
+    @pytest.mark.smoke
+    def test_open_report(self):
+        AggrClientProjectReport.open_by_default()
+        assert AggrClientProjectReport.is_open_report()
+
+    @testit.title('reports')
+    @testit.displayName('Проверить наименование отчёта')
+    @testit.description('Проверяется наименование отчёта')
+    @pytest.mark.smoke
+    def test_check_name(self):
+        AggrClientProjectReport.open_by_default()
+        assert AggrClientProjectReport.get_name_report() == AggrClientProjectReport.name

@@ -2,11 +2,10 @@ import time
 
 from selenium.common.exceptions import ElementClickInterceptedException
 from selenium.webdriver.common.by import By
-from page_objects.BasePage import BasePage
 import testit
 
 
-class ComponentB2BChangeWorkPIRAndSMR(BasePage):
+class ComponentB2BChangeWorkPIRAndSMR:
 
     name = 'B2B: Редактировать объекмы работы ПИР/СМР'
 

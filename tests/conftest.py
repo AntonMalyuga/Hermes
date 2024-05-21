@@ -1,9 +1,8 @@
-import time
-
 import pytest
 from page_objects.elements.UserLoginForm import UserLoginForm
 
 
-@pytest.fixture(autouse=True)
-def authorization(driver):
-    UserLoginForm(driver).authorization_default()
+@pytest.fixture(scope='session', autouse=True)
+def authorization():
+    UserLoginForm.open_by_default()
+    UserLoginForm.authorization_default()

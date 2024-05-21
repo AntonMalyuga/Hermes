@@ -4,10 +4,19 @@ import testit
 from page_objects.reports.SubtasksDetailedReport import SubtasksDetailedReport
 
 
-@testit.title('reports')
-@testit.displayName('Проверить открытие отчёта "Детальный отчёт по подзадачам"')
-@testit.description('Проверяется открытие отчёта "Детальный отчёт по подзадачам"')
-@pytest.mark.smoke
-def test_open_report_sltucontrol_det_expanded_report(driver):
-    SubtasksDetailedReport(driver).open()
-    assert SubtasksDetailedReport(driver).check_report()
+class TestSubtasksDetailedReport:
+    @testit.title('reports')
+    @testit.displayName('Проверить открытие отчёта')
+    @testit.description('Проверяется открытие отчёта')
+    @pytest.mark.smoke
+    def test_open_report(self):
+        SubtasksDetailedReport.open_by_default()
+        assert SubtasksDetailedReport.is_open_report()
+
+    @testit.title('reports')
+    @testit.displayName('Проверить наименование отчёта')
+    @testit.description('Проверяется наименование отчёта')
+    @pytest.mark.smoke
+    def test_check_name(self):
+        SubtasksDetailedReport.open_by_default()
+        assert SubtasksDetailedReport.get_name_report() == SubtasksDetailedReport.name

@@ -10,7 +10,7 @@ class FormB2CObjectOrder(Order):
     name = 'Объекты заказа КИП'
     path = 'b2c/group_orders'
 
-    _ORDER_ID = (By.CSS_SELECTOR, '.form-group.mb-0 .js--load-tab.js--new-tab')
+    _ORDER_ID = '.form-group.mb-0 .js--load-tab.js--new-tab')
     _LOCATOR_CHANGE_CONTRACTOR_BUTTON = (
         By.XPATH, '//button[@form[contains(., "form-change-client")]]')
     _LOCATOR_CONTRACTOR = (By.XPATH, '//div[@title = "Подрядчик"]')

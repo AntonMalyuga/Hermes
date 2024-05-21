@@ -7,7 +7,7 @@ import testit
 class ComponentB2CChangeWorkPIRAndSMR(Order):
     name = 'B2C: Редактировать объекмы работы ПИР/СМР'
 
-    _LOCATOR_BUTTON_FORM_WORK = (By.CSS_SELECTOR, 'a[href*="works_volumes"]')
+    _LOCATOR_BUTTON_FORM_WORK = 'a[href*="works_volumes"]')
 
     def open_form_work(self):
         with testit.step(f'Открыть форму "{self.name}"'):

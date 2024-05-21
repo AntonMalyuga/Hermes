@@ -4,12 +4,19 @@ import testit
 from page_objects.reports.TEOConversionWithAptv import TEOConversionWithAptv
 
 
-@testit.title('reports')
-@testit.displayName(
-    'Проверить открытие отчёта "Отчёт по конвертации ТЭО-Стройка с учетом срока окупаемости и с аналитикой АПТВ"')
-@testit.description(
-    'Проверяется открытие отчёта "Отчёт по конвертации ТЭО-Стройка с учетом срока окупаемости и с аналитикой АПТВ"')
-@pytest.mark.smoke
-def test_open_report_teo_conversion_with_aptv(driver):
-    TEOConversionWithAptv(driver).open()
-    assert TEOConversionWithAptv(driver).check_report()
+class TestTEOConversionWithAptv:
+    @testit.title('reports')
+    @testit.displayName('Проверить открытие отчёта')
+    @testit.description('Проверяется открытие отчёта')
+    @pytest.mark.smoke
+    def test_open_report(self):
+        TEOConversionWithAptv.open_by_default()
+        assert TEOConversionWithAptv.is_open_report()
+
+    @testit.title('reports')
+    @testit.displayName('Проверить наименование отчёта')
+    @testit.description('Проверяется наименование отчёта')
+    @pytest.mark.smoke
+    def test_check_name(self):
+        TEOConversionWithAptv.open_by_default()
+        assert TEOConversionWithAptv.get_name_report() == TEOConversionWithAptv.name

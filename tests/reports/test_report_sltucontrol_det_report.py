@@ -4,10 +4,19 @@ import testit
 from page_objects.reports.SLTUControlDetReport import SLTUControlDetReport
 
 
-@testit.title('reports')
-@testit.displayName('Проверить открытие отчёта "Детальный Отчёт по контролю корректности данных в СЛТУ"')
-@testit.description('Проверяется открытие отчёта "Детальный Отчёт по контролю корректности данных в СЛТУ"')
-@pytest.mark.smoke
-def test_open_report_sltucontrol_det_report(driver):
-    SLTUControlDetReport(driver).open()
-    assert SLTUControlDetReport(driver).check_report()
+class TestSLTUControlDetReport:
+    @testit.title('reports')
+    @testit.displayName('Проверить открытие отчёта')
+    @testit.description('Проверяется открытие отчёта')
+    @pytest.mark.smoke
+    def test_open_report(self):
+        SLTUControlDetReport.open_by_default()
+        assert SLTUControlDetReport.is_open_report()
+
+    @testit.title('reports')
+    @testit.displayName('Проверить наименование отчёта')
+    @testit.description('Проверяется наименование отчёта')
+    @pytest.mark.smoke
+    def test_check_name(self):
+        SLTUControlDetReport.open_by_default()
+        assert SLTUControlDetReport.get_name_report() == SLTUControlDetReport.name

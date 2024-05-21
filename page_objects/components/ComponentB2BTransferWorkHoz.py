@@ -2,11 +2,10 @@ import time
 
 from selenium.common.exceptions import ElementClickInterceptedException
 from selenium.webdriver.common.by import By
-from page_objects.BasePage import BasePage
 import testit
 
 
-class ComponentB2BTransferWorkHoz(BasePage):
+class ComponentB2BTransferWorkHoz:
     name = 'B2B: Хоз. способ'
 
     _GROUP = '//div[@class="panel panel-material"]//span[contains(., "Капитальные расходы")]/ancestor::div[2]'

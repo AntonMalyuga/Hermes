@@ -4,10 +4,19 @@ import testit
 from page_objects.reports.SLTUProcessingDetailedReport import SLTUProcessingDetailedReport
 
 
-@testit.title('reports')
-@testit.displayName('Проверить открытие отчёта "Отчёт по сквозному прохождению заявок на организацию (детальный)"')
-@testit.description('Проверяется открытие отчёта "Отчёт по сквозному прохождению заявок на организацию (детальный)"')
-@pytest.mark.smoke
-def test_open_report_sltu_processing_detailed_report(driver):
-    SLTUProcessingDetailedReport(driver).open()
-    assert SLTUProcessingDetailedReport(driver).check_report()
+class TestSLTUProcessingDetailedReport:
+    @testit.title('reports')
+    @testit.displayName('Проверить открытие отчёта')
+    @testit.description('Проверяется открытие отчёта')
+    @pytest.mark.smoke
+    def test_open_report(self):
+        SLTUProcessingDetailedReport.open_by_default()
+        assert SLTUProcessingDetailedReport.is_open_report()
+
+    @testit.title('reports')
+    @testit.displayName('Проверить наименование отчёта')
+    @testit.description('Проверяется наименование отчёта')
+    @pytest.mark.smoke
+    def test_check_name(self):
+        SLTUProcessingDetailedReport.open_by_default()
+        assert SLTUProcessingDetailedReport.get_name_report() == SLTUProcessingDetailedReport.name

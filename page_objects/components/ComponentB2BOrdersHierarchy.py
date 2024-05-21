@@ -1,9 +1,8 @@
 from selenium.webdriver.common.by import By
-from page_objects.BasePage import BasePage
 import testit
 
 
-class ComponentB2BOrdersHierarchy(BasePage):
+class ComponentB2BOrdersHierarchy:
     name = 'B2B: Иерархия заявок'
     group = 'Иерархия заявок'
 

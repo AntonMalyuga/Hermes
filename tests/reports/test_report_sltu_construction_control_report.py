@@ -4,10 +4,19 @@ import testit
 from page_objects.reports.SLTUConstructionControlReport import SLTUConstructionControlReport
 
 
-@testit.title('reports')
-@testit.displayName('Проверить открытие отчёта "Отчёт по контролю занесения данных в СЛТУ"')
-@testit.description('Проверяется открытие отчёта "Отчёт по контролю занесения данных в СЛТУ"')
-@pytest.mark.smoke
-def test_open_report_sltu_construction_control_report(driver):
-    SLTUConstructionControlReport(driver).open()
-    assert SLTUConstructionControlReport(driver).check_report()
+class TestSLTUConstructionControlReport:
+    @testit.title('reports')
+    @testit.displayName('Проверить открытие отчёта')
+    @testit.description('Проверяется открытие отчёта')
+    @pytest.mark.smoke
+    def test_open_report(self):
+        SLTUConstructionControlReport.open_by_default()
+        assert SLTUConstructionControlReport.is_open_report()
+
+    @testit.title('reports')
+    @testit.displayName('Проверить наименование отчёта')
+    @testit.description('Проверяется наименование отчёта')
+    @pytest.mark.smoke
+    def test_check_name(self):
+        SLTUConstructionControlReport.open_by_default()
+        assert SLTUConstructionControlReport.get_name_report() == SLTUConstructionControlReport.name
