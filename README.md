@@ -28,6 +28,15 @@ source venv/bin/activate
 deactivate
 ```
 
+Для удаления виртуального окружения
+```
+sudo rm -rf venv/
+```
+
+## Удалить кэш
+```
+find . | grep -E "(__pycache__|\.pyc|\.pyo$)" | xargs rm -rf
+```
 * Установить пакеты для работы с проектом
 
 ```commandline
@@ -35,20 +44,13 @@ pip install -r requirements.txt
 ```
 
 
-## Установка браузера для linux
-
-Для работы веб драйвера в системе Linux необходимо добавить сам драйвер браузера из GitHub
-* Chrome https://dl.google.com/linux/direct/google-chrome-stable_current_amd64.deb
-
-Скачиваем необходимый файл браузера (указан пример):
-```
-wget https://dl.google.com/linux/direct/google-chrome-stable_current_amd64.deb
+## Установка браузеров для playwrite
+```commandline
+playwright install
 ```
 
-Устанавливаем браузер (указан пример):
-```
-dpkg -i google-chrome-stable_current_amd64.deb
-```
+
+
 
 ## Установка переменного окружения
 
