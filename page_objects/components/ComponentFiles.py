@@ -10,12 +10,12 @@ class ComponentFiles(Order):
 
     name = 'Вложения'
 
-    _LOCATOR_GROUP = (By.XPATH, '//div[@class="panel panel-material"]//span[contains(., "Вложения")]')
+    _LOCATOR_GROUP = '//div[@class="panel panel-material"]//span[contains(., "Вложения")]')
     _FORM_ATTACHMENT = '//form[@action[contains(., "AddAttachment")]]'
-    _LOCATOR_FORM_INPUT_FILE = (By.XPATH, f'{_FORM_ATTACHMENT}//input[@name[contains(., "file")]]')
-    _LOCATOR_FORM_ATTACHMENT_TYPE = (By.XPATH, f'{_FORM_ATTACHMENT}//select[@id[contains(., "typeSelect")]]')
-    _LOCATOR_FORM_ATTACHMENT_NAME = (By.XPATH, f'{_FORM_ATTACHMENT}//input[@id[contains(., "name")]]')
-    _LOCATOR_FORM_ATTACHMENT_ADD_BUTTON = (By.XPATH, f'{_FORM_ATTACHMENT}//button[@type="submit"]')
+    _LOCATOR_FORM_INPUT_FILE = f'{_FORM_ATTACHMENT}//input[@name[contains(., "file")]]')
+    _LOCATOR_FORM_ATTACHMENT_TYPE = f'{_FORM_ATTACHMENT}//select[@id[contains(., "typeSelect")]]')
+    _LOCATOR_FORM_ATTACHMENT_NAME = f'{_FORM_ATTACHMENT}//input[@id[contains(., "name")]]')
+    _LOCATOR_FORM_ATTACHMENT_ADD_BUTTON = f'{_FORM_ATTACHMENT}//button[@type="submit"]')
 
     def move_to_group(self):
         with testit.step(f'Перейти к группе'):
@@ -39,7 +39,7 @@ class ComponentFiles(Order):
 
             self.check_open_order_interface()
             try:
-                locator = (By.XPATH, f'{self._LOCATOR_FORM_ATTACHMENT_TYPE[1]}//option[contains(.,"{type}")]')
+                locator = f'{self._LOCATOR_FORM_ATTACHMENT_TYPE[1]}//option[contains(.,"{type}")]')
                 self.find_element(locator=locator).click()
             except ValueError:
                 raise f'Не найден тип вложения {type}'

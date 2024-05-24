@@ -8,7 +8,7 @@ class Order:
     name = ''
 
     _CHECK_OPEN_ORDER = '.tab-content title')
-    _LOCATOR_ORDER_ID = (By.XPATH, '//div[text()="Номер заявки:"]/following::div[1]')
+    _LOCATOR_ORDER_ID = '//div[text()="Номер заявки:"]/following::div[1]')
 
     def open_order(self, order_id: int):
         with testit.step(f'Открыть заявку по схеме "{self.name}": {order_id}'):

@@ -1,28 +1,25 @@
-from selenium.webdriver.common.by import By
-from selenium.webdriver.support.select import Select
 from pynput.keyboard import Key, Controller
+from locator import Locator, Input
+from page import Page
 import time
 import testit
 from api.HermesSys import Sys
 
 
-class FormB2CCreationSMROrder:
+class FormB2CCreationSMROrder(Page):
     name = 'Создать заявку СМР'
     path = 'client/createb2c'
 
-    _LOCATOR_BUILDING_TYPE = (
-        By.XPATH, '//select[@class= "form-control input-sm input-reload-onchange suggest__hidden-accessible"]')
-    _LOCATOR_BUILDING_FLOORS = (By.XPATH, '//input[@id[contains(., "ADDRESSPARAMS[MAX_ETAZH]")]]')
-    _LOCATOR_BUILDING_ENTRANCES = (By.XPATH, '//input[@id[contains(., "ADDRESSPARAMS[CNT_PODJEZD]")]]')
-    _LOCATOR_BUILDING_FLAT_AT_FLOOR = (By.XPATH, '//input[@id[contains(., "ADDRESSPARAMS[FLAT_AT_FLOOR]")]]')
-    _LOCATOR_BUILDING_DH_COUNTER = (By.XPATH, '//input[@id[contains(., "ADDRESSPARAMS[COUNT_FLATS]")]]')
-    _LOCATOR_BUILDING_COMMERCE_PLAN = (By.XPATH, '//input[@id[contains(., "ADDRESSPARAMS[PP_DRS]")]]')
-    _LOCATOR_BUILDING_AP_YEAR = (By.XPATH,
-                                 '//div[@class = "form-group  has-warning"]//div[@class = "suggest form-control input-sm js--matomo-log-focus-event"]')
+    _LOCATOR_BUILDING_TYPE = '//select[@class= "form-control input-sm input-reload-onchange suggest__hidden-accessible"]'
+    _LOCATOR_BUILDING_FLOORS = '//input[@id[contains(., "ADDRESSPARAMS[MAX_ETAZH]")]]'
+    _LOCATOR_BUILDING_ENTRANCES = '//input[@id[contains(., "ADDRESSPARAMS[CNT_PODJEZD]")]]'
+    _LOCATOR_BUILDING_FLAT_AT_FLOOR = '//input[@id[contains(., "ADDRESSPARAMS[FLAT_AT_FLOOR]")]]'
+    _LOCATOR_BUILDING_DH_COUNTER = '//input[@id[contains(., "ADDRESSPARAMS[COUNT_FLATS]")]]'
+    _LOCATOR_BUILDING_COMMERCE_PLAN = '//input[@id[contains(., "ADDRESSPARAMS[PP_DRS]")]]'
+    _LOCATOR_BUILDING_AP_YEAR = '//div[@class = "form-group  has-warning"]//div[@class = "suggest form-control input-sm js--matomo-log-focus-event"]'
 
-    _LOCATOR_LOCATION = (By.XPATH, '//div[@class = "suggest form-control select-service-address input-sm"]')
-    _LOCATOR_STREET = (By.XPATH,
-                       '//label[@for= "ADDRESS[ATDSTREET]"]/ancestor::div[2]//div[@class[contains(., "suggest form-control select-service-address input-sm")]]')
+    _LOCATOR_LOCATION = '//div[@class = "suggest form-control select-service-address input-sm"]')
+    _LOCATOR_STREET = '//label[@for= "ADDRESS[ATDSTREET]"]/ancestor::div[2]//div[@class[contains(., "suggest form-control select-service-address input-sm")]]'
 
     _LOCATOR_HOUSE = (By.XPATH,
                       '//label[@for= "ADDRESS[ATDHOUSE]"]/ancestor::div[2]//div[@class = "suggest form-control select-service-address input-sm"]')
@@ -31,10 +28,10 @@ class FormB2CCreationSMROrder:
                        '//div[@style = "display: flex"]//div[@class= "suggest form-control input-sm js--matomo-log-focus-event"]')
     _LOCATOR_OBJECT_TYPE = (By.XPATH,
                             '//div[@class = "form-group has-warning"]//div[@class = "suggest form-control select-service-address input-sm"]')
-    _LOCATOR_OBJECT_TYPE_DISABLED = (By.XPATH, '//select[@name = "ADDRESS[CRM_OBJECT_TYPE]"]')
-    _LOCATOR_WIFI_CHECKBOX = (By.XPATH, '//div[@class= "b2c-service-group"]//input[@name= "services[wifi]"]')
-    _LOCATOR_CREATE_BUTTON = (By.XPATH, '//button[@class= "btn btn-primary"]')
-    _LOCATOR_ELEMENTS_HOUSES = (By.XPATH, '//label[@for = "ADDRESS[ATDHOUSE]"]/ancestor::div[2]//span[@class = "name"]')
+    _LOCATOR_OBJECT_TYPE_DISABLED = '//select[@name = "ADDRESS[CRM_OBJECT_TYPE]"]')
+    _LOCATOR_WIFI_CHECKBOX = '//div[@class= "b2c-service-group"]//input[@name= "services[wifi]"]')
+    _LOCATOR_CREATE_BUTTON = '//button[@class= "btn btn-primary"]')
+    _LOCATOR_ELEMENTS_HOUSES = '//label[@for = "ADDRESS[ATDHOUSE]"]/ancestor::div[2]//span[@class = "name"]')
     _LOCATOR_ELEMENTS_STREETS = (
         By.XPATH, '//label[@for = "ADDRESS[ATDSTREET]"]/ancestor::div[2]//span[@class = "name"]')
     _LOCATOR_CREATION_ORDER = '#CreateOrderb2C a')
@@ -44,8 +41,8 @@ class FormB2CCreationSMROrder:
                         '//label[@for= "ADDRESS[ATDOBJECT][2]"]/ancestor::div[2]//div[@class[contains(., "suggest form-control select-service-address input-sm")]]')
     _LOCATOR_AREA_NAME = (By.XPATH,
                           '//label[@for= "ADDRESS[ATDHOUSE]"]/ancestor::div[2]//div[@class[contains(., "suggest form-control select-service-address input-sm")]]')
-    _LOCATOR_MISTAKE = (By.XPATH, '//h5[@class = "text-danger"]')
-    _LOCATOR_CREATING_ORDERS = (By.XPATH, '//table[@class="table table-condensed table-hover"]//td[text()="B2C"]/following::td[1]/a')
+    _LOCATOR_MISTAKE = '//h5[@class = "text-danger"]')
+    _LOCATOR_CREATING_ORDERS = '//table[@class="table table-condensed table-hover"]//td[text()="B2C"]/following::td[1]/a')
 
     @testit.step('Check error add creation order by address in form b2c creation smr')
     def _is_error_add_address_on_creation_order(self):
@@ -63,7 +60,7 @@ class FormB2CCreationSMROrder:
     def _custom_select_method(self, locator, text):
         with testit.step(f'Custom select value {text} by {locator} in form b2c creation smr'):
             element = self.find_element(locator)
-            locator_input = self.find_element((By.XPATH, f'{locator[1]}//input[@type="text"]'))
+            locator_input = self.find_element(f'{locator[1]}//input[@type="text"]'))
             element.click()
             locator_input.send_keys(text)
             time.sleep(1)
@@ -148,13 +145,18 @@ class FormB2CCreationSMROrder:
             clear_and_set(locator=self._LOCATOR_BUILDING_DH_COUNTER, value=dh_counter)
             clear_and_set(locator=self._LOCATOR_BUILDING_COMMERCE_PLAN, value=commerce_plan)
 
-    def _set_building_ap_years(self, ap_year: int):
-        with testit.step('Set building ap year {ap_year} in form b2c creation smr'):
-            self._custom_select_method(locator=self._LOCATOR_BUILDING_AP_YEAR, text=ap_year)
 
-    def _set_wifi_checkbox(self):
+
+    @staticmethod
+    def _set_building_ap_years(ap_year: int):
+        with testit.step('Set building ap year {ap_year} in form b2c creation smr'):
+            ._custom_select_method(locator=self._LOCATOR_BUILDING_AP_YEAR, text=ap_year)
+
+
+    @classmethod
+    def _set_wifi_checkbox(cls):
         with testit.step('Set checkbox wifi in form b2c creation name'):
-            self.find_element(locator=self._LOCATOR_WIFI_CHECKBOX).click()
+            Input(cls._LOCATOR_WIFI_CHECKBOX).click()
 
     def _create_order(self):
         with testit.step('Click create order in form b2c creation name'):

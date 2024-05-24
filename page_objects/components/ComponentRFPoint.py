@@ -15,8 +15,8 @@ class ComponentRFPoint(Order):
     _LOCATOR_RF_POINT_BUTTON = (
         By.XPATH,
         '//span[contains(., "Точка РФ")]/ancestor::div[2]//i[@class = "glyphicon-edit glyphicon"]')
-    _LOCATOR_INTERFACE = (By.XPATH, '//select[@name= "interface"]')
-    _LOCATOR_EQUIPMENT = (By.XPATH, '//textarea[@id= "equipment"]')
+    _LOCATOR_INTERFACE = '//select[@name= "interface"]')
+    _LOCATOR_EQUIPMENT = '//textarea[@id= "equipment"]')
     _LOCATOR_SUBMIT_BUTTON = (By.XPATH,
                               '//textarea[@id= "equipment"]/ancestor::div[2]//button[@type = "submit"]')
 

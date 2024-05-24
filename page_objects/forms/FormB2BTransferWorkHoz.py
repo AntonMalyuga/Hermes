@@ -10,8 +10,8 @@ class FormB2BTransferWorkHoz:
 
     _LOCATOR_CHECKBOX_TRANSFER_HOZ = (
         By.XPATH, '//form[contains(@action,"works")]//input[@type="checkbox"]//following::label[1]')
-    _LOCATOR_BTN_SAVE = (By.XPATH, '//form[contains(@action,"works")]//button[@type="submit"]')
-    _LOCATOR_DIV_CHECK_CHANGES = (By.XPATH, '//div[@class="alert alert-success alert-dismissable"]')
+    _LOCATOR_BTN_SAVE = '//form[contains(@action,"works")]//button[@type="submit"]')
+    _LOCATOR_DIV_CHECK_CHANGES = '//div[@class="alert alert-success alert-dismissable"]')
 
     def open_form(self, order_id: int):
         with testit.step(f'Открыть экранную форму по заявке {order_id}'):

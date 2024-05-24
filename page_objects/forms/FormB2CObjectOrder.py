@@ -13,11 +13,11 @@ class FormB2CObjectOrder(Order):
     _ORDER_ID = '.form-group.mb-0 .js--load-tab.js--new-tab')
     _LOCATOR_CHANGE_CONTRACTOR_BUTTON = (
         By.XPATH, '//button[@form[contains(., "form-change-client")]]')
-    _LOCATOR_CONTRACTOR = (By.XPATH, '//div[@title = "Подрядчик"]')
-    _LOCATOR_FRAME = (By.XPATH, '//input[@id[contains(., "contractorCode")]]')
-    _LOCATOR_SUBMIT_BUTTON = (By.XPATH, '//div[@class = "modal-footer"]/ancestor::div[2]//button[text() = "Сохранить"]')
-    _LOCATOR_DISCOUNT = (By.XPATH, '//input[@name= "discount"]')
-    _LOCATOR_SAVE_ORDER_BUTTON = (By.XPATH, '//div[@class= "row mb-10"]//button[@type = "submit"]')
+    _LOCATOR_CONTRACTOR = '//div[@title = "Подрядчик"]')
+    _LOCATOR_FRAME = '//input[@id[contains(., "contractorCode")]]')
+    _LOCATOR_SUBMIT_BUTTON = '//div[@class = "modal-footer"]/ancestor::div[2]//button[text() = "Сохранить"]')
+    _LOCATOR_DISCOUNT = '//input[@name= "discount"]')
+    _LOCATOR_SAVE_ORDER_BUTTON = '//div[@class= "row mb-10"]//button[@type = "submit"]')
 
     @testit.step('Open form object contract KIP by order {order}')
     def open_form(self, order_id):
@@ -30,7 +30,7 @@ class FormB2CObjectOrder(Order):
     @testit.step('Custom select form object contract KIP by {locator} and text {text}')
     def _custom_select_method(self, locator, text):
         element = self.find_element(locator)
-        locator_input = self.find_element((By.XPATH, f'{locator[1]}//input[@type="text"]'))
+        locator_input = self.find_element(f'{locator[1]}//input[@type="text"]'))
         element.click()
         locator_input.send_keys(text)
         time.sleep(1)

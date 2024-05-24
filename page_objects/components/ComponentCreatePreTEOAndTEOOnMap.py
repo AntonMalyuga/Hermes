@@ -8,12 +8,12 @@ class ComponentCreatePreTEOAndTEOOnMap(Order):
     name = 'Создание предТЭО и ТЭО на карте'
 
     _GROUP = '//div[@class="panel panel-material"]//span[contains(., "Общая информация")]/ancestor::div[2]'
-    _LOCATOR_OPEN_MAP = (By.XPATH, f'{_GROUP}//a[contains(., "Создание предТЭО и ТЭО на карте")]')
+    _LOCATOR_OPEN_MAP = f'{_GROUP}//a[contains(., "Создание предТЭО и ТЭО на карте")]')
 
     def move_to_group(self):
         with testit.step(f'Перейти к группе'):
             self.check_loader()
-            self.move_to_element((By.XPATH, self._GROUP))
+            self.move_to_element(self._GROUP))
 
     def open_form(self):
         with testit.step(f'Открыть форму создания проекта'):

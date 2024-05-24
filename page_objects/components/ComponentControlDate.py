@@ -7,8 +7,8 @@ class ComponentControlDate(Order):
 
     name = 'B2C: Контрольные даты'
 
-    _LOCATOR_GROUP = (By.XPATH, '//div[@class="panel panel-material"]//span[contains(., "Контрольные даты")]/ancestor::div[2]')
-    _LOCATOR_BUTTON_CHANGE_ALL_CONTROL_DATES = (By.XPATH, '//div[@id[contains(., "btn-editor-control-dates")]]')
+    _LOCATOR_GROUP = '//div[@class="panel panel-material"]//span[contains(., "Контрольные даты")]/ancestor::div[2]')
+    _LOCATOR_BUTTON_CHANGE_ALL_CONTROL_DATES = '//div[@id[contains(., "btn-editor-control-dates")]]')
 
     def move_to_group(self):
         with testit.step(f'Перейти к группе'):
@@ -19,9 +19,9 @@ class ComponentControlDate(Order):
             self.check_loader()
             self.move_to_group()
             component = self._LOCATOR_BUTTON_CHANGE_ALL_CONTROL_DATES[1]
-            self.find_element((By.XPATH, f'{component}//button[@class[contains(., "btn-default")]]')).click()
+            self.find_element(f'{component}//button[@class[contains(., "btn-default")]]')).click()
             self.find_element(
-                (By.XPATH, f'//div[@id[contains(., "editor-control-dates")]]//input[@type="text"]')).send_keys(
+                f'//div[@id[contains(., "editor-control-dates")]]//input[@type="text"]')).send_keys(
                 cnt_dates)
             self.find_element(
-                (By.XPATH, f'//div[@id[contains(., "editor-control-dates")]]//button[@type="submit"]')).click()
+                f'//div[@id[contains(., "editor-control-dates")]]//button[@type="submit"]')).click()

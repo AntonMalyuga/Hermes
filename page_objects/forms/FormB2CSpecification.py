@@ -10,11 +10,11 @@ class B2cFormSpecification:
 
     _LOCATOR_BUTTON_OPEN_MODAL_ADD_SPECIFICATION = 'button[id="addEquipment"]')
     _LOCATOR_CHECK_OPEN_MODAL = '.modal.fade.in')
-    _LOCATOR_SHOW_MODAL_SPECIFICATION_LIST = (By.XPATH, '//button[@data-url="/b2c/specification/equipment_list"]')
+    _LOCATOR_SHOW_MODAL_SPECIFICATION_LIST = '//button[@data-url="/b2c/specification/equipment_list"]')
     _LOCATOR_TABLE_INSERT_SPECIFICATION = (
         By.XPATH, '//div[@id="specification-equipment-list"]/table')
     _LOCATOR_BUTTON_SAVE_WORKS = 'button.btn.btn-primary.js--validation-hidden-forms')
-    _LOCATOR_LABEL_CONSTRUCTION_METHOD = (By.XPATH, '//label[@class="radio-inline"')
+    _LOCATOR_LABEL_CONSTRUCTION_METHOD = '//label[@class="radio-inline"')
     _LOCATOR_BUTTON_MODAL_ADD_SPECIFICATION = (
         By.XPATH, '//button[@class[contains(.,"b2c-specification-add-equipments")]]')
     _LOCATOR_BUTTON_MODAL_CLOSE = (
@@ -25,7 +25,7 @@ class B2cFormSpecification:
     def __set_construct_method(self, type_construct):
         with testit.step(f'Выбрать метод строительства "{type_construct}" с помощью B2C спецификации', 'Тип строительства выбран'):
             selector = f'{self._LOCATOR_LABEL_CONSTRUCTION_METHOD[1]} and contains(.,"{type_construct}")]/input'
-            element = self.find_element(locator=(By.XPATH, selector))
+            element = self.find_element(locator=selector))
 
             try:
                 element.click()
@@ -75,7 +75,7 @@ class B2cFormSpecification:
             with testit.step(f'Установить метод строительства "{specification}" в спецификации'):
                 time.sleep(1)
                 specification_locator = f'//tr[@class="specification-new-equipment"]//td[contains(., "{specification}")]/following::td[11]/select[@name[contains(., "type_installation")]]'
-                self.selected_element_by_value(locator=(By.XPATH, specification_locator),
+                self.selected_element_by_value(locator=specification_locator),
                                                value=specification_params["method"])
 
     def __set_natural_indicators(self, specification: dict):
@@ -83,7 +83,7 @@ class B2cFormSpecification:
             with testit.step(f'Установить натуральные показатели "{specification}" в спецификации'):
                 time.sleep(1)
                 specification_locator = f'//tr[@class="specification-new-equipment"]//td[contains(., "{specification}")]/following::td[1]/select[@id[contains(., "naturalIndicator")]]'
-                self.selected_element_by_value(locator=(By.XPATH, specification_locator),
+                self.selected_element_by_value(locator=specification_locator),
                                                value=specification_params["natural_indicator"])
 
     def __create_specification(self):

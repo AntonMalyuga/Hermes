@@ -9,7 +9,7 @@ class ComponentCheckListVideo(Order):
 
     name = 'B2C: Видеонаблюдение'
 
-    _LOCATOR_GROUP = (By.XPATH, '//div[@class="panel panel-material"]//span[contains(., "Чек-лист")]/ancestor::div[2]')
+    _LOCATOR_GROUP = '//div[@class="panel panel-material"]//span[contains(., "Чек-лист")]/ancestor::div[2]')
     _LOCATOR_COMPONENT_COLLAPSED_MENU = (By.XPATH,
                                          '//div[@class="panel panel-material"]//span[contains(., "Чек-лист")]/ancestor::div[2]//b[text()="Видеонаблюдение"]/ancestor::div[2]//div[@class = "panel-heading pointer"]')
     _LOCATOR_COMPONENT_EDIT_BUTTON = (By.XPATH,

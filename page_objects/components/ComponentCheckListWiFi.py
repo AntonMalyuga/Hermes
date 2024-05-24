@@ -38,7 +38,7 @@ class ComponentCheckListWiFi(Order):
 
     def move_to_group(self):
         with testit.step(f'Перейти к группе'):
-            self.move_to_element((By.XPATH, self.GROUP))
+            self.move_to_element(self.GROUP))
 
     def add_cost_wifi(self, value: str):
         with testit.step(f'Добавить стоимость услуги wi-fi "{value}"'):

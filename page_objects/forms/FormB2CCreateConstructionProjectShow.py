@@ -15,10 +15,10 @@ class FormB2CCreateConstructionProjectShow:
     _LOCATOR_SELECT_TECHNOLOGY = '#technology')
     _LOCATOR_INPUT_PROJECT_NAME = '#projectName')
     _LOCATOR_BUTTON_OPEN_MODAL_ADD_OBJECT_SMR = '.btn-group button')
-    _LOCATOR_OPEN_DROPDOWN = (By.XPATH, '//div[@class = "suggest form-control input-sm"]')
+    _LOCATOR_OPEN_DROPDOWN = '//div[@class = "suggest form-control input-sm"]')
 
     _LOCATOR_SELECT_AJAX_MODAL = '.modal-content')
-    _LOCATOR_SELECT_AJAX_MODAL_ADDRESS_CITY = (By.XPATH, '//div[@class="modal-content"]//input[contains(@id, "city")]')
+    _LOCATOR_SELECT_AJAX_MODAL_ADDRESS_CITY = '//div[@class="modal-content"]//input[contains(@id, "city")]')
     _LOCATOR_SELECT_AJAX_MODAL_ADDRESS_STREET = (
         By.CSS_SELECTOR, '.modal-content .js--b2c-construction-projects-load-houses-on-street')
     _LOCATOR_SELECT_MODAL_ADDRESS_LIST_UNCHECKED = (
@@ -40,7 +40,7 @@ class FormB2CCreateConstructionProjectShow:
     _LOCATOR_TABLE_SERVICES_OPEN_MODAL_SERVICES = '.b2c-objects :nth-child(8)')
 
     _LOCATOR_CHECKBOX_MODAL_SERVICES_LIST = '.modal-body .b2c-service-group:nth-child(2) input')
-    _LOCATOR_CHECKBOX_MODAL_SERVICE = (By.XPATH, '//div[@class="b2c-service-name"')
+    _LOCATOR_CHECKBOX_MODAL_SERVICE = '//div[@class="b2c-service-name"')
     _LOCATOR_BUTTON_MODAL_SERVICES_SUBMIT = '.js--b2c-construction-btn-save-key-services')
     _LOCATOR_BUTTON_MODAL_SERVICES_CLOSE_MODAL = (
         By.CSS_SELECTOR, '.b2c-construction-projects-modal-services .modal-dialog .modal-footer button')
@@ -126,7 +126,7 @@ class FormB2CCreateConstructionProjectShow:
 
             self.find_element(locator=self._LOCATOR_TABLE_SERVICES_OPEN_MODAL_SERVICES).click()
             time.sleep(3)
-            self.find_element(locator=(By.XPATH, selector)).click()
+            self.find_element(locator=selector)).click()
             self.find_element(locator=self._LOCATOR_BUTTON_MODAL_SERVICES_SUBMIT).click()
 
     def _enter_create_project(self):

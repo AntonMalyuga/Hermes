@@ -13,8 +13,8 @@ class ComponentBindingOT(Order):
     _LOCATOR_BINDING_BUTTON = (
         By.XPATH,
         '//a[@title = "Привязка ОТ"]')
-    _LOCATOR_REFERENCE_POINT = (By.XPATH, '//select[@name= "cluster_node"]')
-    _LOCATOR_SUBMIT_BUTTON = (By.XPATH, '//button[text() = "Привязать"]')
+    _LOCATOR_REFERENCE_POINT = '//select[@name= "cluster_node"]')
+    _LOCATOR_SUBMIT_BUTTON = '//button[text() = "Привязать"]')
 
     def move_to_group(self):
         with testit.step(f'Перейти к группе'):

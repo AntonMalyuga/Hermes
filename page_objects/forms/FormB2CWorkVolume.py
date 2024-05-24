@@ -10,12 +10,12 @@ class B2cFormWorkVolume:
     name = 'Редактировать объемы ПИР/СМР B2C'
 
     _LOCATOR_BUTTON_OPEN_MODAL_ADD_WORK = 'button[data-target^="#add-work-modal"]')
-    _LOCATOR_TABLE_OPEN_MODAL_ADD_WORK = (By.XPATH, '//tbody[@id="add-work-table-tbody"]')
+    _LOCATOR_TABLE_OPEN_MODAL_ADD_WORK = '//tbody[@id="add-work-table-tbody"]')
     _LOCATOR_CHECK_OPEN_MODAL = '.modal.fade.in')
-    _LOCATOR_BUTTON_MODAL_ADD_WORK = (By.XPATH, '//div[@class="modal-content"]//button[text()="Добавить"]')
-    _LOCATOR_TABLE_INSERT_WORKS = (By.XPATH, '//table[contains(@class, "hook--work-table")]')
+    _LOCATOR_BUTTON_MODAL_ADD_WORK = '//div[@class="modal-content"]//button[text()="Добавить"]')
+    _LOCATOR_TABLE_INSERT_WORKS = '//table[contains(@class, "hook--work-table")]')
     _LOCATOR_BUTTON_SAVE_WORKS = 'button.btn.btn-primary.js--validation-hidden-forms')
-    _LOCATOR_LABEL_CONSTRUCTION_METHOD = (By.XPATH, '//label[@class="radio-inline"')
+    _LOCATOR_LABEL_CONSTRUCTION_METHOD = '//label[@class="radio-inline"')
 
     def check_open_modal(self):
         with testit.step('Открыть модальное окно', 'Окно открыто'):
@@ -57,23 +57,23 @@ class B2cFormWorkVolume:
             for work, work_params in works.items():
                 time.sleep(1)
                 work_locator = f'//tr[@data-work-name[contains(., "{work}")] and @data-work-type="{work_params["type"]}"]//input[@class="form-control input-sm volumes-form-work-quantity-input"]'
-                self.find_element((By.XPATH, work_locator)).send_keys(Keys.CONTROL, 'a')
-                self.find_element((By.XPATH, work_locator)).send_keys(Keys.BACKSPACE)
-                self.find_element((By.XPATH, work_locator)).send_keys(int(work_params["qty"]))
+                self.find_element(work_locator)).send_keys(Keys.CONTROL, 'a')
+                self.find_element(work_locator)).send_keys(Keys.BACKSPACE)
+                self.find_element(work_locator)).send_keys(int(work_params["qty"]))
 
     def set_method_by_core(self, works: dict):
         with testit.step(f'Установить тип строительства по услуге Core "{works}"'):
             for work, work_params in works.items():
                 time.sleep(1)
                 work_locator = f'//tr[@data-work-name[contains(., "{work}")] and @data-work-type="{work_params["type"]}"]//select[@class="form-control input-sm core-construction-method-selector"]'
-                self.selected_element_by_value(locator=(By.XPATH, work_locator), value=work_params["method"])
+                self.selected_element_by_value(locator=work_locator), value=work_params["method"])
 
     def set_natural_indicators(self, works: dict):
         with testit.step(f'Установить натуральные показатели "{works}"'):
             for work, work_params in works.items():
                 time.sleep(1)
                 work_locator = f'//tr[@data-work-name[contains(., "{work}")] and @data-work-type="{work_params["type"]}"]//select[@class="form-control input-sm inputOrText "]'
-                self.selected_element_by_value(locator=(By.XPATH, work_locator), value=work_params["natural_indicator"])
+                self.selected_element_by_value(locator=work_locator), value=work_params["natural_indicator"])
 
     def save_works(self):
         with testit.step(f'Сохранить работы', 'Работы сохранены'):

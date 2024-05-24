@@ -10,8 +10,8 @@ class ComponentB2BChangeWorkPIRAndSMR:
     name = 'B2B: Редактировать объекмы работы ПИР/СМР'
 
     _GROUP = '//div[@class="panel panel-material"]//span[contains(., "Капитальные расходы")]/ancestor::div[2]'
-    _LOCATOR_GROUP = (By.XPATH, _GROUP)
-    _LOCATOR_BUTTON_FORM_WORK = (By.XPATH, f'{_GROUP}//a[text()="Редактировать объемы ПИР/СМР"]')
+    _LOCATOR_GROUP = _GROUP)
+    _LOCATOR_BUTTON_FORM_WORK = f'{_GROUP}//a[text()="Редактировать объемы ПИР/СМР"]')
 
     def move_to_group(self):
         with testit.step(f'Перейти к группе'):

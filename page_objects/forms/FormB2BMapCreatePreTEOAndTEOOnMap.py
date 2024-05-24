@@ -11,17 +11,17 @@ class FormB2BMapCreatePreTEOAndTEOOnMap:
 
     name = 'Создание ТЭО/предТЭО на карте'
 
-    _LOCATOR_MAP = (By.XPATH, '//div[@class="yandex-common-map"]')
+    _LOCATOR_MAP = '//div[@class="yandex-common-map"]')
     _LOCATOR_BTN_MAP_FULL_WINDOW = (
         By.XPATH, '//ymaps[@class="ymaps-2-1-79-float-button-icon ymaps-2-1-79-float-button-icon_icon_expand"]')
-    _LOCATOR_SELECT_MAP_PARENT_OT = (By.XPATH, '//select[@name="reference_point_id"]')
-    _LOCATOR_SELECT_MAP_TECHNOLOGY_TYPE = (By.XPATH, '//select[@name="link_type_id"]')
-    _LOCATOR_BTN_MAP_START_CABLING = (By.XPATH, '//button[contains(., "Начать прокладку")]')
-    _LOCATOR_BTN_MAP_DELETE_PRE_SALE = (By.XPATH, '//ymaps[@title=" Удалить данные ПредТЭО "]')
-    _LOCATOR_BTN_SAVE_IN_MO = (By.XPATH, '//ymaps[contains(@title, "Сохранить в ТЭО на МО")]')
+    _LOCATOR_SELECT_MAP_PARENT_OT = '//select[@name="reference_point_id"]')
+    _LOCATOR_SELECT_MAP_TECHNOLOGY_TYPE = '//select[@name="link_type_id"]')
+    _LOCATOR_BTN_MAP_START_CABLING = '//button[contains(., "Начать прокладку")]')
+    _LOCATOR_BTN_MAP_DELETE_PRE_SALE = '//ymaps[@title=" Удалить данные ПредТЭО "]')
+    _LOCATOR_BTN_SAVE_IN_MO = '//ymaps[contains(@title, "Сохранить в ТЭО на МО")]')
     _MODAL_CONFIRM = '//form[@data-map-element-action="reloadAfterSave"]'
-    _LOCATOR_TEXT_AREA_MODAL_COMMENT = (By.XPATH, f'{_MODAL_CONFIRM}//textarea')
-    _LOCATOR_BTN_CONFIRM_SAVE = (By.XPATH, f'{_MODAL_CONFIRM}//button[@type="submit"]')
+    _LOCATOR_TEXT_AREA_MODAL_COMMENT = f'{_MODAL_CONFIRM}//textarea')
+    _LOCATOR_BTN_CONFIRM_SAVE = f'{_MODAL_CONFIRM}//button[@type="submit"]')
 
     def _check_delete_pre_teo(self) -> bool:
         try:
@@ -39,7 +39,7 @@ class FormB2BMapCreatePreTEOAndTEOOnMap:
         self.selected_element_by_value(locator=self._LOCATOR_SELECT_MAP_PARENT_OT, value=parent_ot_name)
 
     def _set_technology_connect(self, technology_type: str):
-        ot_locator = (By.XPATH, f'{self._LOCATOR_SELECT_MAP_TECHNOLOGY_TYPE[1]}//option[text()="{technology_type}"]')
+        ot_locator = f'{self._LOCATOR_SELECT_MAP_TECHNOLOGY_TYPE[1]}//option[text()="{technology_type}"]')
         self.find_element(locator=ot_locator).click()
 
     def _click_start_cabling(self):
@@ -82,12 +82,12 @@ class FormB2BMapCreatePreTEOAndTEOOnMap:
 
 
 class CableModal:
-    _LOCATOR_SELECT_MAP_CABLE_LINE_TYPE = (By.XPATH, '//select[@name="cabling_type_id"]')
-    _LOCATOR_SELECT_MAP_CABLE_TYPE = (By.XPATH, '//select[@name="cable_type_id"]')
-    _LOCATOR_INPUT_MAP_CABLE_LEN = (By.XPATH, '//input[@name="CABLE_LEN"]')
-    _LOCATOR_SELECT_MF_RIGHT = (By.XPATH, '//select[@name="mf_right"]')
-    _LOCATOR_BTN_SAVE_PROJECT = (By.XPATH, '//button[contains(@form, "btn-Projected-Save")]')
-    _LOCATOR_BTN_SAVE_AND_CONNECT_CLIENT = (By.XPATH, '//div[@class="tab-pane active"]//button[@name="saveAndBind"]')
+    _LOCATOR_SELECT_MAP_CABLE_LINE_TYPE = '//select[@name="cabling_type_id"]')
+    _LOCATOR_SELECT_MAP_CABLE_TYPE = '//select[@name="cable_type_id"]')
+    _LOCATOR_INPUT_MAP_CABLE_LEN = '//input[@name="CABLE_LEN"]')
+    _LOCATOR_SELECT_MF_RIGHT = '//select[@name="mf_right"]')
+    _LOCATOR_BTN_SAVE_PROJECT = '//button[contains(@form, "btn-Projected-Save")]')
+    _LOCATOR_BTN_SAVE_AND_CONNECT_CLIENT = '//div[@class="tab-pane active"]//button[@name="saveAndBind"]')
     _LOCATOR_BTN_SAVE_BY_CLIENT = (
     By.XPATH, '//div[@class="tab-pane active"]//button[contains(@form, "btn-Projected-Save")]')
 

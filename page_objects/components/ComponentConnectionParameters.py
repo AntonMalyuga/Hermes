@@ -15,12 +15,12 @@ class ComponentConnectionParameters(Order):
     _LOCATOR_PARAMETERS_BUTTON = (
         By.XPATH,
         '//span[contains(., "Параметры подключения")]/ancestor::div[2]//i[@class = "glyphicon-edit glyphicon"]')
-    _LOCATOR_ORGANIZATION_WAY = (By.XPATH, '//select[@name = "last_inch_method"]')
-    _LOCATOR_COORDINATION = (By.XPATH, '//textarea[@name = "approval_details"]')
-    _LOCATOR_SPECIAL_CONDITIONS = (By.XPATH, '//textarea[@name = "special_conditions"]')
-    _LOCATOR_CROSSING = (By.XPATH, '//select[@name = "lm_crossing"]')
-    _LOCATOR_LAST_MILE = (By.XPATH, '//select[@name = "last_mile_method"]')
-    _LOCATOR_NETWORK_PATH = (By.XPATH, '//select[@name= "crm_network_path"]')
+    _LOCATOR_ORGANIZATION_WAY = '//select[@name = "last_inch_method"]')
+    _LOCATOR_COORDINATION = '//textarea[@name = "approval_details"]')
+    _LOCATOR_SPECIAL_CONDITIONS = '//textarea[@name = "special_conditions"]')
+    _LOCATOR_CROSSING = '//select[@name = "lm_crossing"]')
+    _LOCATOR_LAST_MILE = '//select[@name = "last_mile_method"]')
+    _LOCATOR_NETWORK_PATH = '//select[@name= "crm_network_path"]')
     _LOCATOR_SUBMIT_BUTTON = (By.XPATH,
                               '//span[contains(., "Информация о подключении")]/ancestor::div[2]//button[@class[not(contains(., "disable-after-click"))]]')
 

@@ -25,7 +25,7 @@ class ComponentCloseStage:
     def __set_pass(self, pass_name: str):
         with testit.step(f'Выбрать переход: {pass_name}'):
             try:
-                pass_locator = (By.XPATH, f'{self._LOCATOR_FORM_ODER_CLOSE_STAGE_PASS[1]}[text()="{pass_name}"]')
+                pass_locator = f'{self._LOCATOR_FORM_ODER_CLOSE_STAGE_PASS[1]}[text()="{pass_name}"]')
                 self.find_element(locator=pass_locator).click()
 
             except ValueError:

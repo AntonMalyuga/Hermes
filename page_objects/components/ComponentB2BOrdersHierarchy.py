@@ -7,17 +7,17 @@ class ComponentB2BOrdersHierarchy:
     group = 'Иерархия заявок'
 
     _SELECTOR_GROUP = f'//div[@class="panel panel-material"]//span[contains(., "{group}")]/ancestor::div[2]'
-    _LOCATOR_LINK_PROJECT = (By.XPATH, f'{_SELECTOR_GROUP}//tbody//td[1]/a')
-    _LOCATOR_LINK_CLIENT = (By.XPATH, f'{_SELECTOR_GROUP}//tbody//td[2]/a')
-    _LOCATOR_LINK_CONSTRUCT = (By.XPATH, f'{_SELECTOR_GROUP}//tbody//td[3]/a')
-    _LOCATOR_LINK_SMU = (By.XPATH, f'{_SELECTOR_GROUP}//tbody//td[4]/a')
-    _LOCATOR_LINK_HOZ = (By.XPATH, f'{_SELECTOR_GROUP}//tbody//td[5]/a')
-    _LOCATOR_LINK_GPH = (By.XPATH, f'{_SELECTOR_GROUP}//tbody//td[6]/a')
-    _LOCATOR_LINK_CUSTOMER = (By.XPATH, f'{_SELECTOR_GROUP}//tbody//td[7]/a')
-    _LOCATOR_LINK_VTR = (By.XPATH, f'{_SELECTOR_GROUP}//tbody//td[8]/a')
+    _LOCATOR_LINK_PROJECT = f'{_SELECTOR_GROUP}//tbody//td[1]/a')
+    _LOCATOR_LINK_CLIENT = f'{_SELECTOR_GROUP}//tbody//td[2]/a')
+    _LOCATOR_LINK_CONSTRUCT = f'{_SELECTOR_GROUP}//tbody//td[3]/a')
+    _LOCATOR_LINK_SMU = f'{_SELECTOR_GROUP}//tbody//td[4]/a')
+    _LOCATOR_LINK_HOZ = f'{_SELECTOR_GROUP}//tbody//td[5]/a')
+    _LOCATOR_LINK_GPH = f'{_SELECTOR_GROUP}//tbody//td[6]/a')
+    _LOCATOR_LINK_CUSTOMER = f'{_SELECTOR_GROUP}//tbody//td[7]/a')
+    _LOCATOR_LINK_VTR = f'{_SELECTOR_GROUP}//tbody//td[8]/a')
 
     def move_to_group(self):
-        self.move_to_element((By.XPATH, self._SELECTOR_GROUP))
+        self.move_to_element(self._SELECTOR_GROUP))
 
     def get_project_number(self) -> int:
         self.move_to_group()

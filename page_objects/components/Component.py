@@ -10,7 +10,7 @@ class Component:
     group: str
 
     _SELECTOR_GROUP = f'//div[@class="panel panel-material"]//span[contains(., "")]/ancestor::div[2]'
-    _LOCATOR_GROUP = (By.XPATH, _SELECTOR_GROUP)
+    _LOCATOR_GROUP = _SELECTOR_GROUP)
 
     def move_to_group(self):
         self.move_to_element(self._LOCATOR_GROUP)

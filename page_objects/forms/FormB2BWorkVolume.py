@@ -8,10 +8,10 @@ from selenium.webdriver.remote.webelement import WebElement
 class FormB2BWorkVolume:
     name = 'Редактировать объемы ПИР/СМР B2B'
 
-    _LOCATOR_BTN_SHOW_ALL_WORKS = (By.XPATH, '//button[@title="Отобразить все объемы работ"]')
+    _LOCATOR_BTN_SHOW_ALL_WORKS = '//button[@title="Отобразить все объемы работ"]')
     _LOCATOR_INPUTS_VALUE_ALL_WORKS = (
         By.XPATH, '//div[@id="works-tab"]//input[contains(@name, "work")]/ancestor::tr[1]')
-    _LOCATOR_BTN_SAVE_WORKS = (By.XPATH, '//form[contains(@id, "volumesForm")]//button[contains(text(), "Сохранить")]')
+    _LOCATOR_BTN_SAVE_WORKS = '//form[contains(@id, "volumesForm")]//button[contains(text(), "Сохранить")]')
     _LOCATOR_DIV_ALERT_CHANGE_WORK_COMPLETED = (
         By.XPATH, '//div[contains(@id,"volumesFormTab")]/div[@class="alert-success alert"]')
 

@@ -9,8 +9,8 @@ class ComponentB2BTransferWorkHoz:
     name = 'B2B: Хоз. способ'
 
     _GROUP = '//div[@class="panel panel-material"]//span[contains(., "Капитальные расходы")]/ancestor::div[2]'
-    _LOCATOR_GROUP = (By.XPATH, _GROUP)
-    _LOCATOR_BUTTON_HOZ = (By.XPATH, '//a[text()="Хоз. способ"]')
+    _LOCATOR_GROUP = _GROUP)
+    _LOCATOR_BUTTON_HOZ = '//a[text()="Хоз. способ"]')
 
     def move_to_group(self):
         with testit.step(f'Перейти к группе'):

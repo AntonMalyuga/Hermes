@@ -8,16 +8,16 @@ class ComponentB2COrdersHierarchy(Order):
     name = 'B2C: Иерархия заявок'
 
     _GROUP = '//div[@class="panel panel-material"]//span[contains(., "Иерархия заявок")]/ancestor::div[2]'
-    _LOCATOR_LINK_PROJECT = (By.XPATH, f'{_GROUP}//tbody//td[2]/a')
-    _LOCATOR_LINK_SMR = (By.XPATH, f'{_GROUP}//tbody//td[3]/a')
-    _LOCATOR_LINK_HOZ = (By.XPATH, f'{_GROUP}//tbody//td[4]/a')
-    _LOCATOR_LINK_GPH = (By.XPATH, f'{_GROUP}//tbody//td[5]/a')
-    _LOCATOR_LINK_CUSTOMER = (By.XPATH, f'{_GROUP}//tbody//td[6]/a')
-    _LOCATOR_LINK_CUSTOMER_ORDER = (By.XPATH, f'{_GROUP}//tbody//td[7]/a')
+    _LOCATOR_LINK_PROJECT = f'{_GROUP}//tbody//td[2]/a')
+    _LOCATOR_LINK_SMR = f'{_GROUP}//tbody//td[3]/a')
+    _LOCATOR_LINK_HOZ = f'{_GROUP}//tbody//td[4]/a')
+    _LOCATOR_LINK_GPH = f'{_GROUP}//tbody//td[5]/a')
+    _LOCATOR_LINK_CUSTOMER = f'{_GROUP}//tbody//td[6]/a')
+    _LOCATOR_LINK_CUSTOMER_ORDER = f'{_GROUP}//tbody//td[7]/a')
 
     def move_to_group(self):
         with testit.step(f'Перейти к группе'):
-            self.move_to_element((By.XPATH, self._GROUP))
+            self.move_to_element(self._GROUP))
 
     def get_smr_number(self, position: int = 0):
         with testit.step(f'Получить номер SMR"{position}"'):
