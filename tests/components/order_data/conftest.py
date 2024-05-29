@@ -9,10 +9,10 @@ fake = Faker('ru_RU')
 
 @dataclass
 class Order:
-    id: int = 1604034
+    id: int = 1598428
     stage_name: str = 'Проработка ТР и внесение стоимости работ'
 
 
 @pytest.fixture()
-def order():
+def order_id():
     return Order

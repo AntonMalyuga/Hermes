@@ -1,37 +1,40 @@
-from selenium.webdriver.common.by import By
 import time
 import testit
+from locator import Locator, Input, Select
+from page import Page
 
 
-class Order:
+class Order(Page):
     id = ''
     name = ''
+    path = 'aggregator'
 
-    _CHECK_OPEN_ORDER = '.tab-content title')
-    _LOCATOR_ORDER_ID = '//div[text()="Номер заявки:"]/following::div[1]')
+    _LOCATOR_TAB = '//div[@class="tab-content"]//title'
+    _LOCATOR_ORDER_ID = '//div[text()="Номер заявки:"]/following::div[1]'
+    _LOCATOR_STAGE_NAME = '//div[text()= "Текущий этап и время начала:"]/following::div[1]'
+    _LOCATOR_RELOAD_PAGE = '//div[@class="h-loader"]'
 
-    def open_order(self, order_id: int):
-        with testit.step(f'Открыть заявку по схеме "{self.name}": {order_id}'):
-            time.sleep(7)
-            self._driver.get(f'{self._driver.base_url}/aggregator/{order_id}')
+    @classmethod
+    def open_order(cls, order: int):
+        cls.open_with_path(path=f'{cls.path}/{order}')
 
-    def get_order_id(self) -> int:
-        self.check_loader()
-        order_id = int(self.find_element(locator=self._LOCATOR_ORDER_ID).text)
+    @classmethod
+    def get_tab_name(cls) -> str:
+        return Locator(cls._LOCATOR_TAB).text
+
+    @classmethod
+    def get_order_id(cls) -> int:
+        order_id = int(Locator(cls._LOCATOR_ORDER_ID).text)
         with testit.step(f'Получить номер заявки: {order_id}'):
             return order_id
 
-    @testit.step(f'Дождаться открытия заявки')
-    def check_open_order_interface(self):
-        self.check_loader()
-        self.find_element(locator=self._CHECK_OPEN_ORDER).get_property(
-            'innerText')
+    @classmethod
+    def get_current_stage(cls) -> str:
+        stage_name = Locator(cls._LOCATOR_STAGE_NAME).text
+        stage_name = stage_name.replace('«', '')
+        return stage_name.split('»')[0]
 
-    def check_order_id(self, order_id: int) -> bool:
-        self.check_open_order_interface()
-        text = self.find_element(locator=self._CHECK_OPEN_ORDER).get_property(
-            'innerText')
-
-        if text.find(str(order_id)) != -1:
-            with testit.step(f'Проверка заявки в форме заявки:{order_id}'):
-                return True
+    @classmethod
+    def wait_reload_page(cls, time_wait: int = 2):
+        Locator(cls._LOCATOR_RELOAD_PAGE).wait_attached()
+        time.sleep(time_wait)

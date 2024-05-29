@@ -1,10 +1,8 @@
 import os
-import sys
 import requests
-import exceptiongroup
 
 
-class Sys:
+class SysAPI:
     def __init__(self):
         self.login = os.getenv('HERMES_LOGIN')
         self.password = os.getenv('HERMES_PASSWORD')
@@ -16,9 +14,9 @@ class Sys:
         }
 
         res = requests.post(url=self.url, data=data, headers=headers, auth=(self.login, self.password))
-        print(res.text)
 
-    def delete_order(self, order_id: int):
+    @classmethod
+    def delete_order(cls, order_id: int):
         try:
             data = {
                 'Order_ID': order_id,
@@ -26,8 +24,7 @@ class Sys:
                 "isForce": 1
             }
 
-            self._api(data=data)
+            cls._api(data=data)
 
         except Exception:
             print(f'Удаление заявки {order_id} невозможно')
-

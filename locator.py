@@ -1,12 +1,14 @@
 from __future__ import annotations
+
+import time
+
 from playwright.sync_api import Locator as PlaywrightLocator
 from driver import Driver
 
-DEFAULT_TIMEOUT = 5_000  # ms
+DEFAULT_TIMEOUT = 30000  # ms
 
 
 class Locator:
-
     name: str = ""
     xpath: str = None
     block_xpath: str = ""
@@ -56,7 +58,28 @@ class Locator:
             self.webelement.first.wait_for(timeout=timeout, state="visible")
         except:
             raise Exception(
-                f"Element {self.name} with xpath={self.block_xpath + self.xpath} is not visible")
+                f"Элемента {self.name} по xpath={self.block_xpath + self.xpath} не видно на странице")
+
+    def press(self, keys_command: str = '', timeout=DEFAULT_TIMEOUT):
+        self._use_current_page_context()
+        self.webelement.first.press(keys_command)
+
+    def press_sequentially(self, text: str):
+        self._use_current_page_context()
+        self.webelement.first.press_sequentially(text)
+
+    def wait_attached(self, timeout=DEFAULT_TIMEOUT):
+        self._use_current_page_context()
+        try:
+            self.webelement.first.wait_for(timeout=timeout, state="attached")
+        except:
+            raise Exception(
+                f"Элемента {self.name} по xpath={self.block_xpath + self.xpath} не найдено в DOM")
+
+    @property
+    def count(self, timeout=DEFAULT_TIMEOUT):
+        self._use_current_page_context()
+        return self.webelement.count()
 
 
 class Input(Locator):
@@ -67,3 +90,33 @@ class Input(Locator):
     def value(self) -> str:
         self._use_current_page_context()
         return self.webelement.first.input_value(timeout=DEFAULT_TIMEOUT)
+
+
+class CheckBox(Locator):
+    def checked(self):
+        self._use_current_page_context()
+        return self.webelement.first.set_checked(timeout=DEFAULT_TIMEOUT, checked=True)
+
+    def unchecked(self):
+        self._use_current_page_context()
+        return self.webelement.first.set_checked(timeout=DEFAULT_TIMEOUT, checked=False)
+
+
+class Select(Locator):
+    def ajax_option(self, string: str):
+        self._use_current_page_context()
+        Locator(f'{self.xpath}//following::div[1]').click()
+        Input(f'{self.xpath}//following::div[1]//input[@type="text"]').input(string)
+        Locator(f'{self.xpath}//following::div[1]//span[contains(., "{string}")]').click()
+
+    def option(self, string: str):
+        self._use_current_page_context()
+        self.webelement.first.select_option(string)
+
+    def index(self, index: int):
+        self._use_current_page_context()
+        self.webelement.select_option(index=index, timeout=DEFAULT_TIMEOUT)
+
+    def option_by_index(self, index: int):
+        self._use_current_page_context()
+        self.webelement.first.select_option(timeout=DEFAULT_TIMEOUT, index=index)

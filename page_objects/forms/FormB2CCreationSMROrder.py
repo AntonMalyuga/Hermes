@@ -3,7 +3,7 @@ from locator import Locator, Input
 from page import Page
 import time
 import testit
-from api.HermesSys import Sys
+from api.Sys import Sys
 
 
 class FormB2CCreationSMROrder(Page):

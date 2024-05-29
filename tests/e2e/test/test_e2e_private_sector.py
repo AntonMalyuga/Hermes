@@ -5,7 +5,7 @@ from page_objects.components.ComponentCreateProjectButton import ComponentCreate
 from page_objects.forms.FormB2CCreateConstructionProjectShow import FormB2CCreateConstructionProjectShow
 from page_objects.components.ComponentLoaderDH import ComponentLoaderDH
 from page_objects.components.ComponentAddressParameters import ComponentAdressParameters
-from api.HermesSys import Sys
+from api.Sys import Sys
 import testit
 import pytest
 

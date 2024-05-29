@@ -31,11 +31,12 @@ class Page:
             Driver().page.goto(self.BASE_PAGE_URL)
             return self
 
-    def open_with_path(self, path: str):
-        with testit.step(f'Открыть ссылку: {self.BASE_PAGE_URL}{path}'):
+    @classmethod
+    def open_with_path(cls, path: str):
+        with testit.step(f'Открыть ссылку: {cls.BASE_PAGE_URL}{path}'):
             testit.addLinks(url=f'{Page().BASE_PAGE_URL}{path}', title='Страница')
-            Driver().page.goto(self.BASE_PAGE_URL + path)
-            return self
+            Driver().page.goto(cls.BASE_PAGE_URL + path)
+            return cls
 
     @classmethod
     def open_by_default(cls):

@@ -171,12 +171,12 @@ class FormB2BCreateOldClientProject(Page):
     @classmethod
     def set_street(cls, street_name: str):
         with testit.step(f'Установить улицу: "{street_name}" в форме создаиня старого клиентского проекта'):
-            Select(cls._LOCATOR_SELECT_STREET).ajax_option(street_name, is_check=True)
+            Select(cls._LOCATOR_SELECT_STREET).ajax_option(street_name)
 
     @classmethod
     def set_house(cls, house_name: str):
         with testit.step(f'Установить дом: "{house_name}" в форме создаиня старого клиентского проекта'):
-            Select(cls._LOCATOR_SELECT_HOUSE).ajax_option(house_name, is_check=True)
+            Select(cls._LOCATOR_SELECT_HOUSE).ajax_option(house_name)
 
     @classmethod
     def set_client_on_addresses_by_index(cls, index: int):

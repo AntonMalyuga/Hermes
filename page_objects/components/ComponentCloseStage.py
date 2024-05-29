@@ -1,76 +1,107 @@
-from selenium.webdriver.common.by import By
 import time
+
 import testit
+from locator import Locator, Input, Select
+from page import Page
 
 
-class ComponentCloseStage:
-
+class ComponentCloseStage(Page):
     name = 'Управление этапом'
 
-    _CHECK_OPEN_ORDER = '.tab-content title')
+    _LOCATOR_FORM_CLOSE_STAGE_PASS = '//select[@name="passDescriptionId"]'
+    _LOCATOR_FORM_CLOSE_STAGE_REASON = '//select[contains(@name,"reasonId")]'
+    _LOCATOR_FORM_CLOSE_STAGE_COMMENT = '//div[contains(@id, "transitionComment")]/textarea'
+    _LOCATOR_FORM_BUTTON_MANUAL_CLOSE_STAGE = '//div[contains(@id, "moveOrderSelector")]//button[text()="Перейти"]'
+    _LOCATOR_FORM_TEXT_NEXT_STAGE = '//form[@id="close_stage_form"]//div[contains(@id, "comment")]/div[1]'
+    _LOCATOR_FORM_BUTTON_AUTO_CLOSE_STAGE = '//div[contains(@id, "moveOrderSelector")]//button[contains(text(), "Перейти без проверок")]'
+    _LOCATOR_ALERT_FOR_PASS = '//div[@class="text-danger mt-10" and @id="required-actions"]'
 
-    _LOCATOR_FORM_ODER_CLOSE_STAGE_PASS = (
-        By.XPATH, '//select[@name="passDescriptionId"]/optgroup[@label="Ручные переходы"]/option')
-    _LOCATOR_FORM_ODER_CLOSE_STAGE_REASON = 'select.js--show-reason-description')
-    _LOCATOR_FORM_ODER_CLOSE_STAGE_COMMENT = '.agg-change-stage-form textarea[name="comment"]')
-    _LOCATOR_FORM_BUTTON_CLOSE_STAGE = 'div[id^="moveOrderSelector"]')
+    @classmethod
+    def _set_manual_pass(cls, pass_name: str):
+        with testit.step(f'Выбрать ручной переход: {pass_name}'):
+            Select(cls._LOCATOR_FORM_CLOSE_STAGE_PASS).option(pass_name)
 
-    @testit.step(f'Check opening interface order')
-    def check_open_order_interface(self):
-        with testit.step('Проверить открытие заявки в интерфейсе'):
-            self.check_loader()
-            self.find_element(locator=self._CHECK_OPEN_ORDER).get_property(
-                'innerText')
+    @classmethod
+    def _set_reason(cls, reason: str):
+        with (testit.step(f'Установить причину: "{reason}"')):
+            Locator(cls._LOCATOR_FORM_CLOSE_STAGE_REASON).wait_for_displayed()
+            Select(cls._LOCATOR_FORM_CLOSE_STAGE_REASON).ajax_option(reason)
 
-    def __set_pass(self, pass_name: str):
-        with testit.step(f'Выбрать переход: {pass_name}'):
-            try:
-                pass_locator = f'{self._LOCATOR_FORM_ODER_CLOSE_STAGE_PASS[1]}[text()="{pass_name}"]')
-                self.find_element(locator=pass_locator).click()
-
-            except ValueError:
-                raise f'Не найден переход {pass_name}'
-
-    def __set_reason(self, reason: str):
-        with testit.step(f'Установить причину: "{reason}"'):
-            self.selected_element_by_value(value=reason, locator=self._LOCATOR_FORM_ODER_CLOSE_STAGE_REASON)
-
-    def __set_comment(self, comment: str):
+    @classmethod
+    def _set_comment(cls, comment: str):
         with testit.step(f'Установить комментарий: "{comment}"'):
-            self.find_element(locator=self._LOCATOR_FORM_ODER_CLOSE_STAGE_COMMENT).send_keys(comment)
+            Input(cls._LOCATOR_FORM_CLOSE_STAGE_COMMENT).input(comment)
+            Locator(cls._LOCATOR_FORM_CLOSE_STAGE_COMMENT).press_sequentially(' ')
+            Locator(cls._LOCATOR_FORM_CLOSE_STAGE_COMMENT).press('Backspace')
 
-    def __click_go(self):
+    @classmethod
+    def _get_name_next_stage(cls) -> str:
+        next_stage = Locator(cls._LOCATOR_FORM_TEXT_NEXT_STAGE).text
+        next_stage = next_stage.replace('»', '')
+        next_stage = next_stage.split('«')[1]
+        with testit.step(f'Получить имя следующего этапа: {next_stage}'):
+            return next_stage
+
+    @classmethod
+    def _click_go(cls):
         with testit.step('Нажать "Перейти"'):
-            self.find_element(locator=f'{self._LOCATOR_FORM_BUTTON_CLOSE_STAGE[1]} button')).click()
+            Locator(cls._LOCATOR_FORM_BUTTON_MANUAL_CLOSE_STAGE).click()
 
-    def __click_go_auto(self):
-        with testit.step('Нажать "Перейти без проверок"'):
-            self.find_elements(locator=f'{self._LOCATOR_FORM_BUTTON_CLOSE_STAGE[1]} button'))[
-                1].click()
+    @classmethod
+    def get_text_alert_for_pass(cls) -> str:
+        alert_text = Locator(cls._LOCATOR_ALERT_FOR_PASS).text
+        with testit.step(f'Установить комментарий: "{alert_text}"'):
+            return alert_text
 
-    def close_stage(self, pass_name: str, next_stage: str = '', reason: str = '', comment: str = '',
-                    is_auto: bool = False):
+    @classmethod
+    def check_show_alert_for_pass(cls) -> bool:
+        with testit.step(f'Проверить отображение ошибки проверки на переходе'):
+            if Locator(cls._LOCATOR_ALERT_FOR_PASS).text != '':
+                return True
+            else:
+                return False
+
+    @classmethod
+    def close_stage(
+            cls,
+            pass_name: str,
+            next_stage: str = '',
+            reason: str = '',
+            comment: str = '',
+            is_go: bool = True,
+            is_auto: bool = False
+
+    ):
         with testit.step(f'Закрыть переход'):
 
-            self.check_loader()
-            self.__set_pass(pass_name)
-            self.check_loader()
+            cls._set_manual_pass(pass_name)
+            time.sleep(2)
 
-            if reason:
-                time.sleep(3)
-                self.__set_reason(reason)
+            if reason != '':
+                cls._set_reason(reason)
 
-            if comment:
-                time.sleep(3)
-                self.__set_comment(comment)
+            if comment != '':
+                cls._set_comment(comment)
 
-            time.sleep(3)
-
-            if is_auto:
-                self.__click_go_auto()
-            else:
-                self.__click_go()
-
-            if next_stage:
+            if is_go:
                 time.sleep(2)
-                self.check_current_stage(next_stage)
+                if is_auto:
+                    cls._click_go_auto()
+                else:
+                    cls._click_go()
+
+            if next_stage != '':
+                cls.check_next_stage(next_stage)
+
+    @classmethod
+    def _click_go_auto(cls):
+        with testit.step('Нажать "Перейти без проверок"'):
+            Locator(cls._LOCATOR_FORM_BUTTON_AUTO_CLOSE_STAGE).click()
+
+    @classmethod
+    def check_next_stage(cls, next_stage):
+        with testit.step(f'Проверить имя следующего этапа: {next_stage}'):
+            if cls._get_name_next_stage() == next_stage:
+                return True
+            else:
+                return False
