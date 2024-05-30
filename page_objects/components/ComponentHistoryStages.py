@@ -1,6 +1,6 @@
 import testit
 
-from page_objects.components.VO.RowHistoryOrder import RowHistoryOrder
+from VO.RowHistoryOrder import RowHistoryOrder
 from locator import Locator
 from page import Page
 

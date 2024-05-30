@@ -38,3 +38,9 @@ class Order(Page):
     def wait_reload_page(cls, time_wait: int = 2):
         Locator(cls._LOCATOR_RELOAD_PAGE).wait_attached()
         time.sleep(time_wait)
+
+    @classmethod
+    def check_current_stage(cls, stage_name: str) -> bool:
+        with testit.step(
+                f'Проверить в схеме {cls.name} текущий этап. Ожидаем: {cls.get_current_stage()}, получаем: {stage_name}'):
+            return cls.get_current_stage() == stage_name

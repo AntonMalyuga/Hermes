@@ -1,20 +1,7 @@
-from driver import Driver
 import testit
-
-# class BasePage:
-#
-#     @staticmethod
-#     def open_page(path: str, title_test_it: str = ''):
-#         path = f'{Driver().current_url}{path}'
-#         # with testit.addLink(url=path, title=title_test_it):
-#         Driver().get(path)
-#
-#     @staticmethod
-#     def current_url() -> str:
-#         return Driver().current_url
-
-
+import time
 from driver import Driver
+from locator import Locator
 
 
 class Page:
@@ -24,6 +11,12 @@ class Page:
 
     BASE_PAGE_URL = 'https://hermes-test.rt.ru/'
     path = ''
+    _LOCATOR_RELOAD_PAGE = '//div[@class="h-loader"]'
+
+    @classmethod
+    def wait_reload_page(cls, time_wait: int = 2):
+        Locator(cls._LOCATOR_RELOAD_PAGE).wait_attached()
+        time.sleep(time_wait)
 
     def open(self):
         with testit.step(f'Открыть ссылку: {self.BASE_PAGE_URL}'):

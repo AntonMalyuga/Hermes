@@ -1,5 +1,6 @@
 from page import Page
 from locator import Locator, Input, CheckBox, Select
+from VO.FormB2BCreateOldProject import Project
 import time
 import testit
 
@@ -45,6 +46,8 @@ class FormB2BCreateOldClientProject(Page):
     _LOCATOR_SELECT_STREET = '//select[@id="ADDRESSES[0][ATDSTREET]"]'
     _LOCATOR_SELECT_HOUSE = '//select[@id="ADDRESSES[0][ATDHOUSE]"]'
 
+    _LOCATOR_CHECKBOX_TVP = '//input[@name="ADDRESSES[0][CRMWorkingKind]"]'
+
     _LOCATOR_DIV_GROUP_PAYBACK = '//h6[@data-event-name="Параметры, влияющие на окупаемость"]'
     _LOCATOR_SELECT_SCALE_SERVICE_SPEED = '//select[@name="SERVICES[0][SRV_CMS_ServiceSpeed_SCALE]"]'
     _LOCATOR_INPUT_SERVICE_SPEED = '//input[@id="SERVICES[0][SRV_CMS_ServiceSpeed]"]'
@@ -54,10 +57,15 @@ class FormB2BCreateOldClientProject(Page):
     _LOCATOR_INPUT_SERVICE_QTY = '//input[@id="SERVICES[0][SERVICE_QTY]"]'
     _LOCATOR_INPUT_SERVICE_FEE_MONTHLY = '//input[@id="SERVICES[0][SRV_FEE_MONTHLY]"]'
 
-    _LOCATOR_STRONG_CREATED_ORDER_KZ = '//pre[contains(text(), "Клиентская заявка")]//a'
-    _LOCATOR_STRONG_CREATED_ORDER_KP = '//pre[contains(text(), "Клиентский проект")]//a'
+    _LOCATOR_STRONG_CREATED_ORDER_KZ = '//span[contains(text(), "Клиентская заявка")]//a'
+    _LOCATOR_STRONG_CREATED_ORDER_KP = '//span[contains(text(), "Клиентский проект")]//a'
 
     _LOCATOR_BUTTON_SUBMIT_FORM = '//button[@name="FORM_PREFILL" and @value="SUBMIT"]'
+
+    @classmethod
+    def wait_reload_page(cls, time_wait: int = 2):
+        Locator(cls._LOCATOR_RELOAD_PAGE).wait_attached()
+        time.sleep(time_wait)
 
     @classmethod
     def set_teo_start_stage(cls):
@@ -184,6 +192,10 @@ class FormB2BCreateOldClientProject(Page):
             Select(cls._LOCATOR_SELECT_CLIENTS_BY_ADDRESS).index(index)
 
     @classmethod
+    def set_tvp(cls):
+        CheckBox(cls._LOCATOR_CHECKBOX_TVP).checked()
+
+    @classmethod
     def click_group_parameters(cls):
         with testit.step(f'Кликнуть на группу "Параметры"'):
             Locator(cls._LOCATOR_DIV_GROUP_PARAMETERS).click()
@@ -232,7 +244,7 @@ class FormB2BCreateOldClientProject(Page):
 
     @classmethod
     def get_created_client_project_order(cls) -> int:
-        return int(Locator(cls._LOCATOR_STRONG_CREATED_ORDER_KZ).text)
+        return int(Locator(cls._LOCATOR_STRONG_CREATED_ORDER_KP).text)
 
     @classmethod
     def submit(cls):
@@ -240,39 +252,44 @@ class FormB2BCreateOldClientProject(Page):
             Locator(cls._LOCATOR_BUTTON_SUBMIT_FORM).click()
 
     @classmethod
-    @testit.step('Заполнить параметры для создания проекта B2B на ТЭО')
-    def create_project_on_teo(cls):
-        cls.set_teo_start_stage()
+    @testit.step('Заполнить параметры для создания проекта B2B')
+    def create_project(cls, project: Project):
+
+        if project.is_teo:
+            cls.set_teo_start_stage()
         time.sleep(6)
-        cls.set_client_name('АВТОТЕСТ')
-        cls.set_client_inn('000000000001')
-        cls.set_client_kpp('100000001')
+
+        cls.set_client_name(project.client_name)
+        cls.set_client_inn(project.client_inn)
+        cls.set_client_kpp(project.client_kpp)
         cls.update_client()
-        cls.set_find_client(inn='000000000001', kpp='100000001', client_name='АВТОТЕСТ')
+        cls.set_find_client(inn=project.client_inn, kpp=project.client_kpp, client_name=project.client_name)
         cls.check_insert_client()
-        cls.set_contact_name('Малюга А.С.')
-        cls.set_contact_telephone_number('8(999)999-99-99')
-        cls.set_contact_email('test@test.test')
-        cls.set_new_project_name('Проект проект уникальщина')
-        cls.set_name_manager_kb('Малюга А.С.')
-        cls.set_telephone_manager_kb('8(999)999-99-99')
-        cls.set_email_manager_kb('testkb@test.test')
-        cls.set_macro_segment('B2B')
-        cls.set_segment('Клиенты федерального уровня (ККФУ)')
-        cls.set_chanel_sales('Активный канал/3К АП (хантеры)')
-        cls.set_organization_term('24.05.2024')
-        cls.set_location_lvl_one('Саратовская Область')
-        cls.set_location_lvl_two('Саратов Город')
+        cls.set_contact_name(project.contact_name)
+        cls.set_contact_telephone_number(project.contact_telephone_number)
+        cls.set_contact_email(project.contact_email)
+        cls.set_new_project_name(project.new_project_name)
+        cls.set_name_manager_kb(project.manager_kb_name)
+        cls.set_telephone_manager_kb(project.manager_kb_telephone_number)
+        cls.set_email_manager_kb(project.manager_kb_email)
+        cls.set_macro_segment(project.manager_kb_macro_segment)
+        cls.set_segment(project.manager_kb_segment)
+        cls.set_chanel_sales(project.chanel_sales)
+        cls.set_organization_term(project.organization_term)
+        cls.set_location_lvl_one(project.location_lvl_one)
+        cls.set_location_lvl_two(project.location_lvl_two)
         cls.check_location_lvl_three()
-        cls.set_street('ул Авиастроителей')
+        cls.set_street(project.street)
+        if project.is_tvp:
+            cls.set_tvp()
         time.sleep(2)
-        cls.set_house('д. 3')
+        cls.set_house(project.house)
         cls.set_client_on_addresses_by_index(1)
         cls.click_group_payback()
-        cls.set_srv_fee_install(1000)
-        cls.set_service_qty(2)
-        cls.set_fee_monthly(300)
+        cls.set_srv_fee_install(project.srv_fee_install)
+        cls.set_service_qty(project.service_qty)
+        cls.set_fee_monthly(project.fee_monthly)
         cls.click_group_parameters()
-        cls.set_scale_servie_speed('кбит/с')
-        cls.set_service_speed(250)
+        cls.set_scale_servie_speed(project.scale_servie_speed)
+        cls.set_service_speed(project.service_speed)
         cls.submit()
