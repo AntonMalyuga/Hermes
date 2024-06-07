@@ -3,7 +3,7 @@ from __future__ import annotations
 from playwright.sync_api import Locator as PlaywrightLocator
 from driver import Driver
 
-DEFAULT_TIMEOUT = 30000  # ms
+DEFAULT_TIMEOUT = 50000  # ms
 
 
 class Locator:
@@ -88,6 +88,10 @@ class Input(Locator):
     def value(self) -> str:
         self._use_current_page_context()
         return self.webelement.first.input_value(timeout=DEFAULT_TIMEOUT)
+
+    def add_files(self, string: str):
+        self._use_current_page_context()
+        self.webelement.set_input_files(string)
 
 
 class CheckBox(Locator):

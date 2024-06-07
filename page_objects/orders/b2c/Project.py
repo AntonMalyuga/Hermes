@@ -1,6 +1,7 @@
 from page_objects.orders.Order import Order
 from page_objects.components.ComponentCloseStage import ComponentCloseStage
 from page_objects.components.ComponentHistoryStages import ComponentHistoryStages
+from page_objects.components.ComponentFiles import ComponentFiles
 
 
 class Project(Order):
@@ -9,6 +10,8 @@ class Project(Order):
 
     ComponentCloseStage = ComponentCloseStage()
     ComponentHistoryStages = ComponentHistoryStages()
+    ComponentFiles = ComponentFiles()
+
 
 
 
