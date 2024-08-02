@@ -1,80 +1,85 @@
-import time
 import testit
+from dataclasses import dataclass, field
+from page import Page
+from locator import Locator, Select, Input
 
-from selenium.webdriver.common.by import By
-from selenium.webdriver.common.keys import Keys
+
+@dataclass
+class Work:
+    name: str
+    qty: int
+    type: str
+    natural_indicator: str
+    construct_method: str
 
 
-class B2cFormWorkVolume:
+@dataclass
+class Works:
+    works_key: list[Work] | None
+    works_core: list[Work] | None
 
+
+class B2cFormWorkVolume(Page):
     name = 'Редактировать объемы ПИР/СМР B2C'
 
-    _LOCATOR_BUTTON_OPEN_MODAL_ADD_WORK = 'button[data-target^="#add-work-modal"]')
-    _LOCATOR_TABLE_OPEN_MODAL_ADD_WORK = '//tbody[@id="add-work-table-tbody"]')
-    _LOCATOR_CHECK_OPEN_MODAL = '.modal.fade.in')
-    _LOCATOR_BUTTON_MODAL_ADD_WORK = '//div[@class="modal-content"]//button[text()="Добавить"]')
-    _LOCATOR_TABLE_INSERT_WORKS = '//table[contains(@class, "hook--work-table")]')
-    _LOCATOR_BUTTON_SAVE_WORKS = 'button.btn.btn-primary.js--validation-hidden-forms')
-    _LOCATOR_LABEL_CONSTRUCTION_METHOD = '//label[@class="radio-inline"')
+    _LOCATOR_BUTTON_OPEN_MODAL_ADD_WORK = '//button[contains(text(), "Добавить работу")]'
+    _LOCATOR_TABLE_OPEN_MODAL_ADD_WORK = '//tbody[@id="add-work-table-tbody"]'
+    _LOCATOR_BUTTON_MODAL_ADD_WORK = '//div[@class="modal-content"]//button[text()="Добавить"]'
+    _LOCATOR_TABLE_INSERT_WORKS = '//table[contains(@class, "hook--work-table")]'
+    _LOCATOR_BUTTON_SAVE_WORKS = '//button[text(), "Сохранить"]'
+    _LOCATOR_LABEL_CONSTRUCTION_METHOD = '//label[@class="radio-inline"'
 
-    def check_open_modal(self):
-        with testit.step('Открыть модальное окно', 'Окно открыто'):
-            time.sleep(2)
-            return self.find_element(self._LOCATOR_CHECK_OPEN_MODAL)
-
-    def add_works(self, works: dict):
+    @classmethod
+    def add_works(cls, works: Works):
         with testit.step(f'Добавить работы "{works}"'):
-            self.check_loader()
-            self.find_element(locator=self._LOCATOR_BUTTON_OPEN_MODAL_ADD_WORK).click()
-            self.check_open_modal()
+            Locator(cls._LOCATOR_BUTTON_OPEN_MODAL_ADD_WORK).click()
 
-        if 'works_keys' in works:
-            self.add_works_by_modal(works['works_keys'])
-            self.set_works_value(works['works_keys'])
-            self.set_natural_indicators(works['works_keys'])
+        if works.works_key:
+            cls.add_works_by_modal(works.works_key)
+            cls.set_works_value(works.works_key)
+            cls.set_natural_indicators(works.works_key)
 
-        if 'works_core' in works:
-            self.add_works_by_modal(works['works_core'])
-            self.set_works_value(works['works_core'])
-            self.set_method_by_core(works['works_core'])
-        self.save_works()
+        if works.works_core:
+            cls.add_works_by_modal(works.works_core)
+            cls.set_works_value(works.works_core)
+            cls.set_method_by_core(works.works_core)
+        cls.save_works()
 
-    def add_works_by_modal(self, works: dict):
-        with testit.step(f'Добавить работы в модальном окне "{works}"'):
-            for work, work_params in works.items():
-                self.find_element((By.XPATH,
-                                   f'{self._LOCATOR_TABLE_OPEN_MODAL_ADD_WORK[1]}//td[contains(text(),"{work_params["type"]}: {work}")]/ancestor::tr[1]')).click()
+    @classmethod
+    def add_works_by_modal(cls, works: list[Work]):
+        for work in works:
+            with testit.step(f'Добавить работу в модальном окне "{work.name}"'):
+                Locator(
+                    f'{cls._LOCATOR_TABLE_OPEN_MODAL_ADD_WORK}//td[contains(text(),"{work.type}: {work.name}")]/ancestor::tr[1]').click()
+        Locator(cls._LOCATOR_BUTTON_MODAL_ADD_WORK).click()
 
-        self.find_element(self._LOCATOR_BUTTON_MODAL_ADD_WORK).click()
-
-    def set_construct_method(self, type_construct):
+    @classmethod
+    def set_construct_method(cls, type_construct):
         with testit.step(f'Установить метод строительства "{type_construct}"'):
-            self.find_element((By.XPATH,
-                               f'{self._LOCATOR_LABEL_CONSTRUCTION_METHOD[1]} and contains(.,"{type_construct}")]/input')).click()
+            Locator(f'{cls._LOCATOR_LABEL_CONSTRUCTION_METHOD} and contains(.,"{type_construct}")]/input').click()
 
-    def set_works_value(self, works: dict):
-        with testit.step(f'Добавить значения работ "{works}"'):
-            for work, work_params in works.items():
-                time.sleep(1)
-                work_locator = f'//tr[@data-work-name[contains(., "{work}")] and @data-work-type="{work_params["type"]}"]//input[@class="form-control input-sm volumes-form-work-quantity-input"]'
-                self.find_element(work_locator)).send_keys(Keys.CONTROL, 'a')
-                self.find_element(work_locator)).send_keys(Keys.BACKSPACE)
-                self.find_element(work_locator)).send_keys(int(work_params["qty"]))
+    @classmethod
+    def set_works_value(cls, works: list[Work]):
+        for work in works:
+            with testit.step(f'Добавить значения {work.qty} для работы "{work.name}"'):
+                work_locator = f'//tr[@data-work-name[contains(., "{work.name}")] and @data-work-type="{work.type}"]//input[@class="form-control input-sm volumes-form-work-quantity-input"]'
+                Input(work_locator).input(str(work.qty))
 
-    def set_method_by_core(self, works: dict):
-        with testit.step(f'Установить тип строительства по услуге Core "{works}"'):
-            for work, work_params in works.items():
-                time.sleep(1)
-                work_locator = f'//tr[@data-work-name[contains(., "{work}")] and @data-work-type="{work_params["type"]}"]//select[@class="form-control input-sm core-construction-method-selector"]'
-                self.selected_element_by_value(locator=work_locator), value=work_params["method"])
+    @classmethod
+    def set_method_by_core(cls, works: list[Work]):
+        for work in works:
+            with testit.step(f'Установить тип строительства по услуге Core "{works}"'):
+                work_locator = f'//tr[@data-work-name[contains(., "{work.name}")] and @data-work-type="{work.type}"]//select[@class="form-control input-sm core-construction-method-selector"]'
+                Select(work_locator).ajax_option(work.construct_method)
 
-    def set_natural_indicators(self, works: dict):
-        with testit.step(f'Установить натуральные показатели "{works}"'):
-            for work, work_params in works.items():
-                time.sleep(1)
-                work_locator = f'//tr[@data-work-name[contains(., "{work}")] and @data-work-type="{work_params["type"]}"]//select[@class="form-control input-sm inputOrText "]'
-                self.selected_element_by_value(locator=work_locator), value=work_params["natural_indicator"])
+    @classmethod
+    def set_natural_indicators(cls, works: list[Work]):
+        for work in works:
+            with testit.step(f'Установить натуральные показатель "{work.natural_indicator}" на работу "{work.name}"'):
+                work_locator = f'//tr[@data-work-name[contains(., "{work.name}")] and @data-work-type="{work.type}"]//select[@class="form-control input-sm inputOrText "]'
+                Select(work_locator).ajax_option(work.natural_indicator)
 
-    def save_works(self):
+    @classmethod
+    def save_works(cls):
         with testit.step(f'Сохранить работы', 'Работы сохранены'):
-            self.find_element(self._LOCATOR_BUTTON_SAVE_WORKS).click()
+            Locator(cls._LOCATOR_BUTTON_SAVE_WORKS).click()

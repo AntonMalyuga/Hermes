@@ -11,7 +11,6 @@ from page_objects.orders.b2b.Client import Client
 from page_objects.orders.b2b.Construction import Construction
 
 
-
 @testit.workItemIds(1079)
 @testit.title('E2E')
 @testit.displayName('E2E B2B по строительству сети enternet')
@@ -25,8 +24,8 @@ def test_e2e_b2b():
     # Client.check_current_stage('Уточнение услуг ТЭО')
     Client.ComponentCloseStage.close_stage(pass_name='Положительно', next_stage='Выбор варианта подключения')
     Client.ComponentConnectionParameters.change_connection_parameters(value='Оптика', coordination='Какое-то',
-                                                                       conditions='Невероятные', crossing='Оптика',
-                                                                       last_mile='Кроссировка', network='Сеть РТ')
+                                                                      conditions='Невероятные', crossing='Оптика',
+                                                                      last_mile='Кроссировка', network='Сеть РТ')
     Client.ComponentBindingOT.change_binding_ot(
         value='АТС-VLG.ARGUS.1371454309, Область Саратовская, Город Саратов, проезд Соколовогорский 1-й, д. 13А')
     Client.ComponentRFPoint.change_rf_point(interface='CUSTOM', equipment='Кампуктеры')
@@ -41,7 +40,7 @@ def test_e2e_b2b():
     Construction.ComponentB2BTransferWorkHoz.open_form_transfer_hoz_work()
     FormB2BTransferWorkHoz.set_all_works_hoz()
     Construction.ComponentCloseStage.close_stage(pass_name='Положительно (не требуется подготовка к СМР с УЗ)',
-                                            next_stage='Согласование ТР с КБ (Уточнения намерений клиента)')
+                                                 next_stage='Согласование ТР с КБ (Уточнения намерений клиента)')
 
     project_order = Construction.ComponentB2BOrdersHierarchy.get_project_number()
     client_order = Construction.ComponentB2BOrdersHierarchy.get_client_number()

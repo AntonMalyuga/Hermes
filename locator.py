@@ -46,6 +46,14 @@ class Locator:
         self.wait_for_displayed(timeout=DEFAULT_TIMEOUT)
         return self.webelement.first.is_visible()
 
+    @property
+    def all(self) -> list[Locator]:
+        self._use_current_page_context()
+        return self.webelement.all()
+
+    def locator(self, xpath_locator: str) -> PlaywrightLocator:
+        return self.locator(xpath_locator)
+
     def get_attribute(self, attribute) -> str:
         self._use_current_page_context()
         return self.webelement.first.get_attribute(attribute, timeout=DEFAULT_TIMEOUT)
@@ -75,12 +83,16 @@ class Locator:
                 f"Элемента {self.name} по xpath={self.block_xpath + self.xpath} не найдено в DOM")
 
     @property
-    def count(self, timeout=DEFAULT_TIMEOUT):
+    def count(self):
         self._use_current_page_context()
         return self.webelement.count()
 
 
 class Input(Locator):
+
+    def locator(self, xpath_locator: str) -> Input:
+        return self.locator(xpath_locator)
+
     def input(self, string: str):
         self._use_current_page_context()
         self.webelement.first.fill(string, timeout=DEFAULT_TIMEOUT)

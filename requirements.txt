@@ -5,9 +5,9 @@ requests==2.32.1
 webdriver-manager==4.0.1
 pytest-xdist==3.5.0
 pynput==1.7.6
-testit-api-client==2.0.2
-testit-adapter-pytest==2.0.4
-testit-python-commons==2.0.4
+testit-api-client==4.0.0
+testit-adapter-pytest==3.2.2
+testit-python-commons==3.2.2
 mouse==0.7.1
 faker==25.2.0
 playwright==1.42.0

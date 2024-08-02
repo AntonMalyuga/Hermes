@@ -1,9 +1,11 @@
-import pytest
-import testit
+import time
 
 from page_objects.forms.FormB2BWorkVolume import FormB2BWorkVolume
 
 
-def test_form_b2b_work(driver):
-    driver.get('https://hermes-test.rt.ru/aggregator/volumes/1604035')
-    FormB2BWorkVolume(driver).fill_and_save_random_works()
+class TestFormB2BWorkVolume:
+    def test_form_b2b_work(self, order):
+        FormB2BWorkVolume.open_form(order.id)
+        time.sleep(4)
+        FormB2BWorkVolume.delete_all_works()
+        time.sleep(30)

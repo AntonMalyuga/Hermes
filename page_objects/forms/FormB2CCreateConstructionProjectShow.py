@@ -1,151 +1,168 @@
 import random
 import testit
-from selenium.webdriver.common.by import By
 import time
+from dataclasses import dataclass
+from locator import Locator, Select, Input
+
+
+@dataclass
+class Project:
+    rf: str
+    is_need_broad: str
+    is_type_construct: str
+    customer_inn: str
+    project_name: str
+    dh: int
+    service_key: str
+
+
+@dataclass
+class Address:
+    city: str = 'Ульяновск'
+    street: str = 'Авиационная'
+    house_name: str = 'д. 1'
 
 
 class FormB2CCreateConstructionProjectShow:
     name = 'Создать строительный проект B2C'
     path = 'b2c/create_construction_project_show'
 
-    _LOCATOR_SELECT_RF = 'select#rfId')
-    _LOCATOR_SELECT_IS_NEED_BROAD_BAND = '#needBroadband')
-    _LOCATOR_SELECT_TYPE_BUILD_TYPE = '#buildTypeId')
-    _LOCATOR_SELECT_AJAX_CUSTOMER = '#customerId')
-    _LOCATOR_SELECT_TECHNOLOGY = '#technology')
-    _LOCATOR_INPUT_PROJECT_NAME = '#projectName')
-    _LOCATOR_BUTTON_OPEN_MODAL_ADD_OBJECT_SMR = '.btn-group button')
-    _LOCATOR_OPEN_DROPDOWN = '//div[@class = "suggest form-control input-sm"]')
+    _LOCATOR_SELECT_RF = '//select[@id = "rfId"]'
+    _LOCATOR_SELECT_IS_NEED_BROAD_BAND = '//select[@id = "needBroadband"]'
+    _LOCATOR_SELECT_TYPE_BUILD_TYPE = '//input[@id = "buildTypeId"]'
+    _LOCATOR_SELECT_AJAX_CUSTOMER = '//input[@id = "customerId"]'
+    _LOCATOR_INPUT_PROJECT_NAME = '//input[@id = "projectName"]'
+    _LOCATOR_BUTTON_OPEN_MODAL_ADD_OBJECT_SMR = '.btn-group button'
+    _LOCATOR_OPEN_DROPDOWN = '//button[contains(text(), "Добавить адрес в список")]'
 
-    _LOCATOR_SELECT_AJAX_MODAL = '.modal-content')
-    _LOCATOR_SELECT_AJAX_MODAL_ADDRESS_CITY = '//div[@class="modal-content"]//input[contains(@id, "city")]')
-    _LOCATOR_SELECT_AJAX_MODAL_ADDRESS_STREET = (
-        By.CSS_SELECTOR, '.modal-content .js--b2c-construction-projects-load-houses-on-street')
-    _LOCATOR_SELECT_MODAL_ADDRESS_LIST_UNCHECKED = (
-        By.CSS_SELECTOR, '.modal-content .construction-projects-address-div div:first-child select')
-    _LOCATOR_SELECT_MODAL_ADDRESS_LIST_CHECKED = (
-        By.CSS_SELECTOR, '.modal-content .construction-projects-address-div div:last-child select')
-    _LOCATOR_BUTTON_MODAL_ADDRESS_ADD_ADDRESS = (
-        By.CSS_SELECTOR, '.modal-content .construction-projects-address-div .js--b2c-multi-selected-values-right')
-    _LOCATOR_BUTTON_MODAL_ADDRESS_DELETE_ADDRESS = (
-        By.CSS_SELECTOR, '.modal-content .construction-projects-address-div .js--b2c-multi-selected-values-left')
-    _LOCATOR_BUTTON_MODAL_ADDRESS_CONFIRM_ADDRESS = (
-        By.CSS_SELECTOR, '.modal-content .js--b2c-construction-projects-add-selected-addresses')
-    _LOCATOR_BUTTON_MODAL_ADDRESS_CLOSE_MODAL = '.modal-content [data-dismiss="modal"]:last-child')
+    _MODAL = '//div[@class="modal-content"]'
+    _LOCATOR_SELECT_AJAX_MODAL_ADDRESS_CITY = f'{_MODAL}//input[contains(@id, "city")]'
+    _LOCATOR_SELECT_AJAX_MODAL_ADDRESS_STREET = f'{_MODAL}//input[contains(@data-url, "streets_in_city")]'
+    _LOCATOR_SELECT_MODAL_ADDRESS_LIST_UNCHECKED = f'{_MODAL}//div[contains(@class, "construction-projects-address-list")][1]//select'
+    _LOCATOR_SELECT_MODAL_ADDRESS_LIST_CHECKED = f'{_MODAL}//div[contains(@class, "construction-projects-address-list")][2]//select'
+    _LOCATOR_BUTTON_MODAL_ADDRESS_ADD_ADDRESS = f'{_MODAL}//button[./i[@class = "fas fa-arrow-right"]]'
+    _LOCATOR_BUTTON_MODAL_ADDRESS_DELETE_ADDRESS = f'{_MODAL}//button[./i[@class = "fas fa-arrow-left"]]'
+    _LOCATOR_BUTTON_MODAL_ADDRESS_CONFIRM_ADDRESS = f'{_MODAL}//button[contains(text(), "Добавить в список выбранные адреса")]'
+    _LOCATOR_BUTTON_MODAL_ADDRESS_CLOSE_MODAL = f'{_MODAL}//button[text() = "Отмена"]'
 
-    _LOCATOR_TABLE_SERVICES = '.b2c-create-construction-project-objects')
-    _LOCATOR_TABLE_SERVICES_OPEN_DH = '.b2c-objects :nth-child(7)')
-    _LOCATOR_TABLE_SERVICES_ENTER_DH = '.b2c-objects :nth-child(7) input')
+    _TABLE_SERVICES = '//table[contains(@class, "b2c-create-construction-project-objects")]'
+    _LOCATOR_TABLE_SERVICES_OPEN_DH = f'{_TABLE_SERVICES}//tr[@class="b2c-objects"]//td[7]'
+    _LOCATOR_TABLE_SERVICES_ENTER_DH = f'{_LOCATOR_TABLE_SERVICES_OPEN_DH}/input'
 
-    _LOCATOR_TABLE_SERVICES_OPEN_MODAL_SERVICES = '.b2c-objects :nth-child(8)')
+    _LOCATOR_TABLE_SERVICES_OPEN_MODAL_SERVICES = f'{_TABLE_SERVICES}//tr[@class="b2c-objects"]//td[8]'
 
-    _LOCATOR_CHECKBOX_MODAL_SERVICES_LIST = '.modal-body .b2c-service-group:nth-child(2) input')
-    _LOCATOR_CHECKBOX_MODAL_SERVICE = '//div[@class="b2c-service-name"')
-    _LOCATOR_BUTTON_MODAL_SERVICES_SUBMIT = '.js--b2c-construction-btn-save-key-services')
-    _LOCATOR_BUTTON_MODAL_SERVICES_CLOSE_MODAL = (
-        By.CSS_SELECTOR, '.b2c-construction-projects-modal-services .modal-dialog .modal-footer button')
+    _LOCATOR_CHECKBOX_MODAL_SERVICES_LIST = '//input[@name ="b2c-services"]'
 
-    _LOCATOR_BUTTON_DELETE_SERVICES = '.js--b2c-construction-projects-delete-objects')
-    _LOCATOR_BUTTON_CREATE_PROJECT = '.js--b2c-construction-projects-create-project')
+    _LOCATOR_BUTTON_MODAL_SERVICES_SUBMIT = '//button[contains(@class, "js--b2c-construction-btn-save-key-services")]'
+    _LOCATOR_BUTTON_MODAL_SERVICES_CLOSE_MODAL = '//div[contains(@class, "b2c-construction-projects-modal-services")]//button[text() = "Отмена"]'
 
-    def _selected_rf(self, rf_name: str):
+    _LOCATOR_BUTTON_DELETE_SERVICES = '//button[contains(text(), "Удалить выбранные объекты")]'
+    _LOCATOR_BUTTON_CREATE_PROJECT = '//button[contains(text(), "Создать проект B2C")]'
+
+    @classmethod
+    def selected_rf(cls, rf_name: str):
         with testit.step(f'Установить региональный филиал "{rf_name}"'):
-            self.selected_element_by_value(locator=self._LOCATOR_SELECT_RF, value=rf_name)
+            Select(cls._LOCATOR_SELECT_RF).ajax_option(rf_name)
 
-    def _selected_type_construct(self, type_construct: str):
+    @classmethod
+    def selected_type_construct(cls, type_construct: str):
         with testit.step(f'Установить тип строительства "{type_construct}"'):
-            self.selected_element_by_value(locator=self._LOCATOR_SELECT_TYPE_BUILD_TYPE, value=type_construct)
+            Select(cls._LOCATOR_SELECT_TYPE_BUILD_TYPE).ajax_option(type_construct)
 
-    def _selected_is_need_broad(self, is_need_broad: str = 'Нет'):
+    @classmethod
+    def selected_is_need_broad(cls, is_need_broad: str = 'Нет'):
         with testit.step(f'Установить статус "требуется строительство ШПД" "{is_need_broad}"'):
-            self.selected_element_by_value(locator=self._LOCATOR_SELECT_IS_NEED_BROAD_BAND,
-                                           value=is_need_broad)
+            Select(cls._LOCATOR_SELECT_IS_NEED_BROAD_BAND).ajax_option(is_need_broad)
 
-    def _selected_customer_by_inn(self, inn: str):
+    @classmethod
+    def selected_customer_by_inn(self, inn: str):
         with testit.step(f'Выбрать клиента по ИНН: "{inn}"'):
             self.selected_element_by_value(locator=self._LOCATOR_SELECT_AJAX_CUSTOMER,
                                            value=inn)
 
-    def _enter_project_name(self, project_name: str):
+    @classmethod
+    def enter_project_name(cls, project_name: str):
         unique_project_name = f'{project_name} (уникальный: {time.time()})'
         with testit.step(f'Установить имя проекта: "{project_name}"'):
-            self.find_element(locator=self._LOCATOR_INPUT_PROJECT_NAME).send_keys(unique_project_name)
+            Input(cls._LOCATOR_INPUT_PROJECT_NAME).input(unique_project_name)
 
-    def _set_modal_address_city(self, address_city):
-
-        locator = self._LOCATOR_SELECT_AJAX_MODAL_ADDRESS_CITY
+    @classmethod
+    def set_modal_address_city(cls, address_city):
+        locator = cls._LOCATOR_SELECT_AJAX_MODAL_ADDRESS_CITY
 
         with testit.step(f'Установить адрес в модальном окне "{address_city}"'):
-            self.find_element(locator=self._LOCATOR_OPEN_DROPDOWN).click()
-            self.find_element(f'{locator[1]}/following::div[1]')).click()
-            time.sleep(2)
-            self.find_element(f'{locator[1]}/following::div[1]//input[@type="text"]')).send_keys(
-                address_city)
-            time.sleep(2)
-            self.find_element((By.CSS_SELECTOR,
-                               f'{locator[1]}/following::div[1]//span/span[ontains(text(), "Город {address_city}")]')).click()
+            Locator(cls._LOCATOR_OPEN_DROPDOWN).click()
+            Locator(f'{locator[1]}/following::div[1]').click()
 
-    def _set_modal_address_street(self, street_name: str):
+        Input(f'{locator[1]}/following::div[1]//input[@type="text"]').input(address_city)
+        Input(f'{locator[1]}/following::div[1]//span/span[ontains(text(), "Город {address_city}")]').click()
+
+    @classmethod
+    def set_modal_address_street(cls, street_name: str):
         with testit.step(f'Установить улицу в модальном окне: {street_name}'):
-            self.selected_element_by_value(locator=self._LOCATOR_SELECT_AJAX_MODAL_ADDRESS_STREET,
-                                       value=street_name)
+            Select(cls._LOCATOR_SELECT_AJAX_MODAL_ADDRESS_STREET).ajax_option(street_name)
 
-    def _set_modal_address_house(self, house_name: str):
+    @classmethod
+    def set_modal_address_house(cls, house_name: str):
         with testit.step(f'Установить дом в модальном окне: {house_name}'):
-            self.selected_element_by_value(locator=self._LOCATOR_SELECT_MODAL_ADDRESS_LIST_CHECKED, value=house_name)
-            self.find_element(locator=self._LOCATOR_BUTTON_MODAL_ADDRESS_ADD_ADDRESS).click()
-            self.find_element(locator=self._LOCATOR_BUTTON_MODAL_ADDRESS_CONFIRM_ADDRESS).click()
+            Select(cls._LOCATOR_SELECT_MODAL_ADDRESS_LIST_CHECKED).ajax_option(house_name)
+            Locator(cls._LOCATOR_BUTTON_MODAL_ADDRESS_ADD_ADDRESS).click()
+            Locator(cls._LOCATOR_BUTTON_MODAL_ADDRESS_CONFIRM_ADDRESS).click()
 
-    def _open_modal_address(self):
+    @classmethod
+    def open_modal_address(cls):
         with testit.step(f'Открыть модальное окно'):
-            self.find_element(locator=self._LOCATOR_BUTTON_OPEN_MODAL_ADD_OBJECT_SMR).click()
+            Locator(cls._LOCATOR_BUTTON_OPEN_MODAL_ADD_OBJECT_SMR).click()
 
-    def _add_address(self, city_name, street_name, house):
+    @classmethod
+    def add_address(cls, city_name, street_name, house):
         with testit.step(f'Установить адрес "{city_name}", "{street_name}" and "{house}"'):
-            self._open_modal_address()
-            self._set_modal_address_city(address_city=city_name)
-            self._set_modal_address_street(street_name=street_name)
-            self._set_modal_address_house(house_name=house)
+            cls.open_modal_address()
+            cls.set_modal_address_city(address_city=city_name)
+            cls.set_modal_address_street(street_name=street_name)
+            cls.set_modal_address_house(house_name=house)
 
-    def _enter_dh_for_address(self, dh_count):
+    @classmethod
+    def enter_dh_for_address(cls, dh_count):
         with testit.step(f'Установить количество ДХ "{dh_count}"'):
-            self.find_element(locator=self._LOCATOR_TABLE_SERVICES_OPEN_DH).click()
-            self.find_element(locator=self._LOCATOR_TABLE_SERVICES_ENTER_DH).send_keys(f'{dh_count}\n')
+            Locator(cls._LOCATOR_TABLE_SERVICES_OPEN_DH).click()
+            Input(cls._LOCATOR_TABLE_SERVICES_ENTER_DH).input(f'{dh_count}\n')
 
-    def _set_random_service_key(self):
+    @classmethod
+    def set_random_service_key(cls):
         with testit.step('Установить рандомный сервисный ключ', 'Сервисный ключ установлен'):
-            self.find_element(locator=self._LOCATOR_TABLE_SERVICES_OPEN_MODAL_SERVICES).click()
-            self.find_element(locator=self._LOCATOR_BUTTON_MODAL_SERVICES_SUBMIT).is_displayed()
-            time.sleep(3)
-            self.find_elements(locator=self._LOCATOR_CHECKBOX_MODAL_SERVICES_LIST)[random.randint(0, 5)].click()
-            self.find_element(locator=self._LOCATOR_BUTTON_MODAL_SERVICES_SUBMIT).click()
+            Locator(cls._LOCATOR_TABLE_SERVICES_OPEN_MODAL_SERVICES).click()
+            # Исправить на рандом
+            Locator(cls._LOCATOR_CHECKBOX_MODAL_SERVICES_LIST).click()
+            Locator(cls._LOCATOR_BUTTON_MODAL_SERVICES_SUBMIT).click()
 
-    def _set_service_key(self, service_name: str):
+    @classmethod
+    def set_service_key(cls, service_name: str):
         with testit.step(f'Установить услугу "{service_name}"'):
-            selector = f'{self._LOCATOR_CHECKBOX_MODAL_SERVICE[1]} and contains(., "{service_name}")]//input'
+            selector = f'{cls._LOCATOR_CHECKBOX_MODAL_SERVICE[1]} and contains(., "{service_name}")]//input'
 
-            self.find_element(locator=self._LOCATOR_TABLE_SERVICES_OPEN_MODAL_SERVICES).click()
-            time.sleep(3)
-            self.find_element(locator=selector)).click()
-            self.find_element(locator=self._LOCATOR_BUTTON_MODAL_SERVICES_SUBMIT).click()
+            Locator(cls._LOCATOR_TABLE_SERVICES_OPEN_MODAL_SERVICES).click()
+            Locator(selector).click()
+            Locator(cls._LOCATOR_BUTTON_MODAL_SERVICES_SUBMIT).click()
 
-    def _enter_create_project(self):
+    @classmethod
+    def enter_create_project(cls):
         with testit.step('Кликнуть кнопку проект', 'Проект создан'):
-            self.find_element(locator=self._LOCATOR_BUTTON_CREATE_PROJECT).click()
+            Locator(cls._LOCATOR_BUTTON_CREATE_PROJECT).click()
 
-    def create_project(self, project: dict, is_prepared: bool = False):
+    @classmethod
+    def create_project(cls, project: Project, address=Address, is_prepared: bool = False):
         with testit.step('Создать проект', 'Проект создан'):
             if is_prepared:
-                self._enter_project_name(project['project_name'])
-                self._enter_create_project()
+                cls.enter_project_name(project.project_name)
+                cls.enter_create_project()
             else:
-                self._selected_rf(project['rf'])
-                self._selected_is_need_broad(project['is_need_broad'])
-                self._selected_type_construct(project['is_type_construct'])
-                self._selected_customer_by_inn(project['customer_inn'])
-                self._enter_project_name(project['project_name'])
-                self._add_address(project['address']['city'], project['address']['street'],
-                                  project['address']['house_name'])
-                self._enter_dh_for_address(project['dh'])
-                self._set_service_key(project['service_key'])
-                self._enter_create_project()
+                cls.selected_rf(project.rf)
+                cls.selected_is_need_broad(project.is_need_broad)
+                cls.selected_type_construct(project.is_type_construct)
+                cls.selected_customer_by_inn(project.customer_inn)
+                cls.enter_project_name(project.project_name)
+                cls.add_address(address.city, address.street, address.house_name)
+                cls.enter_dh_for_address(project.dh)
+                cls.set_service_key(project.service_key)
+                cls.enter_create_project()

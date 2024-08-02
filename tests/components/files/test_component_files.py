@@ -88,17 +88,10 @@ class TestComponentFiles:
         Project.wait_reload_page()
         assert Project.ComponentFiles.get_data_first_file_by_type(attachment.attachment_type).file_version == '2'
 
-    # @testit.title('component')
-    # @testit.displayName('Проверить отсутствия сброса имени вложения при изменении пути к файлу')
-    # @testit.description('Проверить отсутствия сброса имени вложения при изменении пути к файлу')
-    # @pytest.mark.smoke
-    # def test_add_attachment_with_version_in_order(self, order, attachment):
-    #     Project.open_order(order.id)
-    #     with testit.step('Установить пусть к вложению после указания имени'):
-    #         Project.ComponentFiles.set_file_name(attachment.file_alternative_name)
-    #         Project.ComponentFiles.set_file_path(attachment.file_name_in_path)
-    #     Project.ComponentFiles.set_file_type(attachment.attachment_type)
-    #     Project.ComponentFiles.submit()
-    #     Project.wait_reload_page()
-    #     current_name = Project.ComponentFiles.get_data_last_file_by_type(attachment.attachment_type).file_name
-    #     assert current_name == attachment.file_alternative_name
+    @testit.title('component')
+    @testit.displayName('Проверка отображения не обязательных вложений на заявке')
+    @testit.description('Проверяется отображение не обязательных вложений на заявке')
+    @pytest.mark.smoke
+    def test_visible_need_attachment_in_order(self, order_with_need_attachment):
+        Project.open_order(order_with_need_attachment.id)
+        assert Project.ComponentFiles.check_is_need_attachments(order_with_need_attachment.need_attachment) > 0

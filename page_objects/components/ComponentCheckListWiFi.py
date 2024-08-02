@@ -1,50 +1,41 @@
-import time
 import testit
-from selenium.webdriver.common.by import By
-from page_objects.orders.Order import Order
-from selenium.webdriver.support.select import Select
+from page import Page
+from locator import Locator, Select
 
 
-class ComponentCheckListWiFi(Order):
-
+class ComponentCheckListWiFi(Page):
     name = 'B2C: WiFi'
 
     GROUP = '//div[@class="panel panel-material"]//span[contains(., "Чек-лист")]/ancestor::div[2]'
-    _LOCATOR_COMPONENT_COLLAPSED_MENU = (By.XPATH,
-                                         f'{GROUP}/b[text()="Wi-Fi"]/ancestor::div[2]//div[@data-toggle = "collapse"]')
-    _LOCATOR_COMPONENT_EDIT_BUTTON = (By.XPATH,
-                                      f'{GROUP}//form[contains(@action, "/b2c/checklist/save/wifi")]//button[@title="Редактировать"]')
-    _LOCATOR_COMPONENT_SELECT_ITEM = (By.XPATH,
-                                      f'{GROUP}//form[@class = "form-horizontal js--load-element"]//label[text() = "Статья затрат"]/ancestor::div[1]//select[@class = "form-control input-sm"]')
-    _LOCATOR_COMPONENT_SUBMIT_BUTTON = (By.XPATH,
-                                        f'{GROUP}//div[@id[contains(., "collapseChecklist-wifi")]]//div[@class = "btn-group btn-group-sm"]//button[@class = "btn btn-primary"]')
+    _LOCATOR_COMPONENT_COLLAPSED_MENU = f'{GROUP}/b[text()="Wi-Fi"]/ancestor::div[2]//div[@data-toggle = "collapse"]'
+    _LOCATOR_COMPONENT_EDIT_BUTTON = f'{GROUP}//form[contains(@action, "/b2c/checklist/save/wifi")]//button[@title="Редактировать"]'
+    _LOCATOR_COMPONENT_SELECT_ITEM = f'{GROUP}//form[@class = "form-horizontal js--load-element"]//label[text() = "Статья затрат"]/ancestor::div[1]//select[@class = "form-control input-sm"]'
+    _LOCATOR_COMPONENT_SUBMIT_BUTTON = f'{GROUP}//div[@id[contains(., "collapseChecklist-wifi")]]//div[@class = "btn-group btn-group-sm"]//button[@class = "btn btn-primary"]'
 
-    def open_drop_down_panel(self):
+    @classmethod
+    def open_drop_down_panel(cls):
         with testit.step(f'Открыть выпадающую панель'):
-            self.find_element(locator=self._LOCATOR_COMPONENT_COLLAPSED_MENU).click()
+            Locator(cls._LOCATOR_COMPONENT_COLLAPSED_MENU).click()
 
-    def push_edit_button(self):
+    @classmethod
+    def push_edit_button(cls):
         with testit.step(f'Нажать кнопку редактирования'):
-            self.find_element(locator=self._LOCATOR_COMPONENT_EDIT_BUTTON).click()
+            Locator(cls._LOCATOR_COMPONENT_EDIT_BUTTON).click()
 
-    def select_dropdown_panel(self, value):
+    @classmethod
+    def select_dropdown_panel(cls, value):
         with testit.step(f'Выбрать значение в выпадающем меню "{value}"'):
-            select = Select(self.find_element(locator=self._LOCATOR_COMPONENT_SELECT_ITEM))
-            select.select_by_value(value)
+            Select(cls._LOCATOR_COMPONENT_SELECT_ITEM).option(value)
 
-    def push_submit_button(self):
+    @classmethod
+    def push_submit_button(cls):
         with testit.step(f'Нажать кнопку сохранения'):
-            self.find_element(locator=self._LOCATOR_COMPONENT_SUBMIT_BUTTON).click()
+            Locator(cls._LOCATOR_COMPONENT_SUBMIT_BUTTON).click()
 
-    def move_to_group(self):
-        with testit.step(f'Перейти к группе'):
-            self.move_to_element(self.GROUP))
-
-    def add_cost_wifi(self, value: str):
+    @classmethod
+    def add_cost_wifi(cls, value: str):
         with testit.step(f'Добавить стоимость услуги wi-fi "{value}"'):
-            self.check_loader()
-            self.move_to_group()
-            self.open_drop_down_panel()
-            self.push_edit_button()
-            self.select_dropdown_panel(value)
-            self.push_submit_button()
+            cls.open_drop_down_panel()
+            cls.push_edit_button()
+            cls.select_dropdown_panel(value)
+            cls.push_submit_button()

@@ -4,8 +4,8 @@ from page import Page
 from locator import Locator, Select, Input
 
 
-class ComponentChangeSpecification(Page):
-    name = 'Редактировать спецификацию оборудования B2C'
+class ComponentOpenPIRAndSMRForm(Page):
+    name = 'Редактировать объемы ПИР/СМР B2C'
 
     _LOCATOR_BUTTON = f'//a[contains(text(),"{name}")]'
 

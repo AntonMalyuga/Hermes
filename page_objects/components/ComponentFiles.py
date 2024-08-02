@@ -34,6 +34,8 @@ class ComponentFiles(Page):
     _LOCATOR_FORM_ATTACHMENT_DEL_BUTTON = '//button[contains(text(), "Удалить выбранные документы")]'
     _LOCATOR_FORM_ATTACHMENT_CONFIRM_DEL_BUTTON = '//button[contains(@form,"attachments_form") and contains(text(),"Подтвердить")]'
 
+    _LOCATOR_NEED_ATTACHMENTS = f'{_FORM_ATTACHMENT}//select[@id[contains(., "typeSelect")]]//optgroup[@label="Обязательные"]'
+
     _LOCATOR_TABLE_ADD_FILES = f'{_FORM_ATTACHMENT}/parent::div/parent::div//table//tbody'
 
     @classmethod
@@ -122,6 +124,11 @@ class ComponentFiles(Page):
         cnt = Locator(f'{cls._LOCATOR_TABLE_ADD_FILES}//tr[contains(., "{attachment_type}")]').count
         with testit.step(f'Получить количество добавленных вложений с типом {attachment_type}: {cnt}'):
             return cnt
+
+    @classmethod
+    def check_is_need_attachments(cls, need_attachment):
+        with testit.step(f'Проверяет отображение на наличие обязательного вложения: {need_attachment}'):
+            return Locator(f'{cls._LOCATOR_NEED_ATTACHMENTS}//option[contains(., "{need_attachment}")]').count
 
     @classmethod
     def set_version_by_name(cls, file_nam: str):

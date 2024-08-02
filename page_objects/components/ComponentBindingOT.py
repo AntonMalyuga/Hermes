@@ -1,6 +1,4 @@
-from selenium.webdriver.common.by import By
 from page_objects.orders.Order import Order
-from selenium.webdriver.support.select import Select
 import testit
 
 

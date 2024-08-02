@@ -4,7 +4,6 @@ from page_objects.reports.MinicaseB2BServiceReport import MinicaseB2BServiceRepo
 
 
 class TestMinicaseB2BServiceReport:
-
     @testit.title('reports')
     @testit.displayName('Проверить открытие отчёта')
     @testit.description('Проверяется открытие отчёта')

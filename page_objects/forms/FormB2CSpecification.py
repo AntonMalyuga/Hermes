@@ -1,105 +1,94 @@
 import time
 import testit
-from selenium.common.exceptions import ElementClickInterceptedException
-from selenium.webdriver.common.by import By
+from dataclasses import dataclass
+from page import Page
+from locator import Locator, Select, Input
 
 
-class B2cFormSpecification:
+@dataclass
+class Specification:
+    natural_indicator: str
+    construct_method: str
+    specifications_key: str | None
+    specifications_core: str | None
 
+
+class B2cFormSpecification(Page):
     name = 'Редактировать спецификацию оборудования B2C'
 
-    _LOCATOR_BUTTON_OPEN_MODAL_ADD_SPECIFICATION = 'button[id="addEquipment"]')
-    _LOCATOR_CHECK_OPEN_MODAL = '.modal.fade.in')
-    _LOCATOR_SHOW_MODAL_SPECIFICATION_LIST = '//button[@data-url="/b2c/specification/equipment_list"]')
-    _LOCATOR_TABLE_INSERT_SPECIFICATION = (
-        By.XPATH, '//div[@id="specification-equipment-list"]/table')
-    _LOCATOR_BUTTON_SAVE_WORKS = 'button.btn.btn-primary.js--validation-hidden-forms')
-    _LOCATOR_LABEL_CONSTRUCTION_METHOD = '//label[@class="radio-inline"')
-    _LOCATOR_BUTTON_MODAL_ADD_SPECIFICATION = (
-        By.XPATH, '//button[@class[contains(.,"b2c-specification-add-equipments")]]')
-    _LOCATOR_BUTTON_MODAL_CLOSE = (
-        By.XPATH, '//div[@class[contains(.,"specification-modal-controls")]]/button[@data-dismiss="modal"]')
-    _LOCATOR_BUTTON_CREATE_SPECIFICATION = (
-        By.XPATH, '//form[@id[contains(., "specification")]]/button[contains(., "Создать спецификацию")]')
+    _LOCATOR_BUTTON_OPEN_MODAL_ADD_SPECIFICATION = 'button[id="addEquipment"]'
+    _LOCATOR_CHECK_OPEN_MODAL = '.modal.fade.in'
+    _LOCATOR_SHOW_MODAL_SPECIFICATION_LIST = '//button[@data-url="/b2c/specification/equipment_list"]'
+    _LOCATOR_TABLE_INSERT_SPECIFICATION = '//div[@id="specification-equipment-list"]/table'
+    _LOCATOR_BUTTON_SAVE_WORKS = 'button.btn.btn-primary.js--validation-hidden-forms'
+    _LOCATOR_LABEL_CONSTRUCTION_METHOD = '//label[@class="radio-inline"'
+    _LOCATOR_BUTTON_MODAL_ADD_SPECIFICATION = '//button[@class[contains(.,"b2c-specification-add-equipments")]]'
+    _LOCATOR_BUTTON_MODAL_CLOSE = '//div[@class[contains(.,"specification-modal-controls")]]/button[@data-dismiss="modal"]'
+    _LOCATOR_BUTTON_CREATE_SPECIFICATION = '//form[@id[contains(., "specification")]]/button[contains(., "Создать спецификацию")]'
 
-    def __set_construct_method(self, type_construct):
-        with testit.step(f'Выбрать метод строительства "{type_construct}" с помощью B2C спецификации', 'Тип строительства выбран'):
-            selector = f'{self._LOCATOR_LABEL_CONSTRUCTION_METHOD[1]} and contains(.,"{type_construct}")]/input'
-            element = self.find_element(locator=selector))
+    @classmethod
+    def set_construct_method(cls, type_construct):
+        with testit.step(f'Выбрать метод строительства "{type_construct}" с помощью B2C спецификации',
+                         'Тип строительства выбран'):
+            selector = f'{cls._LOCATOR_LABEL_CONSTRUCTION_METHOD} and contains(.,"{type_construct}")]/input'
+            Locator(selector).click()
 
-            try:
-                element.click()
-            except ElementClickInterceptedException:
-                self._driver.execute_script("arguments[0].click()", element)
-
-    def __open_modal(self):
+    @classmethod
+    def open_modal(cls):
         with testit.step('Открыть модальное окно в спецификации'):
-            element = self.find_element(locator=self._LOCATOR_BUTTON_OPEN_MODAL_ADD_SPECIFICATION)
-            try:
-                element.click()
-            except ElementClickInterceptedException:
-                self._driver.execute_script("arguments[0].click()", element)
+            element = Locator(cls._LOCATOR_BUTTON_OPEN_MODAL_ADD_SPECIFICATION).click()
 
-            def check_open_modal():
-                return self.find_element(self._LOCATOR_CHECK_OPEN_MODAL)
-
-            check_open_modal()
-
-    def __close_modal(self):
+    @classmethod
+    def close_modal(cls):
         with testit.step('Закрыть модальное окно', 'Окно закрыто'):
-            self.find_element(locator=self._LOCATOR_BUTTON_MODAL_CLOSE).click()
+            Locator(cls._LOCATOR_BUTTON_MODAL_CLOSE).click()
 
-    def __confirm_selected_specification(self):
+    @classmethod
+    def confirm_selected_specification(cls):
         with testit.step('Подтвердить выбранную спецификацию'):
-            self.find_element(locator=self._LOCATOR_BUTTON_MODAL_ADD_SPECIFICATION).click()
+            Locator(cls._LOCATOR_BUTTON_MODAL_ADD_SPECIFICATION).click()
 
-    def __show_specification_list_by_modal(self):
+    @classmethod
+    def show_specification_list_by_modal(cls):
         with testit.step('Показать список спецификаций'):
-            self.find_element(self._LOCATOR_SHOW_MODAL_SPECIFICATION_LIST).click()
+            Locator(cls._LOCATOR_SHOW_MODAL_SPECIFICATION_LIST).click()
 
-    def __add_specification_by_modal(self, specifications: dict):
-        for specification, specification_param in specifications.items():
-            with testit.step(f'Выбрать спецификацию "{specification}" в модальном окне формы спецификации'):
-                element = self.find_element((By.XPATH,
-                                             f'{self._LOCATOR_TABLE_INSERT_SPECIFICATION[1]}//td[@data-name="name" and contains(.,"{specification}")]/ancestor::tr[1]//input'))
-                try:
-                    element.click()
-                except ElementClickInterceptedException:
-                    self._driver.execute_script("arguments[0].click()", element)
+    @classmethod
+    def add_specification_by_modal(cls, specifications: str):
+        with testit.step(f'Выбрать спецификацию "{specifications}" в модальном окне формы спецификации'):
+            Locator(
+                f'{cls._LOCATOR_TABLE_INSERT_SPECIFICATION}//td[@data-name="name" and contains(.,"{specifications}")]/ancestor::tr[1]//input').click()
+            cls.confirm_selected_specification()
+            cls.close_modal()
 
-        self.__confirm_selected_specification()
-        self.__close_modal()
+    @classmethod
+    def set_method_by_specification(cls, specification: Specification):
+        with testit.step(f'Установить метод строительства "{specification.construct_method}" в спецификации'):
+            specification_locator = f'//tr[@class="specification-new-equipment"]//td[contains(., "{specification.construct_method}")]/following::td[11]/select[@name[contains(., "type_installation")]]'
+            Select(specification_locator).ajax_option(specification.construct_method)
 
-    def __set_method_by_specification(self, specification: dict):
-        for specification, specification_params in specification.items():
-            with testit.step(f'Установить метод строительства "{specification}" в спецификации'):
-                time.sleep(1)
-                specification_locator = f'//tr[@class="specification-new-equipment"]//td[contains(., "{specification}")]/following::td[11]/select[@name[contains(., "type_installation")]]'
-                self.selected_element_by_value(locator=specification_locator),
-                                               value=specification_params["method"])
+    @classmethod
+    def set_natural_indicators(cls, specification: Specification):
+        with testit.step(f'Установить натуральные показатели "{specification}" в спецификации'):
+            specification_locator = f'//tr[@class="specification-new-equipment"]//td[contains(., "{specification.specifications_key}")]/following::td[1]/select[@id[contains(., "naturalIndicator")]]'
+            Select(specification_locator).ajax_option(specification.natural_indicator)
 
-    def __set_natural_indicators(self, specification: dict):
-        for specification, specification_params in specification.items():
-            with testit.step(f'Установить натуральные показатели "{specification}" в спецификации'):
-                time.sleep(1)
-                specification_locator = f'//tr[@class="specification-new-equipment"]//td[contains(., "{specification}")]/following::td[1]/select[@id[contains(., "naturalIndicator")]]'
-                self.selected_element_by_value(locator=specification_locator),
-                                               value=specification_params["natural_indicator"])
-
-    def __create_specification(self):
+    @classmethod
+    def create_specification(cls):
         with testit.step('Нажать кнопку создания спецификации'):
-            self.find_element(locator=self._LOCATOR_BUTTON_CREATE_SPECIFICATION).click()
+            Locator(cls._LOCATOR_BUTTON_CREATE_SPECIFICATION).click()
 
-    def add_specification(self, specifications: dict):
+    @classmethod
+    def add_specification(cls, specifications: Specification):
         with testit.step('Добавить спецификацию', 'Спецификация сохранена'):
-            self.__set_construct_method(specifications['constuct_method'])
-            self.__open_modal()
-            self.__show_specification_list_by_modal()
+            cls.set_construct_method(specifications.construct_method)
+            cls.open_modal()
+            cls.show_specification_list_by_modal()
 
             if 'specifications_keys' in specifications:
-                self.__add_specification_by_modal(specifications['specifications_keys'])
-                self.__set_natural_indicators(specifications['specifications_keys'])
+                cls.add_specification_by_modal(specifications.specifications_key)
+                cls.set_natural_indicators(specifications)
             if 'specifications_core' in specifications:
-                self.__add_specification_by_modal(specifications['specifications_core'])
-                self.__set_method_by_specification(specifications['specifications_core'])
-            self.__create_specification()
+                cls.add_specification_by_modal(specifications.specifications_core)
+                cls.set_method_by_specification(specifications)
+            cls.create_specification()

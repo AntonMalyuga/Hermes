@@ -11,8 +11,11 @@ class UserLoginForm(Page):
     name = 'Форма авторизации'
     path = ''
 
-    LOGIN = os.getenv('HERMES_LOGIN')
-    PASSWORD = os.getenv('HERMES_PASSWORD')
+    LOGIN_TEST = os.getenv('HERMES_TEST_LOGIN')
+    PASSWORD_TEST = os.getenv('HERMES_TEST_PASSWORD')
+
+    LOGIN_PROD = os.getenv('HERMES_PROD_LOGIN')
+    PASSWORD_PROD = os.getenv('HERMES_PROD_PASSWORD')
 
     _INPUT_LOGIN = '//input[@id="username"]'
     _INPUT_PASSWORD = '//input[@id="password"]'
@@ -23,7 +26,7 @@ class UserLoginForm(Page):
     @staticmethod
     def authorization_default():
         with testit.step('Базовая авторизация', 'Успешная авторизация'):
-            UserLoginForm.authorization_with(username=UserLoginForm.LOGIN, password=UserLoginForm.PASSWORD)
+            UserLoginForm.authorization_with(username=UserLoginForm.LOGIN_TEST, password=UserLoginForm.PASSWORD_TEST)
 
     @staticmethod
     def authorization_with(username: str, password: str):
@@ -35,7 +38,7 @@ class UserLoginForm(Page):
     @staticmethod
     def authorization_default_2fa():
         with testit.step('Авторизация с логином и паролем по 2FA', 'Успешная авторизация'):
-            UserLoginForm.authorization_with(username=UserLoginForm.LOGIN, password=UserLoginForm.PASSWORD)
+            UserLoginForm.authorization_with(username=UserLoginForm.LOGIN_PROD, password=UserLoginForm.PASSWORD_PROD)
             UserLoginForm.enter_2fa_password()
             UserLoginForm.click_log_in()
 

@@ -21,9 +21,21 @@ class Order:
     stage_name: str = 'Корректировка состава объектов проекта, проработка подключения услуг ключа на объектах и формирование предКП по ключу'
 
 
+@dataclass
+class OrderWithNeedAttachment:
+    id: int = 1619182
+    stage_name: str = 'Выбор способа выполнения работ и запрос предложений подрядчика'
+    need_attachment: str = 'Технические условия/решения'
+
+
 @pytest.fixture()
 def order():
     return Order
+
+
+@pytest.fixture()
+def order_with_need_attachment():
+    return OrderWithNeedAttachment
 
 
 @pytest.fixture()
@@ -34,4 +46,3 @@ def attachment():
 @pytest.fixture()
 def attachment_list() -> list[Attachment]:
     return [Attachment(), Attachment(), Attachment()]
-

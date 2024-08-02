@@ -1,28 +1,4 @@
-import time
-
-# from selenium.webdriver import Chrome
-#
-#
-# def singleton(class_):
-#     instances = {}
-#
-#     def getinstance(*args, **kwargs):
-#         if class_ not in instances:
-#             instances[class_] = class_(*args, **kwargs)
-#         return instances[class_]
-#
-#     return getinstance
-#
-#
-# @singleton
-# class Driver(Chrome):
-#
-#     def __init__(self, *args, **kwargs):
-#         super().__init__(*args, **kwargs)
-#         self.implicitly_wait(5)
-
-
-from playwright.sync_api import sync_playwright, Playwright
+from playwright.sync_api import sync_playwright
 
 
 class Singleton(type):
@@ -38,13 +14,21 @@ class Driver(metaclass=Singleton):
 
     def __init__(self, *args, **kwargs):
         self._playwright = sync_playwright().start()
-        if kwargs.get("mobile"):
-            self.browser = self._playwright.webkit.launch()
-            parameters = self._playwright.devices["iPhone 14"]
+        self.request = kwargs
+
+        if self.request.get("url") == 'prod':
+            self.url = 'https://hermes-prod.rt.ru/'
+        elif self.request.get("url") == 'pp':
+            self.url = 'https://hermes-pp.rt.ru/'
         else:
-            self.browser = self._playwright.chromium.launch(headless=False)
-            parameters = self._playwright.devices["Desktop Chrome"]
-            parameters["viewport"] = {"width": 1920, "height": 1080}
+            self.url = 'https://hermes-test.rt.ru/'
+
+        self.browser = self._playwright.chromium.launch(
+            headless=True if self.request.get("headed") == "True" else False
+        )
+
+        parameters = self._playwright.devices["Desktop Chrome"]
+        parameters["viewport"] = {"width": 1920, "height": 1080}
 
         self.page = self.browser.new_page(**parameters)
 
