@@ -24,11 +24,12 @@ class Driver(metaclass=Singleton):
             self.url = 'https://hermes-test.rt.ru/'
 
         self.browser = self._playwright.chromium.launch(
-            headless=True if self.request.get("headed") == "True" else False
+            headless=True if self.request.get("headed") == "True" else False,
         )
 
         parameters = self._playwright.devices["Desktop Chrome"]
         parameters["viewport"] = {"width": 1920, "height": 1080}
+        parameters["ignore_https_errors"] = True if self.request.get("url") == "pp" else False
 
         self.page = self.browser.new_page(**parameters)
 

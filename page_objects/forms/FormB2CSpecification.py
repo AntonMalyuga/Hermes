@@ -16,11 +16,9 @@ class Specification:
 class B2cFormSpecification(Page):
     name = 'Редактировать спецификацию оборудования B2C'
 
-    _LOCATOR_BUTTON_OPEN_MODAL_ADD_SPECIFICATION = 'button[id="addEquipment"]'
-    _LOCATOR_CHECK_OPEN_MODAL = '.modal.fade.in'
+    _LOCATOR_BUTTON_OPEN_MODAL_ADD_SPECIFICATION = '//button[@id="addEquipment"]'
     _LOCATOR_SHOW_MODAL_SPECIFICATION_LIST = '//button[@data-url="/b2c/specification/equipment_list"]'
     _LOCATOR_TABLE_INSERT_SPECIFICATION = '//div[@id="specification-equipment-list"]/table'
-    _LOCATOR_BUTTON_SAVE_WORKS = 'button.btn.btn-primary.js--validation-hidden-forms'
     _LOCATOR_LABEL_CONSTRUCTION_METHOD = '//label[@class="radio-inline"'
     _LOCATOR_BUTTON_MODAL_ADD_SPECIFICATION = '//button[@class[contains(.,"b2c-specification-add-equipments")]]'
     _LOCATOR_BUTTON_MODAL_CLOSE = '//div[@class[contains(.,"specification-modal-controls")]]/button[@data-dismiss="modal"]'
@@ -36,7 +34,7 @@ class B2cFormSpecification(Page):
     @classmethod
     def open_modal(cls):
         with testit.step('Открыть модальное окно в спецификации'):
-            element = Locator(cls._LOCATOR_BUTTON_OPEN_MODAL_ADD_SPECIFICATION).click()
+            Locator(cls._LOCATOR_BUTTON_OPEN_MODAL_ADD_SPECIFICATION).click()
 
     @classmethod
     def close_modal(cls):
@@ -71,7 +69,7 @@ class B2cFormSpecification(Page):
     def set_natural_indicators(cls, specification: Specification):
         with testit.step(f'Установить натуральные показатели "{specification}" в спецификации'):
             specification_locator = f'//tr[@class="specification-new-equipment"]//td[contains(., "{specification.specifications_key}")]/following::td[1]/select[@id[contains(., "naturalIndicator")]]'
-            Select(specification_locator).ajax_option(specification.natural_indicator)
+            Select(specification_locator).option(specification.natural_indicator)
 
     @classmethod
     def create_specification(cls):
@@ -85,10 +83,10 @@ class B2cFormSpecification(Page):
             cls.open_modal()
             cls.show_specification_list_by_modal()
 
-            if 'specifications_keys' in specifications:
+            if specifications.specifications_key:
                 cls.add_specification_by_modal(specifications.specifications_key)
                 cls.set_natural_indicators(specifications)
-            if 'specifications_core' in specifications:
+            if specifications.specifications_core:
                 cls.add_specification_by_modal(specifications.specifications_core)
                 cls.set_method_by_specification(specifications)
             cls.create_specification()

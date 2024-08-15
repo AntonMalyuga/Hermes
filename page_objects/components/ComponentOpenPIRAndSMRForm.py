@@ -12,4 +12,5 @@ class ComponentOpenPIRAndSMRForm(Page):
     @classmethod
     def open_form(cls):
         with testit.step(f'Открыть форму "{cls.name}"'):
+            Page.wait_reload_page()
             Locator(cls._LOCATOR_BUTTON).click()

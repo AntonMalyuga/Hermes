@@ -19,12 +19,13 @@ class ComponentNaturalIndicator(Page):
     @classmethod
     def set_random_qty(cls):
         locator = f'{cls._GROUP}//input[@type="number"]'
+        Locator(locator).is_on_page()
         inputs = Input(locator).all
 
         for input_element in inputs:
             input_element.press('Control+A')
             input_element.press('Backspace')
-            input_element.webelement.fill(str(random.randint(1, 9)))
+            input_element.fill(str(random.randint(1, 9)))
 
     @classmethod
     def save(cls):

@@ -1,6 +1,5 @@
 import pytest
 from faker import Faker
-from dataclasses import dataclass, field
 from page_objects.forms.FormB2CCreateConstructionProjectShow import Project, Address
 from page_objects.forms.FormB2CSpecification import Specification
 from page_objects.forms.FormB2CWorkVolume import Works, Work
@@ -13,7 +12,7 @@ fake = Faker('ru_RU')
 @pytest.fixture()
 def project() -> Project:
     return Project(
-        rf='РФ Саратовский',
+        rf='РФ Ульяновский',
         is_need_broad='Нет',
         is_type_construct='Новостройка',
         customer_inn='1111111111',
@@ -35,7 +34,7 @@ def address() -> Address:
 @pytest.fixture()
 def specifications() -> Specification:
     return Specification(
-        specifications_key='Шасси для пассивных мультиплексоров CWDM',
+        specifications_key='Модуль XENPAK-10GB-ER-RF',
         specifications_core=None,
         natural_indicator='Точки доступа',
         construct_method='Подрядный способ'
@@ -46,14 +45,14 @@ def specifications() -> Specification:
 def works(specifications) -> Works:
     works_key = [
         Work(
-            name='Монтаж оптического кросса (ШКОН, ШКОС) ёмкостью 48-96 портов включительно',
+            name='Восстановление покрытия из брусчатки',
             qty=12,
             natural_indicator='Точки доступа',
             type='СМР',
             construct_method=specifications.construct_method
         ),
         Work(
-            name='Компенсация логистических затрат на транспортировку оборудования, при строительстве объекта на удаленности от 101 км до 200 км включительно, от склада Заказчика.',
+            name='Восстановление газонного покрытия',
             qty=2,
             natural_indicator='Точки доступа',
             type='СМР',

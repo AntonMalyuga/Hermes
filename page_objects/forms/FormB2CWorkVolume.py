@@ -26,7 +26,7 @@ class B2cFormWorkVolume(Page):
     _LOCATOR_TABLE_OPEN_MODAL_ADD_WORK = '//tbody[@id="add-work-table-tbody"]'
     _LOCATOR_BUTTON_MODAL_ADD_WORK = '//div[@class="modal-content"]//button[text()="Добавить"]'
     _LOCATOR_TABLE_INSERT_WORKS = '//table[contains(@class, "hook--work-table")]'
-    _LOCATOR_BUTTON_SAVE_WORKS = '//button[text(), "Сохранить"]'
+    _LOCATOR_BUTTON_SAVE_WORKS = '//button[contains(text(), "Сохранить")]'
     _LOCATOR_LABEL_CONSTRUCTION_METHOD = '//label[@class="radio-inline"'
 
     @classmethod
@@ -77,7 +77,7 @@ class B2cFormWorkVolume(Page):
         for work in works:
             with testit.step(f'Установить натуральные показатель "{work.natural_indicator}" на работу "{work.name}"'):
                 work_locator = f'//tr[@data-work-name[contains(., "{work.name}")] and @data-work-type="{work.type}"]//select[@class="form-control input-sm inputOrText "]'
-                Select(work_locator).ajax_option(work.natural_indicator)
+                Select(work_locator).option(work.natural_indicator)
 
     @classmethod
     def save_works(cls):

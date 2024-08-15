@@ -1,4 +1,4 @@
-import random
+from page import Page
 import testit
 import time
 from dataclasses import dataclass
@@ -23,7 +23,7 @@ class Address:
     house_name: str = 'д. 1'
 
 
-class FormB2CCreateConstructionProjectShow:
+class FormB2CCreateConstructionProjectShow(Page):
     name = 'Создать строительный проект B2C'
     path = 'b2c/create_construction_project_show'
 
@@ -72,13 +72,12 @@ class FormB2CCreateConstructionProjectShow:
     @classmethod
     def selected_is_need_broad(cls, is_need_broad: str = 'Нет'):
         with testit.step(f'Установить статус "требуется строительство ШПД" "{is_need_broad}"'):
-            Select(cls._LOCATOR_SELECT_IS_NEED_BROAD_BAND).ajax_option(is_need_broad)
+            Select(cls._LOCATOR_SELECT_IS_NEED_BROAD_BAND).option(is_need_broad)
 
     @classmethod
-    def selected_customer_by_inn(self, inn: str):
+    def selected_customer_by_inn(cls, inn: str):
         with testit.step(f'Выбрать клиента по ИНН: "{inn}"'):
-            self.selected_element_by_value(locator=self._LOCATOR_SELECT_AJAX_CUSTOMER,
-                                           value=inn)
+            Select(cls._LOCATOR_SELECT_AJAX_CUSTOMER).ajax_option(inn)
 
     @classmethod
     def enter_project_name(cls, project_name: str):
@@ -88,14 +87,10 @@ class FormB2CCreateConstructionProjectShow:
 
     @classmethod
     def set_modal_address_city(cls, address_city):
-        locator = cls._LOCATOR_SELECT_AJAX_MODAL_ADDRESS_CITY
 
         with testit.step(f'Установить адрес в модальном окне "{address_city}"'):
-            Locator(cls._LOCATOR_OPEN_DROPDOWN).click()
-            Locator(f'{locator[1]}/following::div[1]').click()
-
-        Input(f'{locator[1]}/following::div[1]//input[@type="text"]').input(address_city)
-        Input(f'{locator[1]}/following::div[1]//span/span[ontains(text(), "Город {address_city}")]').click()
+            Select(cls._LOCATOR_SELECT_AJAX_MODAL_ADDRESS_CITY).ajax_option(address_city)
+            Select(f'{cls._LOCATOR_SELECT_AJAX_MODAL_ADDRESS_CITY}/following::div[1]').ajax_option(f"Город {address_city}")
 
     @classmethod
     def set_modal_address_street(cls, street_name: str):
@@ -105,7 +100,8 @@ class FormB2CCreateConstructionProjectShow:
     @classmethod
     def set_modal_address_house(cls, house_name: str):
         with testit.step(f'Установить дом в модальном окне: {house_name}'):
-            Select(cls._LOCATOR_SELECT_MODAL_ADDRESS_LIST_CHECKED).ajax_option(house_name)
+            Locator(f'{cls._LOCATOR_SELECT_MODAL_ADDRESS_LIST_UNCHECKED}//option[contains(text(), "{house_name}")]').click()
+
             Locator(cls._LOCATOR_BUTTON_MODAL_ADDRESS_ADD_ADDRESS).click()
             Locator(cls._LOCATOR_BUTTON_MODAL_ADDRESS_CONFIRM_ADDRESS).click()
 
@@ -132,16 +128,14 @@ class FormB2CCreateConstructionProjectShow:
     def set_random_service_key(cls):
         with testit.step('Установить рандомный сервисный ключ', 'Сервисный ключ установлен'):
             Locator(cls._LOCATOR_TABLE_SERVICES_OPEN_MODAL_SERVICES).click()
-            # Исправить на рандом
             Locator(cls._LOCATOR_CHECKBOX_MODAL_SERVICES_LIST).click()
             Locator(cls._LOCATOR_BUTTON_MODAL_SERVICES_SUBMIT).click()
 
     @classmethod
     def set_service_key(cls, service_name: str):
         with testit.step(f'Установить услугу "{service_name}"'):
-            selector = f'{cls._LOCATOR_CHECKBOX_MODAL_SERVICE[1]} and contains(., "{service_name}")]//input'
-
             Locator(cls._LOCATOR_TABLE_SERVICES_OPEN_MODAL_SERVICES).click()
+            selector = f'{cls._LOCATOR_CHECKBOX_MODAL_SERVICES_LIST}/parent::div[contains(string(), "{service_name}")]/input'
             Locator(selector).click()
             Locator(cls._LOCATOR_BUTTON_MODAL_SERVICES_SUBMIT).click()
 

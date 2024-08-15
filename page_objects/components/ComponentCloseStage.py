@@ -35,14 +35,6 @@ class ComponentCloseStage(Page):
             Locator(cls._LOCATOR_FORM_CLOSE_STAGE_COMMENT).press('Backspace')
 
     @classmethod
-    def _get_name_next_stage(cls) -> str:
-        next_stage = Locator(cls._LOCATOR_FORM_TEXT_NEXT_STAGE).text
-        next_stage = next_stage.replace('»', '')
-        next_stage = next_stage.split('«')[1]
-        with testit.step(f'Получить имя следующего этапа: {next_stage}'):
-            return next_stage
-
-    @classmethod
     def _click_go(cls):
         with testit.step('Нажать "Перейти"'):
             Locator(cls._LOCATOR_FORM_BUTTON_MANUAL_CLOSE_STAGE).click()
@@ -73,7 +65,7 @@ class ComponentCloseStage(Page):
 
     ):
         with testit.step(f'Закрыть переход'):
-
+            Page.wait_reload_page()
             cls._set_manual_pass(pass_name)
             time.sleep(2)
 
@@ -101,7 +93,4 @@ class ComponentCloseStage(Page):
     @classmethod
     def check_next_stage(cls, next_stage):
         with testit.step(f'Проверить имя следующего этапа: {next_stage}'):
-            if cls._get_name_next_stage() == next_stage:
-                return True
-            else:
-                return False
+            return Locator(f'{cls._LOCATOR_FORM_TEXT_NEXT_STAGE}[contains(text(), "{next_stage}")]').is_on_page()

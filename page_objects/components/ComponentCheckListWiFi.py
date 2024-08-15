@@ -1,3 +1,5 @@
+import time
+
 import testit
 from page import Page
 from locator import Locator, Select
@@ -7,7 +9,7 @@ class ComponentCheckListWiFi(Page):
     name = 'B2C: WiFi'
 
     GROUP = '//div[@class="panel panel-material"]//span[contains(., "Чек-лист")]/ancestor::div[2]'
-    _LOCATOR_COMPONENT_COLLAPSED_MENU = f'{GROUP}/b[text()="Wi-Fi"]/ancestor::div[2]//div[@data-toggle = "collapse"]'
+    _LOCATOR_COMPONENT_COLLAPSED_MENU = f'{GROUP}//div[contains(@data-target, "collapseChecklist-wifi")]'
     _LOCATOR_COMPONENT_EDIT_BUTTON = f'{GROUP}//form[contains(@action, "/b2c/checklist/save/wifi")]//button[@title="Редактировать"]'
     _LOCATOR_COMPONENT_SELECT_ITEM = f'{GROUP}//form[@class = "form-horizontal js--load-element"]//label[text() = "Статья затрат"]/ancestor::div[1]//select[@class = "form-control input-sm"]'
     _LOCATOR_COMPONENT_SUBMIT_BUTTON = f'{GROUP}//div[@id[contains(., "collapseChecklist-wifi")]]//div[@class = "btn-group btn-group-sm"]//button[@class = "btn btn-primary"]'
