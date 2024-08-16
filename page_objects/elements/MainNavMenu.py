@@ -1,9 +1,9 @@
-from locator import Locator
-from selenium.webdriver.common.by import By
+from page import Page
+from locator import Locator, Select, Input
 import testit
 
 
-class MainNavMenu:
+class MainNavMenu(Page):
     name = 'Навигационное меню'
 
     _LOCATOR_A_FULL_NAME = '.navbar-default .nav.navbar-nav.navbar-right a'
@@ -17,54 +17,54 @@ class MainNavMenu:
     _LOCATOR_BUTTON_SEARCH_ORDER_ID = '#search-task-form button'
 
 
-    @staticmethod
-    def enter_order_id_in_search_order(order_id):
+    @classmethod
+    def enter_order_id_in_search_order(cls, order_id):
         with testit.step(f'Ввести заказ в главном меню "{order_id}"'):
-            Locator(MainNavMenu._LOCATOR_INPUT_SEARCH_ORDER_ID).input(order_id)
+            Input(cls._LOCATOR_INPUT_SEARCH_ORDER_ID).input(order_id)
 
-    @staticmethod
-    def get_max_length_order_id_in_search_order():
-        max_len_search = Locator(MainNavMenu._LOCATOR_INPUT_SEARCH_ORDER_ID).text()
+    @classmethod
+    def get_max_length_order_id_in_search_order(cls):
+        max_len_search = len(Locator(cls._LOCATOR_INPUT_SEARCH_ORDER_ID).text)
         with testit.step(f'Получить максимальную длину order id в поисковой форме заказа "{max_len_search}"'):
             return max_len_search
 
-    @staticmethod
-    def click_search_order():
+    @classmethod
+    def click_search_order(cls):
         with testit.step('Нажать кнопку поиска заказа', 'Заказ найден'):
-            Locator(MainNavMenu._LOCATOR_BUTTON_SEARCH_ORDER_ID).click()
+            Locator(cls._LOCATOR_BUTTON_SEARCH_ORDER_ID).click()
 
-    @staticmethod
-    def get_user_name() -> str:
-        user_name = str(Locator(MainNavMenu._LOCATOR_A_FULL_NAME).text())
-        with testit.step('Получить имя пользователя из главного меню {user_name}'):
+    @classmethod
+    def get_user_name(cls) -> str:
+        user_name = Locator(cls._LOCATOR_A_FULL_NAME).text
+        with testit.step(f'Получить имя пользователя из главного меню {user_name}'):
             return user_name
 
-    @staticmethod
-    def click_user_name():
+    @classmethod
+    def click_user_name(cls):
         with testit.step('Нажать на имя пользователя в главном меню', 'Кнопка нажата'):
-            Locator(MainNavMenu._LOCATOR_A_FULL_NAME).click()
+            Locator(cls._LOCATOR_A_FULL_NAME).click()
 
-    @staticmethod
-    def click_feedback():
+    @classmethod
+    def click_feedback(cls):
         with testit.step('Нажать на фидбек в главном меню', 'Кнопка нажата'):
-            Locator(MainNavMenu._LOCATOR_A_FEEDBACK).click()
+            Locator(cls._LOCATOR_A_FEEDBACK).click()
 
-    @staticmethod
-    def click_calendar_sla():
+    @classmethod
+    def click_calendar_sla(cls):
         with testit.step('Нажать на календарь СЛА в главном меню', 'Кнопка нажата'):
-            Locator(MainNavMenu._LOCATOR_A_CALENDAR_SLA).click()
+            Locator(cls._LOCATOR_A_CALENDAR_SLA).click()
 
-    @staticmethod
-    def click_release_history():
+    @classmethod
+    def click_release_history(cls):
         with testit.step('Нажать на историю релизов в главном меню', 'Кнопка нажата'):
-            Locator(MainNavMenu._LOCATOR_A_RELEASE_HISTORY).click()
+            Locator(cls._LOCATOR_A_RELEASE_HISTORY).click()
 
-    @staticmethod
-    def click_faq(self):
+    @classmethod
+    def click_faq(cls):
         with testit.step('Нажать на FAQ в главном меню', 'Кнопка нажата'):
-            Locator(MainNavMenu._LOCATOR_A_FAQ).click()
+            Locator(cls._LOCATOR_A_FAQ).click()
 
-    @staticmethod
-    def click_notification(self):
+    @classmethod
+    def click_notification(cls):
         with testit.step('Нажать на уведомления в главном меню', 'Кнопка нажата'):
-            Locator(self._LOCATOR_A_NOTIFICATION).click()
+            Locator(cls._LOCATOR_A_NOTIFICATION).click()

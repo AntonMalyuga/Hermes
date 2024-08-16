@@ -1,9 +1,9 @@
 from pynput.keyboard import Key, Controller
-from locator import Locator, Input
+from locator import Locator, Input, Select
 from page import Page
 import time
 import testit
-from api.Sys import Sys
+from api.Sys import SysAPI
 
 
 class FormB2CCreationSMROrder(Page):
@@ -18,96 +18,89 @@ class FormB2CCreationSMROrder(Page):
     _LOCATOR_BUILDING_COMMERCE_PLAN = '//input[@id[contains(., "ADDRESSPARAMS[PP_DRS]")]]'
     _LOCATOR_BUILDING_AP_YEAR = '//div[@class = "form-group  has-warning"]//div[@class = "suggest form-control input-sm js--matomo-log-focus-event"]'
 
-    _LOCATOR_LOCATION = '//div[@class = "suggest form-control select-service-address input-sm"]')
+    _LOCATOR_LOCATION = '//div[@class = "suggest form-control select-service-address input-sm"]'
     _LOCATOR_STREET = '//label[@for= "ADDRESS[ATDSTREET]"]/ancestor::div[2]//div[@class[contains(., "suggest form-control select-service-address input-sm")]]'
 
-    _LOCATOR_HOUSE = (By.XPATH,
-                      '//label[@for= "ADDRESS[ATDHOUSE]"]/ancestor::div[2]//div[@class = "suggest form-control select-service-address input-sm"]')
+    _LOCATOR_HOUSE = '//label[@for= "ADDRESS[ATDHOUSE]"]/ancestor::div[2]//div[@class = "suggest form-control select-service-address input-sm"]'
 
-    _LOCATOR_CLIENT = (By.XPATH,
-                       '//div[@style = "display: flex"]//div[@class= "suggest form-control input-sm js--matomo-log-focus-event"]')
-    _LOCATOR_OBJECT_TYPE = (By.XPATH,
-                            '//div[@class = "form-group has-warning"]//div[@class = "suggest form-control select-service-address input-sm"]')
-    _LOCATOR_OBJECT_TYPE_DISABLED = '//select[@name = "ADDRESS[CRM_OBJECT_TYPE]"]')
-    _LOCATOR_WIFI_CHECKBOX = '//div[@class= "b2c-service-group"]//input[@name= "services[wifi]"]')
-    _LOCATOR_CREATE_BUTTON = '//button[@class= "btn btn-primary"]')
-    _LOCATOR_ELEMENTS_HOUSES = '//label[@for = "ADDRESS[ATDHOUSE]"]/ancestor::div[2]//span[@class = "name"]')
-    _LOCATOR_ELEMENTS_STREETS = (
-        By.XPATH, '//label[@for = "ADDRESS[ATDSTREET]"]/ancestor::div[2]//span[@class = "name"]')
-    _LOCATOR_CREATION_ORDER = '#CreateOrderb2C a')
-    _LOCATOR_AREA = (By.XPATH,
-                     '//label[@for= "ADDRESS[ATDOBJECT][1]"]/ancestor::div[2]//div[@class[contains(., "suggest form-control select-service-address input-sm")]]')
-    _LOCATOR_VILLAGE = (By.XPATH,
-                        '//label[@for= "ADDRESS[ATDOBJECT][2]"]/ancestor::div[2]//div[@class[contains(., "suggest form-control select-service-address input-sm")]]')
-    _LOCATOR_AREA_NAME = (By.XPATH,
-                          '//label[@for= "ADDRESS[ATDHOUSE]"]/ancestor::div[2]//div[@class[contains(., "suggest form-control select-service-address input-sm")]]')
-    _LOCATOR_MISTAKE = '//h5[@class = "text-danger"]')
-    _LOCATOR_CREATING_ORDERS = '//table[@class="table table-condensed table-hover"]//td[text()="B2C"]/following::td[1]/a')
+    _LOCATOR_CLIENT = '//div[@style = "display: flex"]//div[@class= "suggest form-control input-sm js--matomo-log-focus-event"]'
+    _LOCATOR_OBJECT_TYPE = '//div[@class = "form-group has-warning"]//div[@class = "suggest form-control select-service-address input-sm"]'
+    _LOCATOR_OBJECT_TYPE_DISABLED = '//select[@name = "ADDRESS[CRM_OBJECT_TYPE]"]'
+    _LOCATOR_WIFI_CHECKBOX = '//div[@class= "b2c-service-group"]//input[@name= "services[wifi]"]'
+    _LOCATOR_CREATE_BUTTON = '//button[@class= "btn btn-primary"]'
+    _LOCATOR_ELEMENTS_HOUSES = '//label[@for = "ADDRESS[ATDHOUSE]"]/ancestor::div[2]//span[@class = "name"]'
+    _LOCATOR_ELEMENTS_STREETS = '//label[@for = "ADDRESS[ATDSTREET]"]/ancestor::div[2]//span[@class = "name"]'
+    _LOCATOR_CREATION_ORDER = '//a[@id="CreateOrderb2C"]'
+    _LOCATOR_AREA = '//label[@for= "ADDRESS[ATDOBJECT][1]"]/ancestor::div[2]//div[@class[contains(., "suggest form-control select-service-address input-sm")]]'
+    _LOCATOR_VILLAGE = '//label[@for= "ADDRESS[ATDOBJECT][2]"]/ancestor::div[2]//div[@class[contains(., "suggest form-control select-service-address input-sm")]]'
+    _LOCATOR_AREA_NAME = '//label[@for= "ADDRESS[ATDHOUSE]"]/ancestor::div[2]//div[@class[contains(., "suggest form-control select-service-address input-sm")]]'
+    _LOCATOR_MISTAKE = '//h5[@class = "text-danger"]'
+    _LOCATOR_CREATING_ORDERS = '//table[@class="table table-condensed table-hover"]//td[text()="B2C"]/following::td[1]/a'
 
+    @classmethod
     @testit.step('Check error add creation order by address in form b2c creation smr')
-    def _is_error_add_address_on_creation_order(self):
+    def _is_error_add_address_on_creation_order(cls):
         try:
-            return len(self.find_elements(locator=self._LOCATOR_MISTAKE, second=2)) >= 1
+            return len(Locator(cls._LOCATOR_MISTAKE).text) >= 1
         except:
             return False
 
-    def _delete_creating_orders(self):
-        order_list = self.find_elements(self._LOCATOR_CREATING_ORDERS)
+    @classmethod
+    def _delete_creating_orders(cls):
+        order_list = Locator(cls._LOCATOR_CREATING_ORDERS).all
         for order in order_list:
-            time.sleep(4)
-            Sys().delete_order(int(order.text))
+            SysAPI().delete_order(int(order.text))
 
-    def _custom_select_method(self, locator, text):
+    @classmethod
+    def _custom_select_method(cls, locator, text):
         with testit.step(f'Custom select value {text} by {locator} in form b2c creation smr'):
-            element = self.find_element(locator)
-            locator_input = self.find_element(f'{locator[1]}//input[@type="text"]'))
-            element.click()
-            locator_input.send_keys(text)
-            time.sleep(1)
-            locator_input.send_keys('\n')
+            Input(f'{locator}//input[@type="text"]').input(text)
+            Locator(locator).click()
 
-    def _set_building_type(self, building_type: str):
+    @classmethod
+    def _set_building_type(cls, building_type: str):
         with testit.step(f'Set building type {building_type} in form b2c creation smr'):
-            Select(self.find_element(locator=self._LOCATOR_BUILDING_TYPE)).select_by_visible_text(building_type)
+            Select(cls._LOCATOR_BUILDING_TYPE).option(building_type)
 
-    def _set_location(self, location_name: str):
+    @classmethod
+    def _set_location(cls, location_name: str):
         time.sleep(2)
         with testit.step(f'Set location {location_name} in form b2c creation smr'):
-            self._custom_select_method(locator=self._LOCATOR_LOCATION, text=location_name)
+            cls._custom_select_method(cls._LOCATOR_LOCATION, text=location_name)
 
-    def _get_streets_name(self):
-        time.sleep(2)
-        elements = self.find_elements(locator=self._LOCATOR_ELEMENTS_STREETS)
-        street_names = [element.get_property('innerText') for element in elements]
+    @classmethod
+    def _get_streets_name(cls):
+        elements = Locator(cls._LOCATOR_ELEMENTS_STREETS).all
+        street_names = [element.get_attribute('innerText') for element in elements]
         with testit.step('Get streets names {street_names} in form b2c creation smr'):
             return street_names
 
-    def _get_house_names(self):
-        time.sleep(2)
-        elements = self.find_elements(locator=self._LOCATOR_ELEMENTS_HOUSES)
-        house_names = [element.get_property('innerText') for element in elements]
+    @classmethod
+    def _get_house_names(cls):
+        elements = Locator(cls._LOCATOR_ELEMENTS_HOUSES).all
+        house_names = [element.get_attribute('innerText') for element in elements]
         with testit.step(f'Get houses names {house_names} in form b2c creation smr'):
             return house_names
 
-    def _set_random_street_and_house(self):
-        streets_name = self._get_streets_name()
+    @classmethod
+    def _set_random_street_and_house(cls):
+        streets_name = cls._get_streets_name()
         for street_name in streets_name:
-            self._custom_select_method(locator=self._LOCATOR_STREET, text=street_name)
-            time.sleep(2)
-            first_police_house = self._get_police_house()
+            cls._custom_select_method(cls._LOCATOR_STREET, text=street_name)
+            first_police_house = cls._get_police_house()
             if first_police_house:
-                self._set_house(first_police_house)
-                time.sleep(2)
-                if self._is_error_add_address_on_creation_order():
+                cls._set_house(first_police_house)
+                if cls._is_error_add_address_on_creation_order():
                     continue
                 else:
                     with testit.step(f'Set ramdom street {first_police_house} and house in form b2c creation smr'):
                         break
 
-    def _get_police_house(self):
-        houses = self.find_elements(locator=self._LOCATOR_ELEMENTS_HOUSES)
+    @classmethod
+    def _get_police_house(cls):
+        houses = Locator(cls._LOCATOR_ELEMENTS_HOUSES).all
         for house in houses:
-            house_name = house.get_property('innerText')
+            house_name = house.get_attribute('innerText')
             if str(house_name).find('Милицейские') == -1:
                 continue
             else:
@@ -115,94 +108,101 @@ class FormB2CCreationSMROrder(Page):
                     return house_name
         return False
 
-    def _set_house(self, house_name: str):
-        time.sleep(1)
+    @classmethod
+    def _set_house(cls, house_name: str):
         with testit.step(f'Set house {house_name} in form b2c creation smr'):
-            self._custom_select_method(locator=self._LOCATOR_HOUSE, text=house_name)
+            cls._custom_select_method(cls._LOCATOR_HOUSE, text=house_name)
 
-    def _set_client(self, client_name: str):
+    @classmethod
+    def _set_client(cls, client_name: str):
         with testit.step(f'Set client {client_name} in form b2c creation smr'):
             keyboard = Controller()
-            self._custom_select_method(locator=self._LOCATOR_CLIENT, text=client_name)
-            time.sleep(3)
+            cls._custom_select_method(cls._LOCATOR_CLIENT, text=client_name)
             keyboard.press(Key.tab)
             keyboard.release(Key.tab)
 
-    def _set_object_type(self, obj_type: str):
+    @classmethod
+    def _set_object_type(cls, obj_type: str):
         with testit.step('Set object type {obj_type} in form b2c creation smr'):
-            self._custom_select_method(locator=self._LOCATOR_OBJECT_TYPE, text=obj_type)
+            cls._custom_select_method(cls._LOCATOR_OBJECT_TYPE, text=obj_type)
 
-    def _set_building_fields(self, floors: int, entrances: int, flats: int, dh_counter: int, commerce_plan: int):
+    @classmethod
+    def _set_building_fields(cls, floors: int, entrances: int, flats: int, dh_counter: int, commerce_plan: int):
         def clear_and_set(locator, value):
-            self.find_element(locator=locator).clear()
-            self.find_element(locator=locator).send_keys(value)
+            Input(locator).input(value)
 
         with testit.step(
                 f'Set building field {floors}, {entrances}, {flats}, {dh_counter} and {commerce_plan} in form b2c creation smr'):
-            clear_and_set(locator=self._LOCATOR_BUILDING_ENTRANCES, value=entrances)
-            clear_and_set(locator=self._LOCATOR_BUILDING_FLOORS, value=floors)
-            clear_and_set(locator=self._LOCATOR_BUILDING_FLAT_AT_FLOOR, value=flats)
-            clear_and_set(locator=self._LOCATOR_BUILDING_DH_COUNTER, value=dh_counter)
-            clear_and_set(locator=self._LOCATOR_BUILDING_COMMERCE_PLAN, value=commerce_plan)
+            clear_and_set(cls._LOCATOR_BUILDING_ENTRANCES, value=entrances)
+            clear_and_set(cls._LOCATOR_BUILDING_FLOORS, value=floors)
+            clear_and_set(cls._LOCATOR_BUILDING_FLAT_AT_FLOOR, value=flats)
+            clear_and_set(cls._LOCATOR_BUILDING_DH_COUNTER, value=dh_counter)
+            clear_and_set(cls._LOCATOR_BUILDING_COMMERCE_PLAN, value=commerce_plan)
 
-
-
-    @staticmethod
-    def _set_building_ap_years(ap_year: int):
+    @classmethod
+    def _set_building_ap_years(cls, ap_year: int):
         with testit.step('Set building ap year {ap_year} in form b2c creation smr'):
-            ._custom_select_method(locator=self._LOCATOR_BUILDING_AP_YEAR, text=ap_year)
-
+            cls._custom_select_method(cls._LOCATOR_BUILDING_AP_YEAR, text=ap_year)
 
     @classmethod
     def _set_wifi_checkbox(cls):
         with testit.step('Set checkbox wifi in form b2c creation name'):
             Input(cls._LOCATOR_WIFI_CHECKBOX).click()
 
-    def _create_order(self):
+    @classmethod
+    def _create_order(cls):
         with testit.step('Click create order in form b2c creation name'):
-            self.find_element(locator=self._LOCATOR_CREATE_BUTTON).click()
+            Locator(cls._LOCATOR_CREATE_BUTTON).click()
 
-    def _set_area(self, area: str):
+    @classmethod
+    def _set_area(cls, area: str):
         time.sleep(1)
         with testit.step(f'Set area {area} in form b2c creation name'):
-            self._custom_select_method(locator=self._LOCATOR_AREA, text=area)
+            cls._custom_select_method(cls._LOCATOR_AREA, text=area)
 
-    def _set_village(self, village: str):
-        time.sleep(1)
+    @classmethod
+    def _set_village(cls, village: str):
         with testit.step(f'Set village {village} in form b2c creation name'):
-            self._custom_select_method(locator=self._LOCATOR_VILLAGE, text=village)
+            cls._custom_select_method(cls._LOCATOR_VILLAGE, text=village)
 
-    def _set_area_name(self, area_name):
-        time.sleep(1)
+    @classmethod
+    def _set_area_name(cls, area_name):
         with testit.step(f'Set area name {area_name} in form b2c creation name'):
-            self._custom_select_method(locator=self._LOCATOR_AREA_NAME, text=area_name)
+            cls._custom_select_method(cls._LOCATOR_AREA_NAME, text=area_name)
 
-    def _set_commerce_plan(self, commerce_plan):
+    @classmethod
+    def _set_commerce_plan(cls, commerce_plan):
         with testit.step(f'Set commerce plan {commerce_plan} in form b2c creation name'):
-            self.find_element(locator=self._LOCATOR_BUILDING_COMMERCE_PLAN).send_keys(commerce_plan)
+            Input(cls._LOCATOR_BUILDING_COMMERCE_PLAN).input(commerce_plan)
 
-    def _set_parameters_new_building(self, smr: dict):
-        self._set_building_type(smr['building_type'])
-        self._set_location(smr['location_name'])
-        self._set_random_street_and_house()
-        self._set_object_type(smr['obj_type'])
-        self._set_client(smr['client'])
-        self._set_building_fields(smr['floors'], smr['entrances'], smr['flats'], smr['dh_counter'],
+
+    @classmethod
+    def _set_parameters_new_building(cls, smr: dict):
+        cls._set_building_type(smr['building_type'])
+        cls._set_location(smr['location_name'])
+        cls._set_random_street_and_house()
+        cls._set_object_type(smr['obj_type'])
+        cls._set_client(smr['client'])
+        cls._set_building_fields(smr['floors'], smr['entrances'], smr['flats'], smr['dh_counter'],
                                   smr['commerce_plan'])
-        self._set_building_ap_years(smr['ap_year'])
+        cls._set_building_ap_years(smr['ap_year'])
 
-    def _set_parameters_private_sector(self, smr: dict):
-        self._set_building_type(smr['building_type'])
-        self._set_location(smr['location_name'])
-        self._set_area(smr['area'])
-        self._set_village(smr['village'])
-        self._set_area_name(smr['area_name'])
-        if self._is_error_add_address_on_creation_order:
-            self._delete_creating_orders()
+
+    @classmethod
+    def _set_parameters_private_sector(cls, smr: dict):
+        cls._set_building_type(smr['building_type'])
+        cls._set_location(smr['location_name'])
+        cls._set_area(smr['area'])
+        cls._set_village(smr['village'])
+        cls._set_area_name(smr['area_name'])
+        if cls._is_error_add_address_on_creation_order:
+            cls._delete_creating_orders()
             raise 'Заявка B2C удалена по данному адресу, необходимо повторно выполнить тест'
-        self._set_commerce_plan(smr['commerce_plan'])
-        self._set_building_ap_years(smr['ap_year'])
+        cls._set_commerce_plan(smr['commerce_plan'])
+        cls._set_building_ap_years(smr['ap_year'])
 
+
+    @classmethod
     @testit.step('Create smr order')
     def create_smr_order_form(self, smr: dict):
         if smr['building_type'] == 'Комплексная новостройка':
@@ -211,9 +211,10 @@ class FormB2CCreationSMROrder(Page):
             self._set_parameters_private_sector(smr)
         self._create_order()
 
+
+    @classmethod
     @testit.step('Get created order')
-    def get_creation_order(self) -> int:
-        self.check_loader()
-        smr_order_id = int(self.find_element(self._LOCATOR_CREATION_ORDER).text)
+    def get_creation_order(cls) -> int:
+        smr_order_id = int(Locator(cls._LOCATOR_CREATION_ORDER).text)
         with testit.step(f'Get creation order {smr_order_id} in form b2c creation name'):
             return smr_order_id

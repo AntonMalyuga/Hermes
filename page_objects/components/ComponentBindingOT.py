@@ -1,40 +1,34 @@
-from page_objects.orders.Order import Order
+from page import Page
+from locator import Locator, Input, Select, CheckBox
 import testit
 
 
-class ComponentBindingOT(Order):
-
+class ComponentBindingOT(Page):
     name = 'Привязка ОТ'
 
-    _LOCATOR_GROUP = (
-        By.XPATH, '//span[contains(., "Параметры подключения")]')
-    _LOCATOR_BINDING_BUTTON = (
-        By.XPATH,
-        '//a[@title = "Привязка ОТ"]')
-    _LOCATOR_REFERENCE_POINT = '//select[@name= "cluster_node"]')
-    _LOCATOR_SUBMIT_BUTTON = '//button[text() = "Привязать"]')
+    _LOCATOR_GROUP = '//span[contains(., "Параметры подключения")]'
+    _LOCATOR_BINDING_BUTTON = '//a[@title = "Привязка ОТ"]'
+    _LOCATOR_REFERENCE_POINT = '//select[@name= "cluster_node"]'
+    _LOCATOR_SUBMIT_BUTTON = '//button[text() = "Привязать"]'
 
-    def move_to_group(self):
-        with testit.step(f'Перейти к группе'):
-            self.move_to_element(self._LOCATOR_GROUP)
-
-    def push_edit_form_button(self):
+    @classmethod
+    def push_edit_form_button(cls):
         with testit.step(f'Открыть форму редактирования'):
-            self.find_element(locator=self._LOCATOR_BINDING_BUTTON).click()
+            Locator(cls._LOCATOR_BINDING_BUTTON).click()
 
-    def set_reference_point(self, value):
+    @classmethod
+    def set_reference_point(cls, value):
         with testit.step(f'Заполнить селектовую форму со значением опорной точки "{value}"'):
-            select = Select(self.find_element(locator=self._LOCATOR_REFERENCE_POINT))
-            select.select_by_visible_text(value)
+            Select(cls._LOCATOR_REFERENCE_POINT)
 
-    def push_submit_button(self):
+    @classmethod
+    def push_submit_button(cls):
         with testit.step(f'Нажать кнопку сохранения параметров', 'Сохранение успешно'):
-            self.find_element(locator=self._LOCATOR_SUBMIT_BUTTON).click()
+            Locator(cls._LOCATOR_SUBMIT_BUTTON).click()
 
-    def change_binding_ot(self, value: str):
+    @classmethod
+    def change_binding_ot(cls, value: str):
         with testit.step(f'Изменить привязку ОТ'):
-            self.move_to_group()
-            self.push_edit_form_button()
-            self.check_loader()
-            self.set_reference_point(value)
-            self.push_submit_button()
+            cls.push_edit_form_button()
+            cls.set_reference_point(value)
+            cls.push_submit_button()

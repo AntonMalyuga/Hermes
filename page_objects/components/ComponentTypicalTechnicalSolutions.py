@@ -1,37 +1,32 @@
 import testit
-from selenium.webdriver.common.by import By
-from page_objects.orders.Order import Order
+from page import Page
+from locator import Locator, Select, Input
 
 
-class ComponentTypicalTechnicalSolutions(Order):
-
+class ComponentTypicalTechnicalSolutions(Page):
     name = 'B2B: Типовые технические решения'
 
     _GROUP = '//div[@class="panel panel-material"]//span[contains(., "Капитальные расходы")]/ancestor::div[2]'
-    _LOCATOR_GROUP = _GROUP)
-    _LOCATOR_A_EDIT = f'{_GROUP}//a[contains(@href,"TypicalSolution") and @title="Редактировать"]')
-    _LOCATOR_SELECT_LIST_TYPE_TECHNICAL_SOLUTIONS = (
-    By.XPATH, f'{_GROUP}//select[@name="typicalSolutionId"]/following::div[1]')
-    _LOCATOR_BTN_SAVE_TECHNICAL_SOLUTION = (
-    By.XPATH, f'{_GROUP}//form[contains(@action,"ChangeTypicalSolution")]//button[contains(text(), "Изменить")]')
+    _LOCATOR_A_EDIT = f'{_GROUP}//a[contains(@href,"TypicalSolution") and @title="Редактировать"]'
+    _LOCATOR_SELECT_LIST_TYPE_TECHNICAL_SOLUTIONS = f'{_GROUP}//select[@name="typicalSolutionId"]/following::div[1]'
+    _LOCATOR_BTN_SAVE_TECHNICAL_SOLUTION = f'{_GROUP}//form[contains(@action,"ChangeTypicalSolution")]//button[contains(text(), "Изменить")]'
 
-    def move_to_group(self):
-        with testit.step(f'Перейти к группе'):
-            self.move_to_element(self._LOCATOR_GROUP)
+    @classmethod
+    def open_editor(cls):
+        Locator(cls._LOCATOR_A_EDIT).click()
 
-    def open_editor(self):
-        self.find_element(self._LOCATOR_A_EDIT).click()
-
-    def change_typical_technical_solutions(self, type_technical_solutions: str):
-        select = self.find_element(self._LOCATOR_SELECT_LIST_TYPE_TECHNICAL_SOLUTIONS)
+    @classmethod
+    def change_typical_technical_solutions(cls, type_technical_solutions: str):
+        select = Locator(cls._LOCATOR_SELECT_LIST_TYPE_TECHNICAL_SOLUTIONS)
         select.click()
-        select.find_elementf'//span[text()="{type_technical_solutions}"]').click()
+        select.locator(f'//span[text()="{type_technical_solutions}"]').click()
 
-    def save_typical_technical_solutions(self):
-        self.find_element(self._LOCATOR_BTN_SAVE_TECHNICAL_SOLUTION).click()
+    @classmethod
+    def save_typical_technical_solutions(cls):
+        Locator(cls._LOCATOR_BTN_SAVE_TECHNICAL_SOLUTION).click()
 
-    def set_typical_technical_solutions(self, type_technical_solutions: str):
-        self.move_to_group()
-        self.open_editor()
-        self.change_typical_technical_solutions(type_technical_solutions=type_technical_solutions)
-        self.save_typical_technical_solutions()
+    @classmethod
+    def set_typical_technical_solutions(cls, type_technical_solutions: str):
+        cls.open_editor()
+        cls.change_typical_technical_solutions(type_technical_solutions=type_technical_solutions)
+        cls.save_typical_technical_solutions()

@@ -1,82 +1,75 @@
 import time
 
-from selenium.webdriver.common.by import By
-from page_objects.orders.Order import Order
-from selenium.webdriver.support.select import Select
+from page import Page
+from locator import Locator, Select, Input
 import testit
 
 
-class ComponentConnectionParameters(Order):
+class ComponentConnectionParameters(Page):
 
     name = 'Параметры подключения'
 
-    _LOCATOR_GROUP = (
-        By.XPATH, '//span[contains(., "Параметры подключения")]')
-    _LOCATOR_PARAMETERS_BUTTON = (
-        By.XPATH,
-        '//span[contains(., "Параметры подключения")]/ancestor::div[2]//i[@class = "glyphicon-edit glyphicon"]')
-    _LOCATOR_ORGANIZATION_WAY = '//select[@name = "last_inch_method"]')
-    _LOCATOR_COORDINATION = '//textarea[@name = "approval_details"]')
-    _LOCATOR_SPECIAL_CONDITIONS = '//textarea[@name = "special_conditions"]')
-    _LOCATOR_CROSSING = '//select[@name = "lm_crossing"]')
-    _LOCATOR_LAST_MILE = '//select[@name = "last_mile_method"]')
-    _LOCATOR_NETWORK_PATH = '//select[@name= "crm_network_path"]')
-    _LOCATOR_SUBMIT_BUTTON = (By.XPATH,
-                              '//span[contains(., "Информация о подключении")]/ancestor::div[2]//button[@class[not(contains(., "disable-after-click"))]]')
+    _LOCATOR_GROUP = '//span[contains(., "Параметры подключения")]'
+    _LOCATOR_PARAMETERS_BUTTON = '//span[contains(., "Параметры подключения")]/ancestor::div[2]//i[@class = "glyphicon-edit glyphicon"]'
+    _LOCATOR_ORGANIZATION_WAY = '//select[@name = "last_inch_method"]'
+    _LOCATOR_COORDINATION = '//textarea[@name = "approval_details"]'
+    _LOCATOR_SPECIAL_CONDITIONS = '//textarea[@name = "special_conditions"]'
+    _LOCATOR_CROSSING = '//select[@name = "lm_crossing"]'
+    _LOCATOR_LAST_MILE = '//select[@name = "last_mile_method"]'
+    _LOCATOR_NETWORK_PATH = '//select[@name= "crm_network_path"]'
+    _LOCATOR_SUBMIT_BUTTON = '//span[contains(., "Информация о подключении")]/ancestor::div[2]//button[@class[not(contains(., "disable-after-click"))]]'
 
-    def move_to_group(self):
-        with testit.step(f'Перейти к группе'):
-            self.move_to_element(self._LOCATOR_GROUP)
 
-    def push_edit_form_button(self):
+    @classmethod
+    def push_edit_form_button(cls):
         with testit.step(f'Открыть форму редактирования'):
-            self.find_element(locator=self._LOCATOR_PARAMETERS_BUTTON).click()
+            Locator(cls._LOCATOR_PARAMETERS_BUTTON).click()
 
-    def fill_organization_way_field(self, value):
+    @classmethod
+    def fill_organization_way_field(cls, value):
         with testit.step(f'Заполнить селектовую форму со значением нового способа организации "{value}"'):
-            select = Select(self.find_element(locator=self._LOCATOR_ORGANIZATION_WAY))
-            select.select_by_visible_text(value)
+            select = Select(cls._LOCATOR_ORGANIZATION_WAY).option(value)
 
-    def fill_coordination(self, coordination):
+    @classmethod
+    def fill_coordination(cls, coordination):
         with testit.step(f'Установить тип согласования {coordination}'):
-            self.find_element(locator=self._LOCATOR_COORDINATION).clear()
-            self.find_element(locator=self._LOCATOR_COORDINATION).send_keys(coordination)
+            Input(cls._LOCATOR_COORDINATION).input(coordination)
 
-    def fill_special_conditions(self, conditions):
+    @classmethod
+    def fill_special_conditions(cls, conditions):
         with testit.step(f'Установить особые условия {conditions}'):
-            self.find_element(locator=self._LOCATOR_SPECIAL_CONDITIONS).clear()
-            self.find_element(locator=self._LOCATOR_SPECIAL_CONDITIONS).send_keys(conditions)
+            Input(cls._LOCATOR_SPECIAL_CONDITIONS).input(conditions)
 
-    def fill_crossing(self, crossing):
+    @classmethod
+    def fill_crossing(cls, crossing):
         with testit.step(f'Заполнить селектовую форму со значением нового способа кроссировки "{crossing}"'):
-            select = Select(self.find_element(locator=self._LOCATOR_CROSSING))
-            select.select_by_visible_text(crossing)
+            Select(cls._LOCATOR_CROSSING).option(crossing)
 
-    def fill_last_mile(self, last_mile):
+    @classmethod
+    def fill_last_mile(cls, last_mile):
         with testit.step(f'Заполнить селектовую форму "уровень организации last mile" "{last_mile}"'):
-            select = Select(self.find_element(locator=self._LOCATOR_LAST_MILE))
-            select.select_by_visible_text(last_mile)
+            Select(cls._LOCATOR_LAST_MILE).option(last_mile)
 
-    def fill_network_path(self, network):
+    @classmethod
+    def fill_network_path(cls, network):
         with testit.step(f'Заполнить селектовую форму "задействованные участки сети" "{network}"'):
-            select = Select(self.find_element(locator=self._LOCATOR_NETWORK_PATH))
-            select.select_by_visible_text(network)
+            select = Select(cls._LOCATOR_NETWORK_PATH).option(network)
 
-    def push_submit_button(self):
+    @classmethod
+    def push_submit_button(cls):
         with testit.step(f'Нажать кнопку сохранения параметров', 'Сохранение успешно'):
-            self.find_element(locator=self._LOCATOR_SUBMIT_BUTTON).click()
+            Locator(cls._LOCATOR_SUBMIT_BUTTON).click()
 
-    def change_connection_parameters(self, value: str, coordination: str, conditions: str, crossing: str,
+    @classmethod
+    def change_connection_parameters(cls, value: str, coordination: str, conditions: str, crossing: str,
                                      last_mile: str, network: str):
         with testit.step(f'Изменить параметры подключения'):
-            self.move_to_group()
-            self.check_loader()
-            self.push_edit_form_button()
-            self.fill_organization_way_field(value)
-            self.fill_coordination(coordination)
-            self.fill_special_conditions(conditions)
-            self.fill_crossing(crossing)
-            self.fill_last_mile(last_mile)
-            self.fill_network_path(network)
-            self.push_submit_button()
+            cls.push_edit_form_button()
+            cls.fill_organization_way_field(value)
+            cls.fill_coordination(coordination)
+            cls.fill_special_conditions(conditions)
+            cls.fill_crossing(crossing)
+            cls.fill_last_mile(last_mile)
+            cls.fill_network_path(network)
+            cls.push_submit_button()
             time.sleep(10)

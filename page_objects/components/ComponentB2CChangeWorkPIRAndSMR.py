@@ -1,19 +1,13 @@
-from selenium.common.exceptions import ElementClickInterceptedException
-from selenium.webdriver.common.by import By
-from page_objects.orders.Order import Order
+from page import Page
+from locator import Locator, Input, Select, CheckBox
 import testit
 
 
-class ComponentB2CChangeWorkPIRAndSMR(Order):
+class ComponentB2CChangeWorkPIRAndSMR(Page):
     name = 'B2C: Редактировать объекмы работы ПИР/СМР'
 
-    _LOCATOR_BUTTON_FORM_WORK = 'a[href*="works_volumes"]')
+    _LOCATOR_BUTTON_FORM_WORK = 'a[href*="works_volumes"]'
 
-    def open_form_work(self):
-        with testit.step(f'Открыть форму "{self.name}"'):
-            self.check_loader()
-            try:
-                link = self.find_element(locator=self._LOCATOR_BUTTON_FORM_WORK)
-                link.click()
-            except ElementClickInterceptedException:
-                self._driver.execute_script("arguments[0].click()", link)
+    def open_form_work(cls):
+        with testit.step(f'Открыть форму "{cls.name}"'):
+            Locator(cls._LOCATOR_BUTTON_FORM_WORK).click()
