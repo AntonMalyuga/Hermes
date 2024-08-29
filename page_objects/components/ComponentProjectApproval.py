@@ -51,6 +51,7 @@ class ComponentProjectApproval(Page):
         cls._completed_approval(element=element, is_approve=is_approve,
                                 comment=comment)
 
+    @classmethod
     def approval_plan_kc(cls, is_approve: bool, comment: str = None):
         element = Locator(cls._LOCATOR_TR_APPROVAL_PLAN_KC)
         cls._completed_approval(element=element, is_approve=is_approve,

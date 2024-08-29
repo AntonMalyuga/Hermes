@@ -107,6 +107,10 @@ class Input(Locator):
 
 
 class CheckBox(Locator):
+    def is_checked(self):
+        self._use_current_page_context()
+        return self.webelement.first.is_checked(timeout=DEFAULT_TIMEOUT)
+
     def checked(self):
         self._use_current_page_context()
         return self.webelement.first.set_checked(timeout=DEFAULT_TIMEOUT, checked=True)
@@ -115,6 +119,13 @@ class CheckBox(Locator):
         self._use_current_page_context()
         return self.webelement.first.set_checked(timeout=DEFAULT_TIMEOUT, checked=False)
 
+class Radio(Locator):
+    def is_checked(self):
+        self._use_current_page_context()
+        return self.webelement.first.is_checked(timeout=DEFAULT_TIMEOUT)
+    def checked(self):
+        self._use_current_page_context()
+        return self.webelement.first.check()
 
 class Select(Locator):
     def ajax_option(self, string: str):

@@ -1,35 +1,36 @@
 import pytest
 from faker import Faker
+from page_objects.forms.FormB2BWorkVolume import Work
 from dataclasses import dataclass, field
 
 Faker.seed()
 fake = Faker('ru_RU')
 
 
-@dataclass
-class Work:
-    name: str
-    work_type: str
-    count: int = fake.random_int(0, 15)
-
-
 class WorksList:
     works: list[Work] = [
-        Work(name='Восстановление газонного покрытия', work_type='СМР'),
-        Work(name='Восстановление газонного покрытия', work_type='ПИР'),
-        Work(name='Выполнение работ по программированию ключа', work_type='СМР'),
-        Work(name='Демонтаж АРМ/периферийного устройства', work_type='СМР'),
-        Work(name='Демонтаж и отключение розетки', work_type='СМР'),
-        Work(name='Демонтаж кабель каналов, коробов ПВХ', work_type='СМР')
+        Work(name='Восстановление газонного покрытия', work_type='СМР', count=fake.random_int(1, 15)),
+        Work(name='Восстановление газонного покрытия', work_type='ПИР', count=fake.random_int(1, 15)),
+        Work(name='Выполнение работ по программированию ключа', work_type='СМР', count=fake.random_int(1, 15)),
+        Work(name='Демонтаж АРМ/периферийного устройства', work_type='СМР', count=fake.random_int(1, 15)),
+        Work(name='Демонтаж и отключение розетки', work_type='СМР', count=fake.random_int(1, 15)),
+        Work(name='Демонтаж кабель каналов, коробов ПВХ (без материалов)', work_type='СМР', count=fake.random_int(1, 15))
     ]
 
 
 @dataclass
 class Order:
     id: int = 1602625
-    works: Work = field(default_factory=lambda: fake.random_element(WorksList.works))
+    work: Work = field(default_factory=lambda: fake.random_element(WorksList.works))
 
+@dataclass
+class OrderWithCluster:
+    id: int = 1597444
 
 @pytest.fixture
 def order() -> Order:
     return Order()
+
+@pytest.fixture
+def order_with_cluster() -> OrderWithCluster:
+    return OrderWithCluster()

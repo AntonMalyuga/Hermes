@@ -18,13 +18,13 @@ class Order:
 
 @pytest.fixture
 def order() -> Order:
-    order = Order(1627171)
+    order = Order(1627425)
     return order
 
 
 @pytest.fixture
 def order_with_delete() -> Order:
-    order = Order(1627393)
+    order = Order(1627454)
     yield order
     Construction.open_order(order.id)
-    SysAPI.delete_order(Construction.ComponentB2BOrdersHierarchy.get_hoz_number())
+    SysAPI.delete_order(Construction.ComponentB2BOrdersHierarchy.get_smu_number())

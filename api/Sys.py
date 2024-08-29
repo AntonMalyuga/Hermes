@@ -1,30 +1,35 @@
 import os
 import requests
+from dotenv import load_dotenv
+
+load_dotenv()
 
 
 class SysAPI:
-    def __init__(self):
-        self.login = os.getenv('HERMES_LOGIN')
-        self.password = os.getenv('HERMES_PASSWORD')
-        self.url = 'https://hermes-test.rt.ru:8103/smOrderOne.phtml'
+    login = os.getenv('HERMES_TEST_LOGIN')
+    password = os.getenv('HERMES_TEST_PASSWORD')
+    url = 'https://hermes-test.rt.ru:8103/smOrderOne.phtml'
 
-    def _api(self, data: dict):
+    @classmethod
+    def _api(cls, data: dict):
         headers = {
             'User-Agent': 'Mozilla/5.0 (X11; Linux x86_64) AppleWebKit/537.36 (KHTML, like Gecko) Chrome/122.0.0.0 Safari/537.36'
         }
 
-        res = requests.post(url=self.url, data=data, headers=headers, auth=(self.login, self.password))
+
+        response = requests.post(url=cls.url, data=data, headers=headers, auth=(cls.login, cls.password))
+        print(response.text)
 
     @classmethod
     def delete_order(cls, order_id: int):
-        try:
-            data = {
-                'Order_ID': order_id,
-                "delOrderFullOrder": 'Удалить конкретно',
-                "isForce": 1
-            }
+        data = {
+            'Order_ID': order_id,
+            "delOrderFullOrder": 'Удалить конкретно',
+            "isForce": 1
+        }
 
-            cls._api(data=data)
+        cls._api(data=data)
 
-        except Exception:
-            print(f'Удаление заявки {order_id} невозможно')
+
+if __name__ == '__main__':
+    SysAPI.delete_order(123)

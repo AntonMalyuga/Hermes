@@ -1,5 +1,3 @@
-import time
-
 import pytest
 import testit
 
@@ -8,7 +6,7 @@ from page_objects.orders.b2c.Project import Project
 
 class TestComponentFiles:
 
-    @testit.title('component')
+    @testit.title(Project.ComponentFiles.name)
     @testit.displayName('Проверить добавление вложения в заявку')
     @testit.description('Проверяется добавления вложения в заявку')
     @pytest.mark.smoke

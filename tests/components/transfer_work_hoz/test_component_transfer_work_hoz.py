@@ -1,8 +1,18 @@
-from page_objects.components.ComponentB2BTransferWorkHoz import ComponentB2BTransferWorkHoz
+import testit
 import pytest
 
+from page_objects.orders.b2b.Construction import Construction
 
-@pytest.mark.smoke
-def test_component_transfer_work_hoz(driver):
-    driver.get('https://hermes-test.rt.ru/aggregator/1603896')
-    ComponentB2BTransferWorkHoz(driver).open_form_transfer_hoz_work()
+
+class TestFormB2BSpecification:
+
+    @testit.title(Construction.ComponentB2BTransferWorkHoz.name)
+    @testit.displayName('Проверка добавления спецификации на форме редактирования оборудования')
+    @testit.description('Проверяеся добавление новой работы на форме редактирования оборудования B2B')
+    @pytest.mark.smoke
+    def test_add_specification(self, order):
+        Construction.ComponentB2BTransferWorkHoz.open_form_by_order(order.id)
+        FormB2BSpecification.delete_specification()
+        FormB2BSpecification.add_specification(order.specification)
+        FormB2BSpecification.wait_reload_page()
+        assert order.specification.name == FormB2BSpecification.get_all_add_specifications()[0].name
