@@ -1,5 +1,6 @@
 from page_objects.orders.Order import Order
 from page_objects.components.ComponentCloseStage import ComponentCloseStage
+from page_objects.components.ComponentProjectGroup import ComponentProjectGroup
 
 
 class Project(Order):
@@ -7,3 +8,4 @@ class Project(Order):
     name = 'Клиентский проект'
 
     ComponentCloseStage = ComponentCloseStage()
+    ComponentProjectGroup = ComponentProjectGroup()

@@ -58,6 +58,10 @@ class Locator:
         self._use_current_page_context()
         return self.webelement.first.get_attribute(attribute, timeout=DEFAULT_TIMEOUT)
 
+    def get_all_attributes(self):
+        self._use_current_page_context()
+        return self.webelement.first.all_inner_texts()
+
     def wait_for_displayed(self, timeout=DEFAULT_TIMEOUT):
         self._use_current_page_context()
         try:
@@ -139,6 +143,9 @@ class Select(Locator):
         self.webelement.first.select_option(string)
 
     def index(self, index: int):
+        '''
+        Выбирает опцию с указанным индексом начиная с 0
+        '''
         self._use_current_page_context()
         self.webelement.select_option(index=index, timeout=DEFAULT_TIMEOUT)
 
