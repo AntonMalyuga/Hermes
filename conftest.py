@@ -2,8 +2,6 @@ import pytest
 from driver import Driver
 from typing import Any
 
-from page_objects.elements.UserLoginForm import UserLoginForm
-
 
 def pytest_addoption(parser: Any) -> None:
     group = parser.getgroup("playwright", "Playwright")

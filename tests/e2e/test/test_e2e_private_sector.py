@@ -5,7 +5,7 @@ from page_objects.components.ComponentCreateProjectButton import ComponentCreate
 from page_objects.forms.FormB2CCreateConstructionProjectShow import FormB2CCreateConstructionProjectShow
 from page_objects.components.ComponentLoaderDH import ComponentLoaderDH
 from page_objects.components.ComponentAddressParameters import ComponentAdressParameters
-from api.Sys import Sys
+from api.Sys import SysAPI
 import testit
 import pytest
 
@@ -14,7 +14,7 @@ import pytest
 @testit.title('E2E')
 @testit.displayName('E2E по типу строительства "Частный сектор"')
 @testit.description('E2E по типу строительства "Частный сектор"  с услугой CORE до удаления созданной заявки проекта и заявки СМР')
-@pytest.mark.slow
+@pytest.mark.skip('Исправить когда будет готово B2C')
 def test_e2e_private_sector_and_delete(driver):
     smr = {
         'building_type': 'Коттеджный посёлок/частный сектор',

@@ -53,6 +53,8 @@ class FormB2CCreateConstructionProjectShow(Page):
 
     _LOCATOR_CHECKBOX_MODAL_SERVICES_LIST = '//input[@name ="b2c-services"]'
 
+    _LOCATOR_SELECT_SCENARIO = '//select[@data-placeholder="Выбрать сценарий"]'
+
     _LOCATOR_BUTTON_MODAL_SERVICES_SUBMIT = '//button[contains(@class, "js--b2c-construction-btn-save-key-services")]'
     _LOCATOR_BUTTON_MODAL_SERVICES_CLOSE_MODAL = '//div[contains(@class, "b2c-construction-projects-modal-services")]//button[text() = "Отмена"]'
 
@@ -143,6 +145,11 @@ class FormB2CCreateConstructionProjectShow(Page):
     def enter_create_project(cls):
         with testit.step('Кликнуть кнопку проект', 'Проект создан'):
             Locator(cls._LOCATOR_BUTTON_CREATE_PROJECT).click()
+
+    @classmethod
+    def enter_scenario(cls, value):
+        with testit.step(f'Установить сценарий: {value}'):
+            Select(cls._LOCATOR_SELECT_SCENARIO).option(value)
 
     @classmethod
     def create_project(cls, project: Project, address=Address, is_prepared: bool = False):
